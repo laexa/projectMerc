@@ -7,7 +7,9 @@ package moon.projectx;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.Statement;
 import com.mysql.cj.jdbc.Driver;
+import java.sql.ResultSet;
 
 
 /**  
@@ -22,14 +24,16 @@ public class ConnectionDataBase {
     private String PASSWORD         = "root";
     private String IPADDRESS        = "localhost";
     private String PORT             = "3306";
-    private String NAMEDATABASE     = "testbd";
+    private String NAMEDATABASE     = "maindb";
     private String TIMEZONESETTING  = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
-      
     
-    public boolean connect(){
+    private Statement statement;
+    private Connection connection;
+    
+    public boolean connect() {
         
         try {
-            Connection connection;
+            
             
             Driver driver = new Driver();
             DriverManager.registerDriver(driver);
@@ -49,4 +53,32 @@ public class ConnectionDataBase {
         return false;
     }
     
+    public void viewAllData() {
+        String SQL = "SELECT * FROM maindb.user_table;";
+        
+        try {
+            statement = connection.createStatement();
+            ResultSet resultSet =  statement.executeQuery(SQL);
+            
+            while(resultSet.next()){
+                int id = resultSet.getInt("ID_USER");
+                String userName = resultSet.getString("USER_NAME");
+                String userLastName = resultSet.getString("USER_LAST_NAME");
+                String userStatusName = resultSet.getString("USER_STATUS");
+                String userPassword = resultSet.getString("USER_PASSWORD");
+                
+                System.out.println("\n================\n");
+                System.out.println("id: " + id);
+                System.out.println("Name: " + userName);
+                System.out.println("userLastName: " + userLastName);
+                System.out.println("userStatus: $" + userStatusName);
+                System.out.println("passwor: $" + userPassword);
+            }                        
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        
+        
+                
+    }
 }
