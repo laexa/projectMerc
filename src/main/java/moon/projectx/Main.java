@@ -5,12 +5,17 @@
  */
 package moon.projectx;
 
-import moon.projectx.driver.ConnectionDataBase;
+
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import com.mysql.cj.jdbc.Driver;
 import moon.projectx.objectTable.User;
 import moon.projectx.driver.RequestDataBase;
+import moon.projectx.driver.ConnectionDataBase;
+import moon.projectx.UI.LoginUI;
+import moon.projectx.UI.NewJFrame;
+
 
 /**
  *
@@ -28,7 +33,10 @@ public class Main {
 //        System.out.println(requestDataBase.deleteUser(8));
         user = requestDataBase.getUser(1);
         System.out.println(user.toString());
-        
-        
+        LoginUI loginForm = new LoginUI();
+        NewJFrame ns = new NewJFrame();
+        ns.setLocationRelativeTo(null);
+        ns.setVisible(true);
+//        
     }
 }
