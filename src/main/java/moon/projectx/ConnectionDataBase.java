@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.Statement;
 import com.mysql.cj.jdbc.Driver;
 import java.sql.ResultSet;
+import moon.projectx.objectTable.User;
 
 
 /**  
@@ -17,6 +18,7 @@ import java.sql.ResultSet;
  * Connection class 
  * connect to Data Base
  */
+
 public class ConnectionDataBase {
     
     private String URL              = "jdbc:mysql://";
@@ -76,9 +78,22 @@ public class ConnectionDataBase {
             }                        
         } catch (Exception e) {
             System.err.println(e.getMessage());
+        }              
+    }
+    //insert maindb.user_table (maindb.user_table.name, maindb.user_table.lastName, maindb.user_table.type, maindb.user_table.password) values ('alex', 'cheipesh', 0, '1999c');
+    public void addUser(User user) {
+ 
+        try {
+            statement = connection.createStatement();
+            String request = "insert maindb.user_table " 
+                    + "(maindb.user_table.name, maindb.user_table.lastName, maindb.user_table.type, maindb.user_table.password)"
+                    + " values ('" + user.getName() + "', '" + user.getLastName()+ "', " + user.getType()+ ", ' " + user.getPassword() + "');";
+            
+            statement.execute(request);
+            statement.close();
+            
+        } catch (Exception e) {
+            System.err.println(e.getCause());
         }
-        
-        
-                
     }
 }
