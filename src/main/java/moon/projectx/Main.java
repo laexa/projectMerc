@@ -5,10 +5,12 @@
  */
 package moon.projectx;
 
+import moon.projectx.driver.ConnectionDataBase;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import com.mysql.cj.jdbc.Driver;
 import moon.projectx.objectTable.User;
+import moon.projectx.driver.RequestDataBase;
 
 /**
  *
@@ -21,7 +23,11 @@ public class Main {
         User user = new User("m11ax", "oka11l", 1, "xyul11o");
         ConnectionDataBase connectionDataBase = new ConnectionDataBase();
         connectionDataBase.connect();
-        connectionDataBase.addUser(user);
+        RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+//        System.out.println(requestDataBase.addUser(user));
+//        System.out.println(requestDataBase.deleteUser(8));
+        user = requestDataBase.getUser(1);
+        System.out.println(user.toString());
         
         
     }

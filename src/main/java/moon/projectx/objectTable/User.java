@@ -10,12 +10,29 @@ package moon.projectx.objectTable;
  * @author user
  */
 public class User {
+    
+    private int     id;
+    private String  name;
+    private String  lastName;
+    private int     type;
+    private String  password;
+
+    public User() {
+    }
 
     public User(String name, String lastName, int type, String password) {
         this.name = name;
         this.lastName = lastName;
         this.type = type;
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -49,11 +66,11 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    private String name;
-    private String lastName;
-    private int type;
-    private String password;
+
+    @Override
+    public String toString() {
+        return "User{" + "id=" + id + ", name=" + name + ", lastName=" + lastName + ", type=" + type + ", password=" + password + '}';
+    }
     
     
 }
