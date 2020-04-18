@@ -54,7 +54,9 @@ public class ConnectionDataBase {
         }
         return false;
     }
+    
     public Connection getConnection() {
         return connection;
     }
+    
 }
