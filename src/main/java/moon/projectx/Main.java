@@ -11,10 +11,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import com.mysql.cj.jdbc.Driver;
 import moon.projectx.objectTable.User;
+import moon.projectx.objectTable.Customer;
 import moon.projectx.driver.RequestDataBase;
 import moon.projectx.driver.ConnectionDataBase;
-import moon.projectx.UI.LoginUI;
-import moon.projectx.UI.NewJFrame;
+//import moon.projectx.UI.LoginUI;
+
 
 
 /**
@@ -26,12 +27,17 @@ public class Main {
                     
     public static void main(String[] args) {
         
-        User user = new User("11111", "1111", 1, "111", "111");
+        Customer customer = new Customer("name", "lastName", 2222, 1111111);
         
         
         ConnectionDataBase connectionDataBase = new ConnectionDataBase();
         connectionDataBase.connect();
         RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        
+//        System.out.println(requestDataBase.addCustomer(customer));                        // OK !!!!!!
+//        System.out.println(requestDataBase.updateCustomer(2, customer));                  // OK !!!!!!
+//        System.out.println(requestDataBase.deleteCustomer(4));                            // OK !!!!!!
+//        System.out.println(requestDataBase.getCustomer(1).toString());                    // OK !!!!!!
         
 //        System.out.println(requestDataBase.addUser(user));
 //        user = new User("222", "222", 1, "222", "222");
