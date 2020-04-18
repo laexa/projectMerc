@@ -25,18 +25,24 @@ import moon.projectx.UI.NewJFrame;
 public class Main {
                     
     public static void main(String[] args) {
-        User user = new User("m11ax", "oka11l", 1, "xyul11o");
+        
+        User user = new User("11111", "1111", 1, "111", "111");
+        
+        
         ConnectionDataBase connectionDataBase = new ConnectionDataBase();
         connectionDataBase.connect();
         RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        
 //        System.out.println(requestDataBase.addUser(user));
-//        System.out.println(requestDataBase.deleteUser(8));
-        user = requestDataBase.getUser(1);
-        System.out.println(user.toString());
-        LoginUI loginForm = new LoginUI();
-        NewJFrame ns = new NewJFrame();
-        ns.setLocationRelativeTo(null);
-        ns.setVisible(true);
+//        user = new User("222", "222", 1, "222", "222");
+//        System.out.println(requestDataBase.updateUser(5, user));
+//        System.out.println(requestDataBase.deleteUser(5));
+//        user = requestDataBase.getUser(1);
+//        System.out.println(user.toString());
+//        LoginUI loginForm = new LoginUI();
+//        NewJFrame ns = new NewJFrame();
+//        ns.setLocationRelativeTo(null);
+//        ns.setVisible(true);
 //        
     }
 }

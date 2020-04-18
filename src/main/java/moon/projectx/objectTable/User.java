@@ -6,24 +6,27 @@
 package moon.projectx.objectTable;
 
 /**
- *
+ * Клас який поточно повторює дані з таблиці user з бази даних
  * @author user
  */
+
 public class User {
     
     private int     id;
     private String  name;
     private String  lastName;
     private int     type;
+    private String  login;
     private String  password;
 
     public User() {
     }
 
-    public User(String name, String lastName, int type, String password) {
+    public User(String name, String lastName, int type, String login, String password) {
         this.name = name;
         this.lastName = lastName;
         this.type = type;
+        this.login = login;
         this.password = password;
     }
 
@@ -59,6 +62,14 @@ public class User {
         this.type = type;
     }
 
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -69,8 +80,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "id=" + id + ", name=" + name + ", lastName=" + lastName + ", type=" + type + ", password=" + password + '}';
+        return "User{" + "id=" + id + ", name=" + name + ", lastName=" + lastName + ", type=" + type + ", login=" + login + ", password=" + password + '}';
     }
-    
-    
+      
 }

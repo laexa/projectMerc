@@ -34,33 +34,49 @@ public class RequestDataBase {
     public Boolean addUser(User user) {
     
         try {
-
-            if(statement.isClosed()){
-                statement = connection.createStatement();
-            }
-            request = "";
-            request = "insert maindb.user_table " 
-                    + "(maindb.user_table.name, maindb.user_table.lastName, maindb.user_table.type, maindb.user_table.password)"
-                    + " values ('" + user.getName() + "', '" + user.getLastName()+ "', " + user.getType()+ ", ' " + user.getPassword() + "');";
-            
-            if(!statement.execute(request)){
+                       
+           preparedStatement = connection.prepareStatement(""
+                + "insert maindb.user (maindb.user.name, maindb.user.lastName, maindb.user.type, maindb.user.login, maindb.user.password) "
+                + "values (?, ?, ?, ?, ?);");
                 
-                return true;
-            }
-            statement.close();
+           preparedStatement.setString(1, user.getName());
+           preparedStatement.setString(2, user.getLastName());
+           preparedStatement.setInt(3, user.getType());
+           preparedStatement.setString(4, user.getLogin());
+           preparedStatement.setString(5, user.getPassword());
+           preparedStatement.executeUpdate();
+           preparedStatement.close();
+                
+            return true; 
             
-            return false;
         } catch (Exception e) {
             System.err.println(e.getLocalizedMessage());
         }
         return false;
     }
     
-    //TODO : треба продумати реализацию обновления данных
-    public Boolean updateUser(){
-        //update maindb.user_table set maindb.user_table.name = 'capaMax' where maindb.user_table.id = 3;
+    public Boolean updateUser(int id, User user){
+        //update maindb.user set maindb.user.name = 'Max', maindb.user.lastName = 'Okal', maindb.user.type = 1, maindb.user.login = 'login', maindb.user.password = 'password' where  maindb.user.id = 2;
         try {
             
+            preparedStatement = connection.prepareStatement("update maindb.user set "
+                    + "maindb.user.name = ?, "
+                    + "maindb.user.lastName = ?, "
+                    + "maindb.user.type = ?, "
+                    + "maindb.user.login = ?, "
+                    + "maindb.user.password = ? "
+                    + "where  maindb.user.id = ?;");
+           
+           preparedStatement.setString(1, user.getName());
+           preparedStatement.setString(2, user.getLastName());
+           preparedStatement.setInt(3, user.getType());
+           preparedStatement.setString(4, user.getLogin());
+           preparedStatement.setString(5, user.getPassword());
+           preparedStatement.setInt(6, id);
+           preparedStatement.executeUpdate();
+           preparedStatement.close();
+                
+            return true; 
             
         } catch (Exception e) {
             System.err.println(e.getLocalizedMessage());
@@ -69,7 +85,6 @@ public class RequestDataBase {
         return false;
     }
     
-    //TODO :  треба зробити щоб юзер не смoгы удалить самого себе пид час роботи. Треба добавити перевирку
     public Boolean deleteUser(int id) {
         try {
             
@@ -77,7 +92,7 @@ public class RequestDataBase {
                 statement = connection.createStatement();
             }
             request = "";
-            request = "delete from maindb.user_table where maindb.user_table.id = " + id + " ;";
+            request = "delete from maindb.user where maindb.user.id = " +id +"";
         
             if(!statement.execute(request)){
                 return true;
