@@ -15,8 +15,17 @@ public class Customer {
     private String name;
     private String lastName;
     private int numberPhone;
-    private int discountCard;
-    private int percent;
+    private int discountCardId;
+
+    public Customer() {
+    }
+    
+    public Customer(String name, String lastName, int numberPhone, int discountCardId) {
+        this.name = name;
+        this.lastName = lastName;
+        this.numberPhone = numberPhone;
+        this.discountCardId = discountCardId;
+    }
 
     public int getId() {
         return id;
@@ -50,20 +59,17 @@ public class Customer {
         this.numberPhone = numberPhone;
     }
 
-    public int getDiscountCard() {
-        return discountCard;
+    public int getDiscountCardId() {
+        return discountCardId;
     }
 
-    public void setDiscountCard(int discountCard) {
-        this.discountCard = discountCard;
+    public void setDiscountCardId(int discountCardId) {
+        this.discountCardId = discountCardId;
     }
 
-    public int getPercent() {
-        return percent;
-    }
-
-    public void setPercent(int percent) {
-        this.percent = percent;
+    @Override
+    public String toString() {
+        return "Customer{" + "id=" + id + ", name=" + name + ", lastName=" + lastName + ", numberPhone=" + numberPhone + ", discountCardId=" + discountCardId + '}';
     }
     
 }
