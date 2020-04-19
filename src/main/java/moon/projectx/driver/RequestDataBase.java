@@ -5,6 +5,7 @@
  */
 package moon.projectx.driver;
 
+import java.util.ArrayList;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -294,30 +295,39 @@ public class RequestDataBase {
         return false;
     }
     
-    public void viewAllData() {
-        String SQL = "SELECT * FROM maindb.user_table;";
+    public ArrayList getAllUser() {
+        String SQL = "SELECT * FROM maindb.user;";
         
         try {
             statement = connection.createStatement();
             resultSet =  statement.executeQuery(SQL);
             
+            ArrayList<User> userList = new ArrayList<>();
+            User user = new User();
+            
             while(resultSet.next()){
-                int id = resultSet.getInt("ID_USER");
-                String userName = resultSet.getString("USER_NAME");
-                String userLastName = resultSet.getString("USER_LAST_NAME");
-                String userStatusName = resultSet.getString("USER_STATUS");
-                String userPassword = resultSet.getString("USER_PASSWORD");
+                user = new User();
                 
-                System.out.println("\n================\n");
-                System.out.println("id: " + id);
-                System.out.println("Name: " + userName);
-                System.out.println("userLastName: " + userLastName);
-                System.out.println("userStatus: $" + userStatusName);
-                System.out.println("passwor: $" + userPassword);
-            }                        
+                user.setId(resultSet.getInt(1));
+                user.setName(resultSet.getString(2));
+                user.setLastName(resultSet.getString(3));
+                user.setType(resultSet.getInt(4));
+                user.setLogin(resultSet.getString(5));
+                user.setPassword(resultSet.getString(6));
+                
+                userList.add(user);
+                
+                
+            }
+            
+            statement.close();
+            return userList;
+            
         } catch (Exception e) {
             System.err.println(e.getMessage());
         }              
+        
+        return null;
     }
     
 }

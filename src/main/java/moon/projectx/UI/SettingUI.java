@@ -46,7 +46,6 @@ public class SettingUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(410, 380));
         setMinimumSize(new java.awt.Dimension(410, 380));
-        setPreferredSize(new java.awt.Dimension(410, 380));
         setResizable(false);
 
         titleLabel.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

@@ -55,7 +55,6 @@ public class LoginUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(555, 350));
         setMinimumSize(new java.awt.Dimension(555, 350));
-        setPreferredSize(new java.awt.Dimension(555, 350));
         setResizable(false);
 
         EnterButton.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N

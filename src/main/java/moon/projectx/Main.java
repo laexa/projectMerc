@@ -15,6 +15,8 @@ import moon.projectx.objectTable.Customer;
 import moon.projectx.driver.RequestDataBase;
 import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.UI.LoginUI;
+import moon.projectx.UI.manager.CategoryManagerUI;
+import moon.projectx.UI.manager.UserManagerUI;
 
 
 
@@ -29,10 +31,14 @@ public class Main {
         
 //        Customer customer = new Customer("name", "lastName", 2222, 1111111);
 //        
-//        
+//        User user = new User("asasdsd", "asdsd", 0, "Asdsad", "asdasd");
 //        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
 //        connectionDataBase.connect();
 //        RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+//        for (int i = 0; i < 10; i++) {
+//            requestDataBase.addUser(user);    
+//        }
+        
 //        
 //        System.out.println(requestDataBase.getUserLogin("login"));
 //        System.out.println(requestDataBase.getUserPassword("password"));
@@ -47,8 +53,11 @@ public class Main {
 //        NewJFrame ns = new NewJFrame();
 //        ns.setLocationRelativeTo(null);
 //        ns.setVisible(true);
-        LoginUI logiWindow = new LoginUI();
-        logiWindow.setVisible(true);
-        
+//        LoginUI logiWindow = new LoginUI();
+//        logiWindow.setVisible(true);
+//        CategoryManagerUI categoryManagerUI = new CategoryManagerUI();
+//        categoryManagerUI.setVisible(true);
+        UserManagerUI userManagerUI = new UserManagerUI();
+        userManagerUI.setVisible(true);
     }
 }

@@ -10,6 +10,8 @@ package moon.projectx.objectTable;
  * @author user
  */
 
+import java.util.Arrays;
+
 public class User {
     
     private int     id;
@@ -30,6 +32,15 @@ public class User {
         this.password = password;
     }
 
+    public User(int id, String name, String lastName, int type, String login, String password) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+        this.type = type;
+        this.login = login;
+        this.password = password;
+    }
+    
     public int getId() {
         return id;
     }
@@ -77,7 +88,18 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    
+   public String[] getUserArray() {
+       String[] user = new String[6];
+       user[0] = String.valueOf(id);
+       user[1] = name;
+       user[2] = lastName;
+       user[3] = String.valueOf(type);
+       user[4] = login;
+       user[5] = password;
+       return user;
+   }
+    
     @Override
     public String toString() {
         return "User{" + "id=" + id + ", name=" + name + ", lastName=" + lastName + ", type=" + type + ", login=" + login + ", password=" + password + '}';
