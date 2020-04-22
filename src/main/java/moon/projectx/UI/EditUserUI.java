@@ -6,20 +6,39 @@
 package moon.projectx.UI;
 
 
+import javax.swing.JOptionPane;
+import moon.projectx.driver.ConnectionDataBase;
+import moon.projectx.driver.RequestDataBase;
 import moon.projectx.objectTable.User;
 /**
  *
  * @author user
  */
 public class EditUserUI extends javax.swing.JFrame {
+    
+    User user = new User();
+
 
     /**
      * Creates new form EditUserUI
      */
-    public EditUserUI(User user){
+    public EditUserUI(User user) {
         initComponents();
         buttonGroup1.add(userRadioButton);
         buttonGroup1.add(adminRadioButton);
+        
+        nameTextField.setText(user.getName());
+        lastNameTextField.setText(user.getLastName());
+        loginTextField.setText(user.getLogin());
+        passwordTextField.setText(user.getPassword());
+        
+        if(user.getType() == 0) {
+            adminRadioButton.setSelected(true);
+        } else if (user.getType() == 1) {
+            userRadioButton.setSelected(true);
+        }        
+        
+        this.user = user;
     }
     
     public EditUserUI() {
@@ -75,6 +94,11 @@ public class EditUserUI extends javax.swing.JFrame {
         jLabel6.setText("Тип користувача");
 
         addButton.setText("Зберегти");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
         exitButton.setText("Вийти");
         exitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -163,6 +187,27 @@ public class EditUserUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.dispose();
     }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here:
+        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
+        connectionDataBase.connect();
+        RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        int dataLogin = requestDataBase.getUserLogin(loginTextField.getText());
+        
+        user.setName(nameTextField.getText());
+        user.setLastName(lastNameTextField.getText());
+        user.setLogin(loginTextField.getText());
+        user.setPassword(passwordTextField.getText());
+        if(adminRadioButton.isSelected()){
+            user.setType(0);
+        } else user.setType(1);
+        
+        if(dataLogin == 0){
+        requestDataBase.updateUser(user.getId(), user);
+        this.dispose();
+        } else JOptionPane.showMessageDialog(null, "Таки логі існує");
+    }//GEN-LAST:event_addButtonActionPerformed
 
     /**
      * @param args the command line arguments

@@ -132,6 +132,7 @@ public class RequestDataBase {
            preparedStatement.setString(5, user.getPassword());
            preparedStatement.executeUpdate();
            
+           
            preparedStatement.close();
                 
             return true; 

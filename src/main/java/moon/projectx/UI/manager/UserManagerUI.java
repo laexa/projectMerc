@@ -6,11 +6,13 @@
 package moon.projectx.UI.manager;
 
 
+import javax.swing.JOptionPane;
 import moon.projectx.UI.TableModel.UserTableModel;
 import moon.projectx.UI.AddUserUI;
 import moon.projectx.UI.EditUserUI;
 import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.driver.RequestDataBase;
+import moon.projectx.objectTable.User;
 
 /**
  *
@@ -66,205 +68,6 @@ public class UserManagerUI extends javax.swing.JFrame {
 
         userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
@@ -365,7 +168,11 @@ public class UserManagerUI extends javax.swing.JFrame {
 
     private void deleteUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserButtonActionPerformed
         // TODO add your handling code here:
-        connectionDataBase = new ConnectionDataBase();
+        
+        if (userTable.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Виберіть користувача");
+        } else{
+            connectionDataBase = new ConnectionDataBase();
         connectionDataBase.connect();
         requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
         
@@ -379,6 +186,7 @@ public class UserManagerUI extends javax.swing.JFrame {
         userTable.setModel(userTableModel);
         userTableModel.refreshDate(requestDataBase.getAllUser());
         
+        }
     }//GEN-LAST:event_deleteUserButtonActionPerformed
 
     private void addUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserButtonActionPerformed
@@ -390,13 +198,37 @@ public class UserManagerUI extends javax.swing.JFrame {
 
     private void editUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserButtonActionPerformed
         // TODO add your handling code here:
-        
-        if (userTable.isFocusable()){
-            System.out.println("sdsdasdasd");
+       
+        if (userTable.getSelectedRow() == -1 ){
+            JOptionPane.showMessageDialog(null, "Виберіть користувача");
+        } else{
+           
+       
+            User user = new User();
+            Object tmp;
+            
+             tmp = userTable.getModel().getValueAt(userTable.getSelectedRow(), 0);
+            user.setId(Integer.valueOf(tmp.toString()));
+            
+            tmp = userTable.getModel().getValueAt(userTable.getSelectedRow(), 1);
+            user.setName(tmp.toString());
+            
+            tmp = userTable.getModel().getValueAt(userTable.getSelectedRow(), 2);
+            user.setLastName(tmp.toString());
+            
+            tmp = userTable.getModel().getValueAt(userTable.getSelectedRow(), 3);
+            user.setType(Integer.valueOf(tmp.toString()));
+            
+            tmp = userTable.getModel().getValueAt(userTable.getSelectedRow(), 4);
+            user.setLogin(tmp.toString());
+            
+            tmp = userTable.getModel().getValueAt(userTable.getSelectedRow(), 5);
+            user.setPassword(tmp.toString());
+           
+            EditUserUI editUserUI = new EditUserUI(user);
+            editUserUI.setVisible(rootPaneCheckingEnabled);
+            
         }
-        
-//        editUserUI.setVisible(rootPaneCheckingEnabled);
-        
     }//GEN-LAST:event_editUserButtonActionPerformed
 
     private void refreshUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshUserButtonActionPerformed

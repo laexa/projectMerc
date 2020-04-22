@@ -31,12 +31,13 @@ public class Main {
     public static void main(String[] args) {
         
 //        Customer customer = new Customer("name", "lastName", 2222, 1111111);
-//        
+////        
 //        User user = new User("asasdsd", "asdsd", 0, "Asdsad", "asdasd");
 //        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
 //        connectionDataBase.connect();
 //        RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
-//        for (int i = 0; i < 10; i++) {
+//        requestDataBase.updateUser(31, user);
+//        for (int i = 0; i < 1000; i++) {
 //            requestDataBase.addUser(user);    
 //        }
         
@@ -61,7 +62,7 @@ public class Main {
 
         UserManagerUI userManagerUI = new UserManagerUI();
         userManagerUI.setVisible(true);
-//        EditUserUI editUserUI = new EditUserUI();
+////        EditUserUI editUserUI = new EditUserUI();
 //        editUserUI.setVisible(true);
     
     }
