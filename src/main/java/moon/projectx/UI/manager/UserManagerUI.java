@@ -7,6 +7,8 @@ package moon.projectx.UI.manager;
 
 
 import moon.projectx.UI.TableModel.UserTableModel;
+import moon.projectx.UI.AddUserUI;
+import moon.projectx.UI.EditUserUI;
 import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.driver.RequestDataBase;
 
@@ -18,6 +20,8 @@ public class UserManagerUI extends javax.swing.JFrame {
     UserTableModel userTableModel;
     ConnectionDataBase connectionDataBase;
     RequestDataBase requestDataBase;
+    AddUserUI addUserUI = new AddUserUI();
+    EditUserUI editUserUI;
     
     /**
      * Creates new form UserManagerUI
@@ -29,8 +33,8 @@ public class UserManagerUI extends javax.swing.JFrame {
         requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
         
         userTableModel = new UserTableModel();
-        jTable1.setModel(userTableModel);
-        userTableModel.addDate(requestDataBase.getAllUser());
+        userTable.setModel(userTableModel);
+        userTableModel.refreshDate(requestDataBase.getAllUser());
         
         
         
@@ -47,11 +51,12 @@ public class UserManagerUI extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        userTable = new javax.swing.JTable();
+        addUserButton = new javax.swing.JButton();
+        editUserButton = new javax.swing.JButton();
+        deleteUserButton = new javax.swing.JButton();
+        exitButton = new javax.swing.JButton();
+        refreshUserButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -59,7 +64,7 @@ public class UserManagerUI extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Меню користувачів");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        userTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -266,15 +271,46 @@ public class UserManagerUI extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        userTable.setAutoscrolls(false);
+        userTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        userTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        userTable.setShowGrid(true);
+        jScrollPane1.setViewportView(userTable);
 
-        jButton1.setText("Добавити");
+        addUserButton.setText("Добавити");
+        addUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addUserButtonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Редагувати");
+        editUserButton.setText("Редагувати");
+        editUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editUserButtonActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Видалити");
+        deleteUserButton.setText("Видалити");
+        deleteUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteUserButtonActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Вихід");
+        exitButton.setText("Вихід");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
+
+        refreshUserButton.setText("Оновити");
+        refreshUserButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshUserButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -287,13 +323,15 @@ public class UserManagerUI extends javax.swing.JFrame {
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))))
+                            .addComponent(addUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(editUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                            .addComponent(deleteUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                            .addComponent(exitButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                            .addComponent(refreshUserButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -301,22 +339,76 @@ public class UserManagerUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(addUserButton)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                        .addComponent(editUserButton)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
+                        .addComponent(deleteUserButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(refreshUserButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4)))
-                .addContainerGap())
+                        .addComponent(exitButton)
+                        .addContainerGap())
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 446, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        // TODO add your handling code here:
+        this.dispose();
+    }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void deleteUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteUserButtonActionPerformed
+        // TODO add your handling code here:
+        connectionDataBase = new ConnectionDataBase();
+        connectionDataBase.connect();
+        requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        
+        Object tmp = userTable.getModel().getValueAt(userTable.getSelectedRow(), 0);
+        System.out.println(tmp.toString());
+        
+        requestDataBase.deleteUser(Integer.valueOf(tmp.toString()));
+        
+        
+        userTableModel = new UserTableModel();
+        userTable.setModel(userTableModel);
+        userTableModel.refreshDate(requestDataBase.getAllUser());
+        
+    }//GEN-LAST:event_deleteUserButtonActionPerformed
+
+    private void addUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserButtonActionPerformed
+        // TODO add your handling code here:
+        
+        addUserUI.setVisible(rootPaneCheckingEnabled);
+       
+    }//GEN-LAST:event_addUserButtonActionPerformed
+
+    private void editUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserButtonActionPerformed
+        // TODO add your handling code here:
+        
+        if (userTable.isFocusable()){
+            System.out.println("sdsdasdasd");
+        }
+        
+//        editUserUI.setVisible(rootPaneCheckingEnabled);
+        
+    }//GEN-LAST:event_editUserButtonActionPerformed
+
+    private void refreshUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshUserButtonActionPerformed
+        // TODO add your handling code here:
+        connectionDataBase = new ConnectionDataBase();
+        connectionDataBase.connect();
+        requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        
+        userTableModel = new UserTableModel();
+        userTable.setModel(userTableModel);
+        userTableModel.refreshDate(requestDataBase.getAllUser());
+    }//GEN-LAST:event_refreshUserButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -354,12 +446,13 @@ public class UserManagerUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
+    private javax.swing.JButton addUserButton;
+    private javax.swing.JButton deleteUserButton;
+    private javax.swing.JButton editUserButton;
+    private javax.swing.JButton exitButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton refreshUserButton;
+    private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
 }

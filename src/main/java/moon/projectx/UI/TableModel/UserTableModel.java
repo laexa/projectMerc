@@ -26,7 +26,7 @@ public class UserTableModel extends AbstractTableModel{
         }
     }
     
-    public void addDate(ArrayList<User> userRow) {
+    public void refreshDate(ArrayList<User> userRow) {
         String[] rowTable = new String[getColumnCount()];
         for (int i = 0; i < userRow.size(); i++) {
             rowTable = userRow.get(i).getUserArray();

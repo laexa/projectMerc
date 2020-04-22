@@ -17,6 +17,7 @@ import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.UI.LoginUI;
 import moon.projectx.UI.manager.CategoryManagerUI;
 import moon.projectx.UI.manager.UserManagerUI;
+import moon.projectx.UI.EditUserUI;
 
 
 
@@ -57,7 +58,11 @@ public class Main {
 //        logiWindow.setVisible(true);
 //        CategoryManagerUI categoryManagerUI = new CategoryManagerUI();
 //        categoryManagerUI.setVisible(true);
+
         UserManagerUI userManagerUI = new UserManagerUI();
         userManagerUI.setVisible(true);
+//        EditUserUI editUserUI = new EditUserUI();
+//        editUserUI.setVisible(true);
+    
     }
 }
