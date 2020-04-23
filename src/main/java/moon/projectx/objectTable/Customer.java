@@ -66,6 +66,17 @@ public class Customer {
     public void setDiscountCardId(int discountCardId) {
         this.discountCardId = discountCardId;
     }
+    
+    public String[] getCustomerArray() {
+        String[] customer = new String[5];
+        customer[0] = String.valueOf(id);
+        customer[1] = name;
+        customer[2] = lastName;
+        customer[3] = String.valueOf(numberPhone);
+        customer[4] = String.valueOf(discountCardId);
+                
+        return customer;        
+    }
 
     @Override
     public String toString() {

@@ -17,7 +17,8 @@ import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.UI.LoginUI;
 import moon.projectx.UI.manager.CategoryManagerUI;
 import moon.projectx.UI.manager.UserManagerUI;
-import moon.projectx.UI.EditUserUI;
+import moon.projectx.UI.UserUI.EditUserUI;
+import moon.projectx.UI.manager.CustomeManagerUI;
 
 
 
@@ -64,8 +65,10 @@ public class Main {
 //            requestDataBase.deleteUser(i);
 //        }
 
-        UserManagerUI userManagerUI = new UserManagerUI();
-        userManagerUI.setVisible(true);
+//        UserManagerUI userManagerUI = new UserManagerUI();
+//        userManagerUI.setVisible(true);
+
+        new CustomeManagerUI().setVisible(true);
         
 ////        EditUserUI editUserUI = new EditUserUI();
 //        editUserUI.setVisible(true);

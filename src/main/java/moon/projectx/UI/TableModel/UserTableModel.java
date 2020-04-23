@@ -48,8 +48,8 @@ public class UserTableModel extends AbstractTableModel{
     }
     
     @Override
-    public String getColumnName(int coumnIndex) {
-        switch(coumnIndex) {
+    public String getColumnName(int columnIndex) {
+        switch(columnIndex) {
             case 0: return "id";
             case 1: return "name";
             case 2: return "lastName";

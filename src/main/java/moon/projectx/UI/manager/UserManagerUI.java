@@ -8,8 +8,8 @@ package moon.projectx.UI.manager;
 
 import javax.swing.JOptionPane;
 import moon.projectx.UI.TableModel.UserTableModel;
-import moon.projectx.UI.AddUserUI;
-import moon.projectx.UI.EditUserUI;
+import moon.projectx.UI.UserUI.AddUserUI;
+import moon.projectx.UI.UserUI.EditUserUI;
 import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.driver.RequestDataBase;
 import moon.projectx.objectTable.User;
@@ -153,6 +153,7 @@ public class UserManagerUI extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed

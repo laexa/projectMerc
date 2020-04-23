@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -195,6 +196,41 @@ public class RequestDataBase {
         return false;
     }
     
+     public ArrayList getAllUser() {
+        String SQL = "SELECT * FROM maindb.user;";
+        
+        try {
+            statement = connection.createStatement();
+            resultSet =  statement.executeQuery(SQL);
+            
+            ArrayList<User> userList = new ArrayList<>();
+            User user = new User();
+            
+            while(resultSet.next()){
+                user = new User();
+                
+                user.setId(resultSet.getInt(1));
+                user.setName(resultSet.getString(2));
+                user.setLastName(resultSet.getString(3));
+                user.setType(resultSet.getInt(4));
+                user.setLogin(resultSet.getString(5));
+                user.setPassword(resultSet.getString(6));
+                
+                userList.add(user);
+                
+                
+            }
+            
+            statement.close();
+            return userList;
+            
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }              
+        
+        return null;
+    }
+    
     public Customer getCustomer(int id){
         
         Customer customer = new Customer();
@@ -296,33 +332,30 @@ public class RequestDataBase {
         return false;
     }
     
-    public ArrayList getAllUser() {
-        String SQL = "SELECT * FROM maindb.user;";
+    public ArrayList getAllCustomer() {
+        String SQL = "SELECT * FROM maindb.customer;";
         
         try {
             statement = connection.createStatement();
             resultSet =  statement.executeQuery(SQL);
             
-            ArrayList<User> userList = new ArrayList<>();
-            User user = new User();
+            ArrayList<Customer> customerList = new ArrayList<>();
+            Customer customer;
             
             while(resultSet.next()){
-                user = new User();
+                customer = new Customer();
                 
-                user.setId(resultSet.getInt(1));
-                user.setName(resultSet.getString(2));
-                user.setLastName(resultSet.getString(3));
-                user.setType(resultSet.getInt(4));
-                user.setLogin(resultSet.getString(5));
-                user.setPassword(resultSet.getString(6));
+                customer.setId(resultSet.getInt(1));
+                customer.setName(resultSet.getString(2));
+                customer.setLastName(resultSet.getString(3));
+                customer.setNumberPhone(resultSet.getInt(4));
+                customer.setDiscountCardId(resultSet.getInt(5));
                 
-                userList.add(user);
-                
-                
+                customerList.add(customer);
             }
             
             statement.close();
-            return userList;
+            return customerList;
             
         } catch (Exception e) {
             System.err.println(e.getMessage());
@@ -330,5 +363,5 @@ public class RequestDataBase {
         
         return null;
     }
-    
+   
 }
