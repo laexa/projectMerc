@@ -58,10 +58,14 @@ public class UserManagerUI extends javax.swing.JFrame {
         editUserButton = new javax.swing.JButton();
         deleteUserButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
-        refreshUserButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                focusWindowRefreshData(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Меню користувачів");
@@ -108,13 +112,6 @@ public class UserManagerUI extends javax.swing.JFrame {
             }
         });
 
-        refreshUserButton.setText("Оновити");
-        refreshUserButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                refreshUserButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,8 +130,7 @@ public class UserManagerUI extends javax.swing.JFrame {
                             .addComponent(addUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(editUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
                             .addComponent(deleteUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                            .addComponent(exitButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
-                            .addComponent(refreshUserButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))))
+                            .addComponent(exitButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -150,8 +146,6 @@ public class UserManagerUI extends javax.swing.JFrame {
                         .addComponent(editUserButton)
                         .addGap(18, 18, 18)
                         .addComponent(deleteUserButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(refreshUserButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(exitButton)
                         .addContainerGap())
@@ -191,9 +185,8 @@ public class UserManagerUI extends javax.swing.JFrame {
 
     private void addUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addUserButtonActionPerformed
         // TODO add your handling code here:
-        
         addUserUI.setVisible(rootPaneCheckingEnabled);
-       
+        
     }//GEN-LAST:event_addUserButtonActionPerformed
 
     private void editUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserButtonActionPerformed
@@ -217,7 +210,12 @@ public class UserManagerUI extends javax.swing.JFrame {
             user.setLastName(tmp.toString());
             
             tmp = userTable.getModel().getValueAt(userTable.getSelectedRow(), 3);
-            user.setType(Integer.valueOf(tmp.toString()));
+            user.setTypeString(tmp.toString());
+            if(tmp.toString() == "Адмін") {
+                user.setType(0);
+            } else{
+                user.setType(1);
+            }
             
             tmp = userTable.getModel().getValueAt(userTable.getSelectedRow(), 4);
             user.setLogin(tmp.toString());
@@ -231,8 +229,9 @@ public class UserManagerUI extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_editUserButtonActionPerformed
 
-    private void refreshUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshUserButtonActionPerformed
+    private void focusWindowRefreshData(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_focusWindowRefreshData
         // TODO add your handling code here:
+         
         connectionDataBase = new ConnectionDataBase();
         connectionDataBase.connect();
         requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
@@ -240,7 +239,8 @@ public class UserManagerUI extends javax.swing.JFrame {
         userTableModel = new UserTableModel();
         userTable.setModel(userTableModel);
         userTableModel.refreshDate(requestDataBase.getAllUser());
-    }//GEN-LAST:event_refreshUserButtonActionPerformed
+                 
+    }//GEN-LAST:event_focusWindowRefreshData
 
     /**
      * @param args the command line arguments
@@ -284,7 +284,6 @@ public class UserManagerUI extends javax.swing.JFrame {
     private javax.swing.JButton exitButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JButton refreshUserButton;
     private javax.swing.JTable userTable;
     // End of variables declaration//GEN-END:variables
 }

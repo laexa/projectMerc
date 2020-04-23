@@ -33,9 +33,9 @@ public class Main {
 //        Customer customer = new Customer("name", "lastName", 2222, 1111111);
 ////        
 //        User user = new User("asasdsd", "asdsd", 0, "Asdsad", "asdasd");
-//        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
-//        connectionDataBase.connect();
-//        RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
+        connectionDataBase.connect();
+        RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
 //        requestDataBase.updateUser(31, user);
 //        for (int i = 0; i < 1000; i++) {
 //            requestDataBase.addUser(user);    
@@ -59,9 +59,14 @@ public class Main {
 //        logiWindow.setVisible(true);
 //        CategoryManagerUI categoryManagerUI = new CategoryManagerUI();
 //        categoryManagerUI.setVisible(true);
+//
+//        for (int i = 1000; i < 1137; i++) {
+//            requestDataBase.deleteUser(i);
+//        }
 
         UserManagerUI userManagerUI = new UserManagerUI();
         userManagerUI.setVisible(true);
+        
 ////        EditUserUI editUserUI = new EditUserUI();
 //        editUserUI.setVisible(true);
     

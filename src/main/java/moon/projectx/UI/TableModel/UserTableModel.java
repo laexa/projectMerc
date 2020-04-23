@@ -28,6 +28,19 @@ public class UserTableModel extends AbstractTableModel{
     
     public void refreshDate(ArrayList<User> userRow) {
         String[] rowTable = new String[getColumnCount()];
+        User user = new User();
+        
+        for (int i = 0; i < userRow.size(); i++) {
+            user = userRow.get(i);
+            if(user.getType() == 0){
+                user.setTypeString("Адмін");
+            }
+            else user.setTypeString("Користувач");
+            userRow.remove(i);
+            userRow.add(i, user);
+            user = null;
+        }
+        
         for (int i = 0; i < userRow.size(); i++) {
             rowTable = userRow.get(i).getUserArray();
             dataArrayList.add(rowTable);

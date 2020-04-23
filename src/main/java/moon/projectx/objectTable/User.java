@@ -20,6 +20,7 @@ public class User {
     private int     type;
     private String  login;
     private String  password;
+    private String typeString;
 
     public User() {
     }
@@ -88,13 +89,22 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public String getTypeString() {
+        return typeString;
+    }
+
+    public void setTypeString(String typeString) {
+        this.typeString = typeString;
+    }
+    
     
    public String[] getUserArray() {
        String[] user = new String[6];
        user[0] = String.valueOf(id);
        user[1] = name;
        user[2] = lastName;
-       user[3] = String.valueOf(type);
+       user[3] = typeString;
        user[4] = login;
        user[5] = password;
        return user;
