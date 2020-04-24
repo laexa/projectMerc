@@ -9,6 +9,8 @@ package moon.projectx.objectTable;
  *
  * @author user
  */
+
+//to do: Треба переписати клас картами і добавити рядок з  процентами по карті
 public class DiscountCard {
     
     private int id;
