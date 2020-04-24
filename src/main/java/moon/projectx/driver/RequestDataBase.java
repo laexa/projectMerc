@@ -13,6 +13,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import moon.projectx.objectTable.User;
 import moon.projectx.objectTable.Customer;
+import moon.projectx.objectTable.DiscountCard;
         
 /**
  *
@@ -364,4 +365,65 @@ public class RequestDataBase {
         return null;
     }
    
+    public boolean addDiscountCard(DiscountCard discountCard) {
+        try {
+            
+           preparedStatement = connection.prepareStatement("insert maindb.discountcardid (maindb.discountcardid.name) values (?)");
+           preparedStatement.setString(1, discountCard.getName());
+           preparedStatement.executeUpdate();
+           
+           
+           preparedStatement.close();
+                
+            return true; 
+            
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        return false;
+    }
+    
+    public boolean updateDiscountCard(int id, DiscountCard discountCard){
+        
+        try {
+            
+            preparedStatement = connection.prepareStatement("update maindb.discountcardid set "
+                    + "maindb.discountcardid.name = ? "
+                    + "where maindb.discountcardid.id = ?");
+           
+           preparedStatement.setString(1, discountCard.getName());
+           preparedStatement.setInt(2, id);
+           preparedStatement.executeUpdate();
+           
+           preparedStatement.close();
+                
+            return true; 
+            
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        
+        return false;
+    }
+    
+    public boolean deleteDiscountCard(int id) {
+        try {
+            
+            if(statement.isClosed()){
+                statement = connection.createStatement();
+            }
+            request = "";
+            request = "delete from maindb.discountcardid where maindb.discountcardid.id	= " +id +"";
+        
+            if(!statement.execute(request)){
+                return true;
+            }
+            statement.close();
+            
+            return false;
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        return false;
+    }
 }

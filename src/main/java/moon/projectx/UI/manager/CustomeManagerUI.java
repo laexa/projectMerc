@@ -5,7 +5,9 @@
  */
 package moon.projectx.UI.manager;
 
+import javax.swing.JOptionPane;
 import moon.projectx.UI.TableModel.CustomerTableModel;
+import moon.projectx.UI.TableModel.UserTableModel;
 import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.driver.RequestDataBase;
 
@@ -161,6 +163,19 @@ public class CustomeManagerUI extends javax.swing.JFrame {
     private void deleteCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCustomerButtonActionPerformed
         // TODO add your handling code here:
         
+        if(customerTable.getSelectedRow() == -1){
+            JOptionPane.showMessageDialog(null, "Виберіть користувача");
+        }else {
+            connectionDataBase.connect();
+            requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+            
+            Object tmp = customerTable.getModel().getValueAt(customerTable.getSelectedRow(), 0);
+            requestDataBase.deleteCustomer(Integer.valueOf(tmp.toString()));
+            
+            customerTableModel = new CustomerTableModel();
+            customerTable.setModel(customerTableModel);
+            customerTableModel.refreshData(requestDataBase.getAllCustomer());
+        }
     }//GEN-LAST:event_deleteCustomerButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
