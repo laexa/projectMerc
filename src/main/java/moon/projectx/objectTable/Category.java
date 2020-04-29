@@ -9,21 +9,17 @@ package moon.projectx.objectTable;
  *
  * @author user
  */
-
-//to do: Треба переписати клас картами і добавити рядок з  процентами по карті
-public class DiscountCard {
+public class Category {
     
     private int id;
     private String name;
-    private int percent;
 
-    public DiscountCard() {
+    public Category() {
     }
 
-    public DiscountCard(int id, String name, int percent) {
+    public Category(int id, String name) {
         this.id = id;
         this.name = name;
-        this.percent = percent;
     }
 
     public int getId() {
@@ -42,17 +38,9 @@ public class DiscountCard {
         this.name = name;
     }
 
-    public int getPercent() {
-        return percent;
-    }
-
-    public void setPercent(int percent) {
-        this.percent = percent;
-    }
-
     @Override
     public String toString() {
-        return "DiscountCard{" + "id=" + id + ", name=" + name + ", percent=" + percent + '}';
+        return "Category{" + "id=" + id + ", name=" + name + '}';
     }
-   
+    
 }

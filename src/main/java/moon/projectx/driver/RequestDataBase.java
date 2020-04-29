@@ -14,6 +14,8 @@ import java.sql.ResultSet;
 import moon.projectx.objectTable.User;
 import moon.projectx.objectTable.Customer;
 import moon.projectx.objectTable.DiscountCard;
+import moon.projectx.objectTable.Category;
+import moon.projectx.objectTable.Merch;
         
 /**
  *
@@ -368,15 +370,13 @@ public class RequestDataBase {
     public boolean addDiscountCard(DiscountCard discountCard) {
         try {
             
-           preparedStatement = connection.prepareStatement("insert maindb.discountcardid (maindb.discountcardid.name) values (?)");
-           preparedStatement.setString(1, discountCard.getName());
-           preparedStatement.executeUpdate();
-           
-           
-           preparedStatement.close();
+            preparedStatement = connection.prepareStatement("insert maindb.discountcardid (maindb.discountcardid.name, maindb.discountcardid.percent) values (?, ?);");
+            preparedStatement.setString(1, discountCard.getName());
+            preparedStatement.setInt(2, discountCard.getPercent());
+            preparedStatement.executeUpdate();                      
+            preparedStatement.close();
                 
-            return true; 
-            
+            return true;             
         } catch (Exception e) {
             System.err.println(e.getLocalizedMessage());
         }
@@ -387,12 +387,14 @@ public class RequestDataBase {
         
         try {
             
-            preparedStatement = connection.prepareStatement("update maindb.discountcardid set "
-                    + "maindb.discountcardid.name = ? "
-                    + "where maindb.discountcardid.id = ?");
+            preparedStatement = connection.prepareStatement("update maindb.discountcardid "
+                                                            + "set maindb.discountcardid.name= ?, "
+                                                            + "maindb.discountcardid.percent = ? "
+                                                            + "where maindb.discountcardid.id = ?;");
            
            preparedStatement.setString(1, discountCard.getName());
-           preparedStatement.setInt(2, id);
+           preparedStatement.setInt(2, discountCard.getPercent());
+           preparedStatement.setInt(3, id);
            preparedStatement.executeUpdate();
            
            preparedStatement.close();
@@ -425,5 +427,194 @@ public class RequestDataBase {
             System.err.println(e.getLocalizedMessage());
         }
         return false;
+    }
+    
+    public ArrayList getAllDiscountCard(){
+       String SQL = "SELECT * FROM maindb.discountcardid;";
+        
+        try {
+            statement = connection.createStatement();
+            resultSet =  statement.executeQuery(SQL);
+            
+            ArrayList<DiscountCard> discountCardList = new ArrayList<>();
+            DiscountCard discountCard;
+            
+            while(resultSet.next()){
+                discountCard = new DiscountCard();
+                
+                discountCard.setId(resultSet.getInt(1));
+                discountCard.setName(resultSet.getString(2));
+                discountCard.setPercent(resultSet.getInt(3));
+                discountCardList.add(discountCard);
+            }
+            
+            statement.close();
+            return discountCardList;
+            
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }              
+        
+        return null;   
+    }
+    
+    public boolean addCategory(Category category){
+        try {
+            
+            preparedStatement = connection.prepareStatement("insert maindb.category (maindb.category.name) values (?);");
+            preparedStatement.setString(1, category.getName());
+            preparedStatement.executeUpdate();            
+            preparedStatement.close();
+            
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }        
+        return false;
+    }
+    
+    public boolean updaCategory(int id, Category category){
+        try {
+            preparedStatement = connection.prepareCall("update maindb.category set maindb.category.name = ? "
+                                                        + "where maindb.category.id = ?");
+            preparedStatement.setString(id, category.getName());
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        return false;
+    }
+    
+    public boolean delete(int id){
+        try {
+            preparedStatement = connection.prepareStatement("delete from maindb.category where maindb.category.id = ?;");
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        return false;
+    }
+    
+    public ArrayList getAllCategory(){
+        String SQL = "select * from maindb.category;";
+        
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Category> categoryList = new ArrayList<>();
+            Category category;
+            
+            while(resultSet.next()){
+                category = new Category();
+                category.setId(resultSet.getInt(1));
+                category.setName(resultSet.getString(2));
+                categoryList.add(category);
+            }
+            
+            statement.close();
+            return categoryList;
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        return null;
+    }
+    
+    public boolean addMerch(Merch merch){
+        try {
+            preparedStatement = connection.prepareStatement("insert maindb.merch (maindb.merch.name, maindb.merch.desc, maindb.merch.categoryId, maindb.merch.price, maindb.merch.count, maindb.merch.percent )"
+                    + "values (?, ?, ?, ?, ?, ?);");
+            preparedStatement.setString(1, merch.getName());
+            preparedStatement.setString(2, merch.getDesc());
+            preparedStatement.setInt(3, merch.getCategoryId());
+            preparedStatement.setInt(4, merch.getPrice());
+            preparedStatement.setInt(5, merch.getCount());
+            preparedStatement.setInt(6, merch.getPercent());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        return false;
+    }
+    
+    public boolean updateMerch(int id, Merch merch){
+        try {
+            preparedStatement = connection.prepareStatement("update maindb.merch set "
+                    + "maindb.merch.name = ?, "
+                    + "maindb.merch.desc = ?, "
+                    + "maindb.merch.categoryId = ?, "
+                    + "maindb.merch.price = ?, "
+                    + "maindb.merch.count = ?, "
+                    + "maindb.merch.percent = ? "
+                    + "where maindb.merch.id = ?;");
+            preparedStatement.setString(1, merch.getName());
+            preparedStatement.setString(2, merch.getDesc());
+            preparedStatement.setInt(3, merch.getCategoryId());
+            preparedStatement.setInt(4, merch.getPrice());
+            preparedStatement.setInt(5, merch.getCount());
+            preparedStatement.setInt(6, merch.getPercent());
+            preparedStatement.setInt(7, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        return false;
+    }
+    
+    public boolean deleteMerch(int id){
+        try {
+            preparedStatement = connection.prepareStatement("delete from maindb.merch where maindb.merch.id = ?;");
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        return false;
+    }
+    
+    public ArrayList getAllMerch(){
+        String SQL = "select maindb.merch.id, maindb.merch.name, maindb.merch.desc, maindb.merch.categoryId, maindb.category.name, maindb.merch.price, maindb.merch.count, maindb.merch.percent from maindb.merch  inner join maindb.category On maindb.merch.categoryId = maindb.category.id;";
+        
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Merch> merchList = new ArrayList<>();
+            Merch merch;
+            
+            while(resultSet.next()){
+                merch = new Merch();
+                merch.setId(resultSet.getInt(1));
+                merch.setName(resultSet.getString(2));
+                merch.setDesc(resultSet.getString(3));
+                merch.setCategoryId(resultSet.getInt(4));
+                merch.setCategory(resultSet.getString(5));
+                merch.setPrice(resultSet.getInt(6));
+                merch.setCount(resultSet.getInt(7));
+                merch.setPercent(resultSet.getInt(8));
+                merchList.add(merch);
+            }
+            statement.close();
+            return merchList;
+            
+        } catch (Exception e) {
+        }
+        return null;
     }
 }
