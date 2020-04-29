@@ -10,8 +10,10 @@ package moon.projectx;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import com.mysql.cj.jdbc.Driver;
+import java.sql.Date;
 import moon.projectx.objectTable.User;
 import moon.projectx.objectTable.Customer;
+import moon.projectx.objectTable.Statistics;
 import moon.projectx.driver.RequestDataBase;
 import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.UI.LoginUI;
@@ -33,10 +35,19 @@ public class Main {
         
 //        Customer customer = new Customer("name", "lastName", 2222, 1111111);
 ////        
-//        User user = new User("asasdsd", "asdsd", 0, "Asdsad", "asdasd");
+////        User user = new User("asasdsd", "asdsd", 0, "Asdsad", "asdasd");
         ConnectionDataBase connectionDataBase = new ConnectionDataBase();
         connectionDataBase.connect();
         RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        Statistics statistics = new Statistics(0, "someText", 0, 0, 0);
+        System.out.println(requestDataBase.addStat(statistics));
+//        java.util.Date utilDate = new java.util.Date();
+//        java.sql.Date sqlDate = convert(utilDate);
+//        System.out.println(utilDate.toString());
+//        System.out.println(sqlDate.toString());
+//        
+        
+        
 //        requestDataBase.updateUser(31, user);
 //        for (int i = 0; i < 1000; i++) {
 //            requestDataBase.addUser(user);    
@@ -68,10 +79,15 @@ public class Main {
 //        UserManagerUI userManagerUI = new UserManagerUI();
 //        userManagerUI.setVisible(true);
 
-        new CustomeManagerUI().setVisible(true);
-        
+//        new CustomeManagerUI().setVisible(true);
+//        
 ////        EditUserUI editUserUI = new EditUserUI();
 //        editUserUI.setVisible(true);
     
+    }
+    
+    private static java.sql.Date convert(java.util.Date uDate){
+        java.sql.Date sDate = (java.sql.Date) new java.util.Date(uDate.getTime());
+        return sDate;
     }
 }

@@ -7,61 +7,51 @@ package moon.projectx.UI.TableModel;
 
 import javax.swing.table.AbstractTableModel;
 import java.util.ArrayList;
-import moon.projectx.objectTable.User;
-
+import moon.projectx.objectTable.Merch;
 /**
  *
  * @author user
  */
-public class UserTableModel extends AbstractTableModel{
+public class MerchTableModel extends AbstractTableModel{
     
-    private int columnCount = 6;
+    private int columnCount  = 7;
     private ArrayList<String []> dataArrayList;
 
-    public UserTableModel() {
+    public MerchTableModel() {
         dataArrayList = new ArrayList<String []>();
         for (int i = 0; i < dataArrayList.size(); i++) {
             dataArrayList.add(new String[getColumnCount()]);
         }
     }
     
-    public void refreshData(ArrayList<User> userRow) {
+    public void refreshData(ArrayList<Merch> merchRow){
         String[] rowTable = new String[getColumnCount()];
-        User user = new User();
+        Merch merch = new Merch();
         
-        for (int i = 0; i < userRow.size(); i++) {
-            user = userRow.get(i);
-            if(user.getType() == 0){
-                user.setTypeString("Адмін");
-            }
-            else user.setTypeString("Користувач");
-            userRow.remove(i);
-            userRow.add(i, user);
-            user = null;
-        }
-        
-        for (int i = 0; i < userRow.size(); i++) {
-            rowTable = userRow.get(i).getUserArray();
+        for (int i = 0; i < merchRow.size(); i++) {
+            rowTable = merchRow.get(i).getMerchArray();
             dataArrayList.add(rowTable);
+            
         }
     }
     
     @Override
-    public String getColumnName(int columnIndex) {
-        switch(columnIndex) {
+    public String getColumnName(int columnIndex){
+        switch(columnIndex){
             case 0: return "id";
             case 1: return "name";
-            case 2: return "lastName";
-            case 3: return "type";
-            case 4: return "login";
-            case 5: return "password";
+            case 2: return "desc";
+            case 3: return "category";
+            case 4: return "price";
+            case 5: return "count";
+            case 6: return "percent";            
         }
         return "";
     }
     
     @Override
     public int getRowCount() {
-        return  dataArrayList.size();
+        return dataArrayList.size();
     }
 
     @Override

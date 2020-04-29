@@ -5,34 +5,34 @@
  */
 package moon.projectx.objectTable;
 
+import java.sql.Date;
+
 /**
  *
  * @author user
  */
-public class Merch {
+public class Statistics {
+    
     private int id;
-    private String name;
-    private String desc;
+    private String name;    
     private String category;
     private int categoryId;
     private int price;
     private int count;
-    private int percent;
+    private Date date;
 
-    public Merch() {
+    public Statistics() {
+        
     }
 
-    public Merch(int id, String name, String desc, String category, int categoryId, int price, int count, int percent) {
+    public Statistics(int id, String name, int categoryId, int price, int count) {
         this.id = id;
         this.name = name;
-        this.desc = desc;
-        this.category = category;
         this.categoryId = categoryId;
         this.price = price;
         this.count = count;
-        this.percent = percent;
     }
-
+    
     public int getId() {
         return id;
     }
@@ -47,14 +47,6 @@ public class Merch {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
     }
 
     public String getCategory() {
@@ -89,29 +81,29 @@ public class Merch {
         this.count = count;
     }
 
-    public int getPercent() {
-        return percent;
+    public Date getDate() {
+        return date;
     }
 
-    public void setPercent(int percent) {
-        this.percent = percent;
+    public void setDate(Date date) {
+        this.date = date;
     }
     
-    public String[] getMerchArray(){
-        String[] merch = new String[7];
-        merch[0] = String.valueOf(id);
-        merch[1] = name;
-        merch[2] = desc;
-        merch[3] = category;
-        merch[4] = String.valueOf(price);
-        merch[5] = String.valueOf(count);
-        merch[6] = String.valueOf(percent); 
-        return merch;
+    public String[] getStatArray() {
+        String[] stat = new String[6];
+        stat[0] = String.valueOf(id);
+        stat[1] = name;
+        stat[2] = category;
+        stat[3] = String.valueOf(count);
+        stat[4] = String.valueOf(price);
+        stat[5] = date.toString();
+        return stat;
     }
-    
+
     @Override
     public String toString() {
-        return "Merch{" + "id=" + id + ", name=" + name + ", desc=" + desc + ", category=" + category + ", categoryId=" + categoryId + ", price=" + price + ", count=" + count + ", percent=" + percent + '}';
+        return "Statistics{" + "id=" + id + ", name=" + name + ", category=" + category + ", categoryId=" + categoryId + ", price=" + price + ", count=" + count + ", date=" + date + '}';
     }
+    
     
 }

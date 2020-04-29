@@ -36,7 +36,7 @@ public class UserManagerUI extends javax.swing.JFrame {
         
         userTableModel = new UserTableModel();
         userTable.setModel(userTableModel);
-        userTableModel.refreshDate(requestDataBase.getAllUser());
+        userTableModel.refreshData(requestDataBase.getAllUser());
         
         
         
@@ -179,7 +179,7 @@ public class UserManagerUI extends javax.swing.JFrame {
         
         userTableModel = new UserTableModel();
         userTable.setModel(userTableModel);
-        userTableModel.refreshDate(requestDataBase.getAllUser());
+        userTableModel.refreshData(requestDataBase.getAllUser());
         
         }
     }//GEN-LAST:event_deleteUserButtonActionPerformed
@@ -239,7 +239,7 @@ public class UserManagerUI extends javax.swing.JFrame {
         
         userTableModel = new UserTableModel();
         userTable.setModel(userTableModel);
-        userTableModel.refreshDate(requestDataBase.getAllUser());
+        userTableModel.refreshData(requestDataBase.getAllUser());
                  
     }//GEN-LAST:event_focusWindowRefreshData
 

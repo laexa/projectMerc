@@ -49,7 +49,15 @@ public class DiscountCard {
     public void setPercent(int percent) {
         this.percent = percent;
     }
-
+    
+    public String[] getDiscountCardArray(){
+        String[] discountCard = new String[3];
+        discountCard[0] = String.valueOf(id);
+        discountCard[1] = name;
+        discountCard[2] = String.valueOf(percent);
+        
+        return discountCard;
+    }
     @Override
     public String toString() {
         return "DiscountCard{" + "id=" + id + ", name=" + name + ", percent=" + percent + '}';

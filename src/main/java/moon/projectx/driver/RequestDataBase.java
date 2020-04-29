@@ -16,6 +16,7 @@ import moon.projectx.objectTable.Customer;
 import moon.projectx.objectTable.DiscountCard;
 import moon.projectx.objectTable.Category;
 import moon.projectx.objectTable.Merch;
+import moon.projectx.objectTable.Statistics;
         
 /**
  *
@@ -613,6 +614,106 @@ public class RequestDataBase {
             statement.close();
             return merchList;
             
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public boolean addStat(Statistics stat){
+        try {
+            preparedStatement = connection.prepareStatement("insert maindb.stat "
+                    + "(maindb.stat.nameMerch, "
+                    + "maindb.stat.categoryId, "
+                    + "maindb.stat.price, "
+                    + "maindb.stat.count, "
+                    + "maindb.stat.date) values "
+                    + "(?, ?, ?, ?, now());");
+            preparedStatement.setString(1, stat.getName());
+            preparedStatement.setInt(2, stat.getCategoryId());
+            preparedStatement.setInt(3, stat.getPrice());
+            preparedStatement.setInt(4, stat.getCount());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            
+            
+            return true;
+        } catch (Exception e) {
+            System.err.println("");
+        }
+        return false;
+    }
+    
+    public boolean updateStat(int id, Statistics stat){
+        try {
+            preparedStatement = connection.prepareStatement("update maindb.stat set "
+                    + "maindb.stat.nameMerch = ?, "
+                    + "maindb.stat.categoryId = ?, "
+                    + "maindb.stat.price = ?, "
+                    + "maindb.stat.count = ?, "
+                    + "maindb.stat.date = now()"
+                    + "where maindb.stat.id = ?;");
+            preparedStatement.setString(1, stat.getName());
+            preparedStatement.setInt(2, stat.getCategoryId());
+            preparedStatement.setInt(3, stat.getPrice());
+            preparedStatement.setInt(4, stat.getCount());
+            preparedStatement.setInt(5, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            return true;
+            
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        return false;
+    }
+    
+    public boolean deleteStat(int id){
+        try {
+            preparedStatement = connection.prepareStatement("delete from maindb.stat where maindb.stat.id = ?;");
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        return false;
+    }
+    
+    public ArrayList getAllStat(){
+        String SQL = "select "
+                + "maindb.stat.id, "
+                + "maindb.stat.nameMerch, "
+                + "maindb.stat.categoryId, "
+                + "maindb.category.name, "
+                + "maindb.stat.price, "
+                + "maindb.stat.count, "
+                + "maindb.stat.date "
+                + "from maindb.stat inner join maindb.category on maindb.stat.categoryId = maindb.category.id;";
+ 
+        
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Statistics> statList = new ArrayList<>();
+            Statistics stat;
+            
+            while (resultSet.next()) {
+                stat = new Statistics();
+                stat.setId(resultSet.getInt(1));
+                stat.setName(resultSet.getString(2));
+                stat.setCategoryId(resultSet.getInt(3));
+                stat.setCategory(resultSet.getString(4));
+                stat.setPrice(resultSet.getInt(5));
+                stat.setCount(resultSet.getInt(6));
+                stat.setDate(resultSet.getDate(7));
+                
+                statList.add(stat);
+                
+            }
+            statement.close();
+            return statList;
         } catch (Exception e) {
         }
         return null;

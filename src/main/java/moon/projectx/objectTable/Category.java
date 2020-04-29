@@ -37,7 +37,15 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
-
+    
+    public String[] getCategoryArray(){
+        String[] category = new String[2];
+        category[0] = String.valueOf(id);
+        category[1] = name;
+        
+        return category;
+    }
+    
     @Override
     public String toString() {
         return "Category{" + "id=" + id + ", name=" + name + '}';
