@@ -36,11 +36,16 @@ public class Main {
 //        Customer customer = new Customer("name", "lastName", 2222, 1111111);
 ////        
 ////        User user = new User("asasdsd", "asdsd", 0, "Asdsad", "asdasd");
-        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
-        connectionDataBase.connect();
-        RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
-        Statistics statistics = new Statistics(0, "someText", 0, 0, 0);
-        System.out.println(requestDataBase.addStat(statistics));
+//        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
+//        System.out.println("");
+//        System.out.println(connectionDataBase.connect());
+        new LoginUI().setVisible(true);
+        
+       
+        
+//        RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+//        Statistics statistics = new Statistics(0, "someText", 0, 0, 0);
+//        System.out.println(requestDataBase.addStat(statistics));
 //        java.util.Date utilDate = new java.util.Date();
 //        java.sql.Date sqlDate = convert(utilDate);
 //        System.out.println(utilDate.toString());
@@ -86,8 +91,4 @@ public class Main {
     
     }
     
-    private static java.sql.Date convert(java.util.Date uDate){
-        java.sql.Date sDate = (java.sql.Date) new java.util.Date(uDate.getTime());
-        return sDate;
-    }
-}
+  }

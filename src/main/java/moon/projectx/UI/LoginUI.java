@@ -32,6 +32,7 @@ public class LoginUI extends javax.swing.JFrame {
      */
     public LoginUI() {
         initComponents();
+        
     }
 
     /**

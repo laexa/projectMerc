@@ -10,11 +10,20 @@ package moon.projectx;
  * @author user
  */
 public class SettingAndUser {
+    
     public static class Setting{
         
+    public static String URL              = "jdbc:mysql://";
+    public static String USERNAME         = "root";
+    public static String PASSWORD         = "12345678";
+    public static String IPADDRESS        = "localhost";
+    public static String PORT             = "3306";
+    public static String NAMEDATABASE     = "maindb";
+    public static String TIMEZONESETTING  = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+       
     }
     
     public static class User{
-    
+        
     }
 }

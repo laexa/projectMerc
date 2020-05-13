@@ -6,6 +6,7 @@
 package moon.projectx.UI;
 
 import javax.swing.JFrame;
+import moon.projectx.SettingAndUser;
 
 /**
  *
@@ -18,7 +19,12 @@ public class SettingUI extends javax.swing.JFrame {
      */
     public SettingUI() {
         initComponents();
-    }
+        userNameTextField.setText(SettingAndUser.Setting.USERNAME);
+        passwordTextField.setText(SettingAndUser.Setting.PASSWORD);
+        ipaddressTextField.setText(SettingAndUser.Setting.IPADDRESS);
+        portTextField.setText(SettingAndUser.Setting.PORT);
+        nameDataBaseTextField.setText(SettingAndUser.Setting.NAMEDATABASE);
+        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -61,6 +67,11 @@ public class SettingUI extends javax.swing.JFrame {
 
         saveButton.setText("Зберегти");
         saveButton.setPreferredSize(new java.awt.Dimension(110, 30));
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("PASSWORD");
@@ -173,40 +184,15 @@ public class SettingUI extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_exitButtonActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SettingUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SettingUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SettingUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SettingUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SettingUI().setVisible(true);
-            }
-        });
-    }
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        // TODO add your handling code here:
+        SettingAndUser.Setting.USERNAME = userNameTextField.getText();
+        SettingAndUser.Setting.PASSWORD = passwordTextField.getText();
+        SettingAndUser.Setting.IPADDRESS = ipaddressTextField.getText();
+        SettingAndUser.Setting.PORT = portTextField.getText();
+        SettingAndUser.Setting.NAMEDATABASE = nameDataBaseTextField.getText();
+        this.dispose();
+    }//GEN-LAST:event_saveButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton exitButton;

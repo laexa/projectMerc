@@ -11,6 +11,7 @@ import java.sql.Statement;
 import com.mysql.cj.jdbc.Driver;
 import java.sql.ResultSet;
 import moon.projectx.objectTable.User;
+import moon.projectx.SettingAndUser;
 
 
 /**  
@@ -21,13 +22,13 @@ import moon.projectx.objectTable.User;
 
 public class ConnectionDataBase {
     
-    private String URL              = "jdbc:mysql://";
-    private String USERNAME         = "root";
-    private String PASSWORD         = "root";
-    private String IPADDRESS        = "localhost";
-    private String PORT             = "3306";
-    private String NAMEDATABASE     = "maindb";
-    private String TIMEZONESETTING  = "?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private String URL              = SettingAndUser.Setting.URL;
+    private String USERNAME         = SettingAndUser.Setting.USERNAME;
+    private String PASSWORD         = SettingAndUser.Setting.PASSWORD;
+    private String IPADDRESS        = SettingAndUser.Setting.IPADDRESS;
+    private String PORT             = SettingAndUser.Setting.PORT;
+    private String NAMEDATABASE     = SettingAndUser.Setting.NAMEDATABASE;
+    private String TIMEZONESETTING  = SettingAndUser.Setting.TIMEZONESETTING;
     
     private Statement statement;
     private Connection connection;
