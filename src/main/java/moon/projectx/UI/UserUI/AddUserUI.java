@@ -27,6 +27,7 @@ public class AddUserUI extends javax.swing.JFrame {
         initComponents();
         buttonGroup1.add(userRadioButton);
         buttonGroup1.add(adminRadioButton);
+        userRadioButton.setSelected(true);
         
         connectionDataBase.connect();
         requestDataBase = new RequestDataBase(connectionDataBase.getConnection());

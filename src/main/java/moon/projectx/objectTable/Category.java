@@ -8,7 +8,7 @@ package moon.projectx.objectTable;
 /**
  *
  * @author user
- */
+ */ 
 public class Category {
     
     private int id;

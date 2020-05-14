@@ -40,6 +40,7 @@ public class Main {
 //        System.out.println("");
 //        System.out.println(connectionDataBase.connect());
         new LoginUI().setVisible(true);
+//        new UserManagerUI().setVisible(true);
         
        
         

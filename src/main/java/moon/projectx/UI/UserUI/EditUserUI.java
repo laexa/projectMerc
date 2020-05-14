@@ -6,6 +6,7 @@
 package moon.projectx.UI.UserUI;
 
 
+import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.driver.RequestDataBase;
@@ -15,14 +16,15 @@ import moon.projectx.objectTable.User;
  * @author user
  */
 public class EditUserUI extends javax.swing.JFrame {
-    
+    private static EditUserUI instance;
     User user = new User();
-
-
-    /**
-     * Creates new form EditUserUI
-     */
-    public EditUserUI(User user) {
+    
+    public EditUserUI(){
+        
+    }
+    
+    public EditUserUI(User user){
+        this.user = user;
         initComponents();
         buttonGroup1.add(userRadioButton);
         buttonGroup1.add(adminRadioButton);
@@ -37,17 +39,11 @@ public class EditUserUI extends javax.swing.JFrame {
         } else if (user.getType() == 1) {
             userRadioButton.setSelected(true);
         }        
-        
-        this.user = user;
+        this.user = null;
+        user = null;
     }
     
-    public EditUserUI() {
-        initComponents();
-        buttonGroup1.add(userRadioButton);
-        buttonGroup1.add(adminRadioButton);
-        
-    }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -185,7 +181,8 @@ public class EditUserUI extends javax.swing.JFrame {
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         // TODO add your handling code here:
-        this.dispose();
+        processWindowEvent(new WindowEvent(this,WindowEvent.WINDOW_CLOSING));
+        
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
@@ -208,42 +205,26 @@ public class EditUserUI extends javax.swing.JFrame {
         this.dispose();
         } else JOptionPane.showMessageDialog(null, "Таки логі існує");
     }//GEN-LAST:event_addButtonActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(EditUserUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(EditUserUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(EditUserUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(EditUserUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new EditUserUI().setVisible(true);
-            }
-        });
+    
+    public void sendUser(User user) {
+        this.user = user;
+        initComponents();
+        buttonGroup1.add(userRadioButton);
+        buttonGroup1.add(adminRadioButton);
+        
+        nameTextField.setText(user.getName());
+        lastNameTextField.setText(user.getLastName());
+        loginTextField.setText(user.getLogin());
+        passwordTextField.setText(user.getPassword());
+        
+        if(user.getType() == 0) {
+            adminRadioButton.setSelected(true);
+        } else if (user.getType() == 1) {
+            userRadioButton.setSelected(true);
+        }        
+        this.user = null;
+        user = null;
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JRadioButton adminRadioButton;
