@@ -5,17 +5,36 @@
  */
 package moon.projectx.UI.manager;
 
+import javax.swing.JOptionPane;
+import moon.projectx.UI.AddAndEditUI.AddDiscountCardUI;
+
+import moon.projectx.driver.ConnectionDataBase;
+import moon.projectx.driver.RequestDataBase;
+import moon.projectx.UI.TableModel.DiscountCardTableModel;
+import moon.projectx.UI.AddAndEditUI.EditDiscountCardUI;
+import moon.projectx.objectTable.DiscountCard;
 /**
  *
  * @author user
  */
 public class DiscountCardManagerUI extends javax.swing.JFrame {
-
+    DiscountCardTableModel discountCardTableModel;
+    AddDiscountCardUI addDiscountCardUI = new AddDiscountCardUI();
+    EditDiscountCardUI editDiscountCardUI = new EditDiscountCardUI();
+    ConnectionDataBase connectionDataBase;
+    RequestDataBase requestDataBase;
     /**
      * Creates new form DiscountCardManagerUI
      */
     public DiscountCardManagerUI() {
         initComponents();
+        connectionDataBase = new ConnectionDataBase();
+        connectionDataBase.connect();
+        requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        
+        discountCardTableModel = new DiscountCardTableModel();
+        discountCardTable.setModel(discountCardTableModel);
+        discountCardTableModel.refreshData(requestDataBase.getAllDiscountCard());
     }
 
     /**
@@ -27,57 +46,174 @@ public class DiscountCardManagerUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        jScrollPane1 = new javax.swing.JScrollPane();
+        discountCardTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        addButton = new javax.swing.JButton();
+        editButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
+        exitButton = new javax.swing.JButton();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                DiscountCardManagerUI.this.windowActivated(evt);
+            }
+        });
+
+        discountCardTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null},
+                {null, null, null},
+                {null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3"
+            }
+        ));
+        discountCardTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(discountCardTable);
+
+        jLabel1.setText("Менеджер Знижкових Карток");
+
+        addButton.setText("Додати");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        editButton.setText("Редагувати");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
+
+        deleteButton.setText("Видалити");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
+
+        exitButton.setText("Вихід");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 417, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(addButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(editButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(deleteButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(13, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(addButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(editButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(exitButton)
+                        .addGap(15, 15, 15))))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(DiscountCardManagerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(DiscountCardManagerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(DiscountCardManagerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(DiscountCardManagerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        // TODO add your handling code here:
+        addDiscountCardUI.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_addButtonActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new DiscountCardManagerUI().setVisible(true);
-            }
-        });
-    }
+    private void windowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_windowActivated
+        // TODO add your handling code here:
+        connectionDataBase = new ConnectionDataBase();
+        connectionDataBase.connect();
+        requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        
+        discountCardTableModel = new DiscountCardTableModel();
+        discountCardTable.setModel(discountCardTableModel);
+        discountCardTableModel.refreshData(requestDataBase.getAllDiscountCard());
+    
+    }//GEN-LAST:event_windowActivated
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        if(editDiscountCardUI.isVisible() == false) {
+            editDiscountCardUI.dispose();
+            editDiscountCardUI = null;
+            System.gc();
+            editDiscountCardUI = new EditDiscountCardUI();
+        }
+        
+        if (discountCardTable.getSelectedRow() == -1 ){
+            JOptionPane.showMessageDialog(null, "Виберіть користувача");
+        } else{
+            
+        Object tmp = new Object();
+        
+        tmp = discountCardTable.getModel().getValueAt(discountCardTable.getSelectedRow(), 0);
+        DiscountCard discountCard = new DiscountCard();
+        discountCard.setId(Integer.valueOf(tmp.toString()));
+        discountCard.setName(String.valueOf(discountCardTable.getModel().getValueAt(discountCardTable.getSelectedRow(), 1)));
+        tmp = discountCardTable.getModel().getValueAt(discountCardTable.getSelectedRow(), 2);
+        discountCard.setPercent(Integer.valueOf(tmp.toString()));
+        
+        editDiscountCardUI.sendDiscountCard(discountCard);
+        editDiscountCardUI.setVisible(rootPaneCheckingEnabled);
+        }
+        
+    }//GEN-LAST:event_editButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        if (discountCardTable.getSelectedRow() == -1 ){
+            JOptionPane.showMessageDialog(null, "Виберіть користувача");
+        } else{
+            connectionDataBase = new ConnectionDataBase();
+            connectionDataBase.connect();
+            requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+            
+            Object tmp = new Object();
+            tmp = discountCardTable.getModel().getValueAt(discountCardTable.getSelectedRow(), 0);
+            requestDataBase.deleteDiscountCard(Integer.valueOf(tmp.toString()));
+            
+            discountCardTableModel = new DiscountCardTableModel();
+            discountCardTable.setModel(discountCardTableModel);
+            discountCardTableModel.refreshData(requestDataBase.getAllDiscountCard());
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addButton;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JTable discountCardTable;
+    private javax.swing.JButton editButton;
+    private javax.swing.JButton exitButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

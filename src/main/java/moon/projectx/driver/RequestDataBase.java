@@ -474,11 +474,11 @@ public class RequestDataBase {
         return false;
     }
     
-    public boolean updaCategory(int id, Category category){
+    public boolean updateCategory(int id, Category category){
         try {
             preparedStatement = connection.prepareCall("update maindb.category set maindb.category.name = ? "
                                                         + "where maindb.category.id = ?");
-            preparedStatement.setString(id, category.getName());
+            preparedStatement.setString(1, category.getName());
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
             preparedStatement.close();
@@ -490,7 +490,7 @@ public class RequestDataBase {
         return false;
     }
     
-    public boolean delete(int id){
+    public boolean deleteCategory(int id){
         try {
             preparedStatement = connection.prepareStatement("delete from maindb.category where maindb.category.id = ?;");
             preparedStatement.setInt(1, id);

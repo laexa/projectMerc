@@ -3,36 +3,47 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package moon.projectx.UI.UserUI;
+package moon.projectx.UI.AddAndEditUI;
 
+
+import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.driver.RequestDataBase;
 import moon.projectx.objectTable.User;
-
 /**
  *
  * @author user
  */
-public class AddUserUI extends javax.swing.JFrame {
+public class EditUserUI extends javax.swing.JFrame {
+    private static EditUserUI instance;
+    User user = new User();
     
-    ConnectionDataBase connectionDataBase = new ConnectionDataBase();
-    RequestDataBase requestDataBase;
-
-    /**
-     * Creates new form addUserUI
-     */
+    public EditUserUI(){
+        
+    }
     
-    public AddUserUI() {
+    public EditUserUI(User user){
+        this.user = user;
         initComponents();
         buttonGroup1.add(userRadioButton);
         buttonGroup1.add(adminRadioButton);
-        userRadioButton.setSelected(true);
         
-        connectionDataBase.connect();
-        requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        nameTextField.setText(user.getName());
+        lastNameTextField.setText(user.getLastName());
+        loginTextField.setText(user.getLogin());
+        passwordTextField.setText(user.getPassword());
+        
+        if(user.getType() == 0) {
+            adminRadioButton.setSelected(true);
+        } else if (user.getType() == 1) {
+            userRadioButton.setSelected(true);
+        }        
+        this.user = null;
+        user = null;
     }
-
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -61,7 +72,7 @@ public class AddUserUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jLabel1.setText("Меню  додавання користувачів");
+        jLabel1.setText("Меню редагування користувачів");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Імя");
@@ -78,7 +89,7 @@ public class AddUserUI extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Тип користувача");
 
-        addButton.setText("Додати");
+        addButton.setText("Зберегти");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
@@ -157,7 +168,7 @@ public class AddUserUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(userRadioButton)
                     .addComponent(adminRadioButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
                     .addComponent(exitButton))
@@ -170,78 +181,49 @@ public class AddUserUI extends javax.swing.JFrame {
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         // TODO add your handling code here:
-         this.dispose();
+        processWindowEvent(new WindowEvent(this,WindowEvent.WINDOW_CLOSING));
+        
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
+        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
+        connectionDataBase.connect();
+        RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
         int dataLogin = requestDataBase.getUserLogin(loginTextField.getText());
-        User user = new User();
         
-        if(userRadioButton.isSelected() == false && adminRadioButton.isSelected() == false){
-            JOptionPane.showMessageDialog(null, "Виберіть тип користувача");
-        } else {
-            if(dataLogin == 0){
-                
-                user.setName(nameTextField.getText());
-                user.setLastName(lastNameTextField.getText());
-                user.setLogin(loginTextField.getText());
-                user.setPassword(passwordTextField.getText());
-                if(userRadioButton.isSelected()){
-                    user.setType(1);
-                }else if (adminRadioButton.isSelected()){
-                    user.setType(0);
-                }
-                requestDataBase.addUser(user);
-                System.out.println(user.toString());
-                JOptionPane.showMessageDialog(null, "Користувача Додано");
-                this.dispose();
-            
-            } else { 
-                JOptionPane.showMessageDialog(null, "Такий логін існує");
-            }
-            
-        }
+        user.setName(nameTextField.getText());
+        user.setLastName(lastNameTextField.getText());
+        user.setLogin(loginTextField.getText());
+        user.setPassword(passwordTextField.getText());
+        if(adminRadioButton.isSelected()){
+            user.setType(0);
+        } else user.setType(1);
         
+        if(dataLogin == 0){
+        requestDataBase.updateUser(user.getId(), user);
+        this.dispose();
+        } else JOptionPane.showMessageDialog(null, "Таки логі існує");
     }//GEN-LAST:event_addButtonActionPerformed
-
     
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddUserUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddUserUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddUserUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddUserUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new AddUserUI().setVisible(true);
-            }
-        });
+    public void sendUser(User user) {
+        this.user = user;
+        initComponents();
+        buttonGroup1.add(userRadioButton);
+        buttonGroup1.add(adminRadioButton);
+        
+        nameTextField.setText(user.getName());
+        lastNameTextField.setText(user.getLastName());
+        loginTextField.setText(user.getLogin());
+        passwordTextField.setText(user.getPassword());
+        
+        if(user.getType() == 0) {
+            adminRadioButton.setSelected(true);
+        } else if (user.getType() == 1) {
+            userRadioButton.setSelected(true);
+        }        
+       
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JRadioButton adminRadioButton;

@@ -8,8 +8,8 @@ package moon.projectx.UI.manager;
 
 import javax.swing.JOptionPane;
 import moon.projectx.UI.TableModel.UserTableModel;
-import moon.projectx.UI.UserUI.AddUserUI;
-import moon.projectx.UI.UserUI.EditUserUI;
+import moon.projectx.UI.AddAndEditUI.AddUserUI;
+import moon.projectx.UI.AddAndEditUI.EditUserUI;
 import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.driver.RequestDataBase;
 import moon.projectx.objectTable.User;
@@ -60,7 +60,7 @@ public class UserManagerUI extends javax.swing.JFrame {
         deleteUserButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
@@ -129,7 +129,7 @@ public class UserManagerUI extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(addUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(editUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
+                            .addComponent(editUserButton, javax.swing.GroupLayout.PREFERRED_SIZE, 114, Short.MAX_VALUE)
                             .addComponent(deleteUserButton, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE)
                             .addComponent(exitButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))))
                 .addContainerGap())
@@ -168,7 +168,8 @@ public class UserManagerUI extends javax.swing.JFrame {
         if (userTable.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Виберіть користувача");
         } else{
-            connectionDataBase = new ConnectionDataBase();
+            
+        connectionDataBase = new ConnectionDataBase();
         connectionDataBase.connect();
         requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
         
@@ -193,7 +194,7 @@ public class UserManagerUI extends javax.swing.JFrame {
 
     private void editUserButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editUserButtonActionPerformed
         // TODO add your handling code here:
-       if (editUserUI.isVisible() == true) {
+       if (editUserUI.isVisible() == false) {
            editUserUI.dispose();
            editUserUI = null;
            System.gc();

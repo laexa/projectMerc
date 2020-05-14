@@ -3,47 +3,36 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package moon.projectx.UI.UserUI;
+package moon.projectx.UI.AddAndEditUI;
 
-
-import java.awt.event.WindowEvent;
 import javax.swing.JOptionPane;
 import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.driver.RequestDataBase;
 import moon.projectx.objectTable.User;
+
 /**
  *
  * @author user
  */
-public class EditUserUI extends javax.swing.JFrame {
-    private static EditUserUI instance;
-    User user = new User();
+public class AddUserUI extends javax.swing.JFrame {
     
-    public EditUserUI(){
-        
-    }
+    ConnectionDataBase connectionDataBase = new ConnectionDataBase();
+    RequestDataBase requestDataBase;
+
+    /**
+     * Creates new form addUserUI
+     */
     
-    public EditUserUI(User user){
-        this.user = user;
+    public AddUserUI() {
         initComponents();
         buttonGroup1.add(userRadioButton);
         buttonGroup1.add(adminRadioButton);
+        userRadioButton.setSelected(true);
         
-        nameTextField.setText(user.getName());
-        lastNameTextField.setText(user.getLastName());
-        loginTextField.setText(user.getLogin());
-        passwordTextField.setText(user.getPassword());
-        
-        if(user.getType() == 0) {
-            adminRadioButton.setSelected(true);
-        } else if (user.getType() == 1) {
-            userRadioButton.setSelected(true);
-        }        
-        this.user = null;
-        user = null;
+        connectionDataBase.connect();
+        requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
     }
-    
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -72,7 +61,7 @@ public class EditUserUI extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jLabel1.setText("Меню редагування користувачів");
+        jLabel1.setText("Меню  додавання користувачів");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel2.setText("Імя");
@@ -89,7 +78,7 @@ public class EditUserUI extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel6.setText("Тип користувача");
 
-        addButton.setText("Зберегти");
+        addButton.setText("Додати");
         addButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addButtonActionPerformed(evt);
@@ -168,7 +157,7 @@ public class EditUserUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(userRadioButton)
                     .addComponent(adminRadioButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
                     .addComponent(exitButton))
@@ -181,50 +170,41 @@ public class EditUserUI extends javax.swing.JFrame {
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         // TODO add your handling code here:
-        processWindowEvent(new WindowEvent(this,WindowEvent.WINDOW_CLOSING));
-        
+         this.dispose();
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
-        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
-        connectionDataBase.connect();
-        RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
         int dataLogin = requestDataBase.getUserLogin(loginTextField.getText());
+        User user = new User();
         
-        user.setName(nameTextField.getText());
-        user.setLastName(lastNameTextField.getText());
-        user.setLogin(loginTextField.getText());
-        user.setPassword(passwordTextField.getText());
-        if(adminRadioButton.isSelected()){
-            user.setType(0);
-        } else user.setType(1);
+        if(userRadioButton.isSelected() == false && adminRadioButton.isSelected() == false){
+            JOptionPane.showMessageDialog(null, "Виберіть тип користувача");
+        } else {
+            if(dataLogin == 0){
+                
+                user.setName(nameTextField.getText());
+                user.setLastName(lastNameTextField.getText());
+                user.setLogin(loginTextField.getText());
+                user.setPassword(passwordTextField.getText());
+                if(userRadioButton.isSelected()){
+                    user.setType(1);
+                }else if (adminRadioButton.isSelected()){
+                    user.setType(0);
+                }
+                requestDataBase.addUser(user);
+                System.out.println(user.toString());
+                JOptionPane.showMessageDialog(null, "Користувача Додано");
+                this.dispose();
+            
+            } else { 
+                JOptionPane.showMessageDialog(null, "Такий логін існує");
+            }
+            
+        }
         
-        if(dataLogin == 0){
-        requestDataBase.updateUser(user.getId(), user);
-        this.dispose();
-        } else JOptionPane.showMessageDialog(null, "Таки логі існує");
     }//GEN-LAST:event_addButtonActionPerformed
-    
-    public void sendUser(User user) {
-        this.user = user;
-        initComponents();
-        buttonGroup1.add(userRadioButton);
-        buttonGroup1.add(adminRadioButton);
-        
-        nameTextField.setText(user.getName());
-        lastNameTextField.setText(user.getLastName());
-        loginTextField.setText(user.getLogin());
-        passwordTextField.setText(user.getPassword());
-        
-        if(user.getType() == 0) {
-            adminRadioButton.setSelected(true);
-        } else if (user.getType() == 1) {
-            userRadioButton.setSelected(true);
-        }        
-        this.user = null;
-        user = null;
-    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
     private javax.swing.JRadioButton adminRadioButton;

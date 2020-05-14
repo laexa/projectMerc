@@ -3,21 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package moon.projectx.UI.UserUI;
+package moon.projectx.UI.AddAndEditUI;
+
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 
 /**
  *
  * @author user
  */
-public class AddCustomer extends javax.swing.JFrame {
-
-    /**
-     * Creates new form AddCustomer
-     */
-    public AddCustomer() {
+public class AddCustomerUI extends javax.swing.JFrame {
+    
+    private DefaultListModel<String> listModel = new DefaultListModel<String>();
+ 
+    public AddCustomerUI() {
         initComponents();
+        for (int i = 0; i < 10; i++) {
+            listModel.add(i, String.valueOf(i));
+        }
+        discountCardList.setModel(listModel);
+        
     }
-
+    
+   
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -91,7 +99,7 @@ public class AddCustomer extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lastNameCustomerTextField, javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,20 +156,21 @@ public class AddCustomer extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AddCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddCustomerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AddCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddCustomerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AddCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddCustomerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AddCustomer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(AddCustomerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddCustomer().setVisible(true);
+                new AddCustomerUI().setVisible(true);
             }
         });
     }

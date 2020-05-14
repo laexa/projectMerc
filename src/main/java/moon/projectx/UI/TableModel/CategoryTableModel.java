@@ -39,7 +39,7 @@ public class CategoryTableModel extends AbstractTableModel{
     public String getColumnName(int columnIndex){
         switch(columnIndex){
             case 0: return "id";
-            case 1: return "name";            
+            case 1: return "Категорія";            
         }
         return "";
     }

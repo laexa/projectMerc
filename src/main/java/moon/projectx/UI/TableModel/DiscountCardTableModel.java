@@ -36,6 +36,16 @@ public class DiscountCardTableModel extends AbstractTableModel{
     }
     
     @Override
+    public String getColumnName(int columnIndex) {
+        switch(columnIndex) {
+            case 0: return "id";
+            case 1: return "ІМЯ";
+            case 2: return "Відсоток";
+        }
+        return "";
+    }
+    
+    @Override
     public int getRowCount() {
         return dataArrayList.size();
     }

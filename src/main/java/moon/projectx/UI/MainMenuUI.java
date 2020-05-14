@@ -5,6 +5,11 @@
  */
 package moon.projectx.UI;
 
+import moon.projectx.UI.manager.CategoryManagerUI;
+import moon.projectx.UI.manager.CustomerManagerUI;
+import moon.projectx.UI.manager.DiscountCardManagerUI;
+import moon.projectx.UI.manager.MerchManagerUI;
+import moon.projectx.UI.manager.UserManagerUI;
 /**
  *
  * @author user
@@ -27,57 +32,139 @@ public class MainMenuUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        categoryButton = new javax.swing.JButton();
+        customerButton = new javax.swing.JButton();
+        userButton = new javax.swing.JButton();
+        merchButton = new javax.swing.JButton();
+        discountCardButton = new javax.swing.JButton();
+        exitButton = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jLabel1.setText("Головне меню");
+
+        categoryButton.setText("Категорії");
+        categoryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                categoryButtonActionPerformed(evt);
+            }
+        });
+
+        customerButton.setText("Покупці");
+        customerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customerButtonActionPerformed(evt);
+            }
+        });
+
+        userButton.setText("Користувачі");
+        userButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userButtonActionPerformed(evt);
+            }
+        });
+
+        merchButton.setText("Товари");
+        merchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                merchButtonActionPerformed(evt);
+            }
+        });
+
+        discountCardButton.setText("Знижки");
+        discountCardButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                discountCardButtonActionPerformed(evt);
+            }
+        });
+
+        exitButton.setText("Вийти");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(userButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(10, 10, 10))
+                    .addComponent(customerButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(categoryButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(merchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(discountCardButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addComponent(categoryButton)
+                .addGap(18, 18, 18)
+                .addComponent(customerButton)
+                .addGap(18, 18, 18)
+                .addComponent(userButton)
+                .addGap(18, 18, 18)
+                .addComponent(merchButton)
+                .addGap(18, 18, 18)
+                .addComponent(discountCardButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                .addComponent(exitButton)
+                .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainMenuUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainMenuUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainMenuUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainMenuUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+       this.dispose();
+        
+    }//GEN-LAST:event_exitButtonActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainMenuUI().setVisible(true);
-            }
-        });
-    }
+    private void categoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryButtonActionPerformed
+        // TODO add your handling code here:
+        new CategoryManagerUI().setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_categoryButtonActionPerformed
+
+    private void customerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerButtonActionPerformed
+        // TODO add your handling code here:
+        new CustomerManagerUI().setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_customerButtonActionPerformed
+
+    private void userButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userButtonActionPerformed
+        // TODO add your handling code here:
+        new UserManagerUI().setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_userButtonActionPerformed
+
+    private void merchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_merchButtonActionPerformed
+        // TODO add your handling code here:
+        new MerchManagerUI().setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_merchButtonActionPerformed
+
+    private void discountCardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_discountCardButtonActionPerformed
+        // TODO add your handling code here:
+        new DiscountCardManagerUI().setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_discountCardButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton categoryButton;
+    private javax.swing.JButton customerButton;
+    private javax.swing.JButton discountCardButton;
+    private javax.swing.JButton exitButton;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton merchButton;
+    private javax.swing.JButton userButton;
     // End of variables declaration//GEN-END:variables
 }

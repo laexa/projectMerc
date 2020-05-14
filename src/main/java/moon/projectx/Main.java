@@ -19,8 +19,12 @@ import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.UI.LoginUI;
 import moon.projectx.UI.manager.CategoryManagerUI;
 import moon.projectx.UI.manager.UserManagerUI;
-import moon.projectx.UI.UserUI.EditUserUI;
-import moon.projectx.UI.manager.CustomeManagerUI;
+import moon.projectx.UI.manager.DiscountCardManagerUI;
+import moon.projectx.UI.AddAndEditUI.EditUserUI;
+import moon.projectx.UI.manager.CustomerManagerUI;
+import moon.projectx.UI.AddAndEditUI.AddCustomerUI;
+import moon.projectx.UI.AddAndEditUI.AddDiscountCardUI;
+import moon.projectx.UI.manager.CategoryManagerUI;
 
 
 
@@ -37,11 +41,12 @@ public class Main {
 ////        
 ////        User user = new User("asasdsd", "asdsd", 0, "Asdsad", "asdasd");
 //        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
-//        System.out.println("");
-//        System.out.println(connectionDataBase.connect());
         new LoginUI().setVisible(true);
-//        new UserManagerUI().setVisible(true);
+//        new CategoryManagerUI().setVisible(true);
         
+//        new AddDiscountCardUI().setVisible(true);
+//        new DiscountCardManagerUI().setVisible(true);
+////        new UserManagerUI().setVisible(true);
        
         
 //        RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());

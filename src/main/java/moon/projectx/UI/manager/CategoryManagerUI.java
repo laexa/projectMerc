@@ -5,22 +5,39 @@
  */
 package moon.projectx.UI.manager;
 
-import moon.projectx.TestTableModel;
-import moon.projectx.objectTable.User;
-import moon.projectx.UI.TableModel.UserTableModel;
+
+import javax.swing.JOptionPane;
+import moon.projectx.UI.AddAndEditUI.AddCategoryUI;
+import moon.projectx.UI.AddAndEditUI.EditCategoryUI;
+import moon.projectx.driver.ConnectionDataBase;
+import moon.projectx.driver.RequestDataBase;
+import moon.projectx.UI.TableModel.CategoryTableModel;
+import moon.projectx.objectTable.Category;
 
 /**
  *
  * @author user
  */
 public class CategoryManagerUI extends javax.swing.JFrame {
+    ConnectionDataBase connectionDataBase = new ConnectionDataBase();
+    RequestDataBase requestDataBase;
+    CategoryTableModel categoryTableModel;
+    EditCategoryUI editCategoryUI = new EditCategoryUI();
+    AddCategoryUI addCategoryUI = new AddCategoryUI();
+    Category category = new Category();
+    
     
 
-    /**
-     * Creates new form CategoryManagerUI
-     */
+  
     public CategoryManagerUI() {
-        initComponents();
+        initComponents();        
+        connectionDataBase = new ConnectionDataBase();
+        connectionDataBase.connect();
+        requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        
+        categoryTableModel = new CategoryTableModel();
+        table.setModel(categoryTableModel);
+        categoryTableModel.refreshData(requestDataBase.getAllCategory());
     }
 
     /**
@@ -34,21 +51,26 @@ public class CategoryManagerUI extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        table = new javax.swing.JTable();
+        addButton = new javax.swing.JButton();
+        editButton = new javax.swing.JButton();
+        deleteButton = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setMaximumSize(new java.awt.Dimension(720, 480));
         setMinimumSize(new java.awt.Dimension(720, 480));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("Меню категорій товару");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -255,15 +277,36 @@ public class CategoryManagerUI extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(table);
 
-        jButton1.setText("Добавити");
+        addButton.setText("Добавити");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Редагувати");
+        editButton.setText("Редагувати");
+        editButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editButtonActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Видалити");
+        deleteButton.setText("Видалити");
+        deleteButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteButtonActionPerformed(evt);
+            }
+        });
 
         jButton4.setText("Вихід");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -279,9 +322,9 @@ public class CategoryManagerUI extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 570, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                            .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(editButton, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                            .addComponent(deleteButton, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
                             .addComponent(jButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE))))
                 .addContainerGap())
         );
@@ -294,61 +337,86 @@ public class CategoryManagerUI extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(addButton)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2)
+                        .addComponent(editButton)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton3)
+                        .addComponent(deleteButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButton4)))
                 .addContainerGap())
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CategoryManagerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CategoryManagerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CategoryManagerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CategoryManagerUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        this.dispose();
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CategoryManagerUI().setVisible(true);
-            }
-        });
-    }
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        addCategoryUI.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_addButtonActionPerformed
+
+    private void editButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editButtonActionPerformed
+        if (editCategoryUI.isVisible() == false) {
+            editCategoryUI.dispose();
+            editCategoryUI = null;
+            System.gc();
+            editCategoryUI = new EditCategoryUI();
+         }
+         if(table.getSelectedRow() == -1) {
+             JOptionPane.showMessageDialog(null, "Виберіть категорію");
+         }else {
+            Object tmpObject = new Object();
+            tmpObject = table.getModel().getValueAt(table.getSelectedRow(), 0);
+            category.setId(Integer.valueOf(tmpObject.toString()));
+            category.setName(String.valueOf(table.getModel().getValueAt(table.getSelectedRow(), 1)));
+            editCategoryUI.sendCategory(category);
+            editCategoryUI.setVisible(rootPaneCheckingEnabled);
+         }
+    }//GEN-LAST:event_editButtonActionPerformed
+
+    private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
+        if (table.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Виберіть категорію");
+        } else {
+            connectionDataBase = new ConnectionDataBase();
+            connectionDataBase.connect();
+            requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+            
+            Object object = new Object();
+            object = table.getModel().getValueAt(table.getSelectedRow(), 0);
+            
+            requestDataBase.deleteCategory(Integer.valueOf(object.toString()));
+            
+            categoryTableModel = new CategoryTableModel();
+            table.setModel(categoryTableModel);
+            categoryTableModel.refreshData(requestDataBase.getAllCategory());
+            
+        }
+    }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        connectionDataBase = new ConnectionDataBase();
+        connectionDataBase.connect();
+        requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        categoryTableModel = new CategoryTableModel();
+        table.setModel(categoryTableModel);
+        categoryTableModel.refreshData(requestDataBase.getAllCategory());
+    }//GEN-LAST:event_formWindowActivated
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton addButton;
+    private javax.swing.JButton deleteButton;
+    private javax.swing.JButton editButton;
     private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }
