@@ -169,7 +169,7 @@ public class LoginUI extends javax.swing.JFrame {
         
         if(dataLogin == 1 && dataPassword == 1) {
             JOptionPane.showMessageDialog(null, "You enter");
-            new MainMenuUI().setVisible(rootPaneCheckingEnabled);
+            new MainMenuAdminUI().setVisible(rootPaneCheckingEnabled);
             this.dispose();
         }else if(dataLogin != 1 && dataPassword != 1) {
             JOptionPane.showMessageDialog(null, "Wrong login and password");

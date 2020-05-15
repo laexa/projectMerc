@@ -251,7 +251,7 @@ public class RequestDataBase {
             while (resultSet.next()) {                
                 customer.setName(resultSet.getString("name"));
                 customer.setLastName(resultSet.getString("lastName"));
-                customer.setNumberPhone(resultSet.getInt("numberPhone"));
+                customer.setNumberPhone(resultSet.getString("numberPhone"));
                 customer.setDiscountCardId(resultSet.getInt("discountCardId"));                               
             }
             
@@ -273,7 +273,7 @@ public class RequestDataBase {
                 
            preparedStatement.setString(1, customer.getName());
            preparedStatement.setString(2, customer.getLastName());
-           preparedStatement.setInt(3, customer.getNumberPhone());
+           preparedStatement.setString(3, customer.getNumberPhone());
            preparedStatement.setInt(4, customer.getDiscountCardId());
            preparedStatement.executeUpdate();
            
@@ -299,7 +299,7 @@ public class RequestDataBase {
            
            preparedStatement.setString(1, customer.getName());
            preparedStatement.setString(2, customer.getLastName());
-           preparedStatement.setInt(3, customer.getNumberPhone());
+           preparedStatement.setString(3, customer.getNumberPhone());
            preparedStatement.setInt(4, customer.getDiscountCardId());
            preparedStatement.setInt(5, id);
            preparedStatement.executeUpdate();
@@ -352,7 +352,7 @@ public class RequestDataBase {
                 customer.setId(resultSet.getInt(1));
                 customer.setName(resultSet.getString(2));
                 customer.setLastName(resultSet.getString(3));
-                customer.setNumberPhone(resultSet.getInt(4));
+                customer.setNumberPhone(resultSet.getString(4));
                 customer.setDiscountCardId(resultSet.getInt(5));
                 
                 customerList.add(customer);

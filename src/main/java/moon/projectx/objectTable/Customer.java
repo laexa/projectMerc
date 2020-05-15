@@ -14,13 +14,13 @@ public class Customer {
     private int id;
     private String name;
     private String lastName;
-    private int numberPhone;
+    private String numberPhone;
     private int discountCardId;
 
     public Customer() {
     }
     
-    public Customer(String name, String lastName, int numberPhone, int discountCardId) {
+    public Customer(String name, String lastName, String numberPhone, int discountCardId) {
         this.name = name;
         this.lastName = lastName;
         this.numberPhone = numberPhone;
@@ -51,11 +51,11 @@ public class Customer {
         this.lastName = lastName;
     }
 
-    public int getNumberPhone() {
+    public String getNumberPhone() {
         return numberPhone;
     }
 
-    public void setNumberPhone(int numberPhone) {
+    public void setNumberPhone(String numberPhone) {
         this.numberPhone = numberPhone;
     }
 
@@ -72,7 +72,7 @@ public class Customer {
         customer[0] = String.valueOf(id);
         customer[1] = name;
         customer[2] = lastName;
-        customer[3] = String.valueOf(numberPhone);
+        customer[3] = numberPhone;
         customer[4] = String.valueOf(discountCardId);
                 
         return customer;        

@@ -25,6 +25,7 @@ import moon.projectx.UI.manager.CustomerManagerUI;
 import moon.projectx.UI.AddAndEditUI.AddCustomerUI;
 import moon.projectx.UI.AddAndEditUI.AddDiscountCardUI;
 import moon.projectx.UI.manager.CategoryManagerUI;
+import moon.projectx.UI.manager.CustomerManagerUI;
 
 
 
@@ -41,7 +42,8 @@ public class Main {
 ////        
 ////        User user = new User("asasdsd", "asdsd", 0, "Asdsad", "asdasd");
 //        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
-        new LoginUI().setVisible(true);
+//        new LoginUI().setVisible(true);
+        new CustomerManagerUI().setVisible(true);
 //        new CategoryManagerUI().setVisible(true);
         
 //        new AddDiscountCardUI().setVisible(true);
