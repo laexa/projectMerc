@@ -7,11 +7,11 @@ package moon.projectx.UI.manager;
 
 import javax.swing.JOptionPane;
 import moon.projectx.UI.TableModel.CustomerTableModel;
-import moon.projectx.UI.TableModel.UserTableModel;
 import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.driver.RequestDataBase;
 import moon.projectx.UI.AddAndEditUI.AddCustomerUI;
 import moon.projectx.UI.AddAndEditUI.EditCustomerUI;
+import moon.projectx.objectTable.Customer;
 
 
 /**
@@ -24,6 +24,9 @@ public class CustomerManagerUI extends javax.swing.JFrame {
     RequestDataBase requestDataBase;
     CustomerTableModel customerTableModel;
     AddCustomerUI addCustomerUI = new AddCustomerUI();
+    EditCustomerUI editCustomerUI = new EditCustomerUI();
+    Customer customer = new Customer();
+    
     
     
     
@@ -161,17 +164,47 @@ public class CustomerManagerUI extends javax.swing.JFrame {
     }//GEN-LAST:event_addCustomerButtonActionPerformed
 
     private void editCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCustomerButtonActionPerformed
-        // TODO add your handling code here:
-
-     
+        if (editCustomerUI.isVisible() == false) {
+            editCustomerUI.dispose();
+            editCustomerUI = null;
+            System.gc();
+            
+            editCustomerUI = new EditCustomerUI();
+        }
         
+        if (customerTable.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Виберіть Покупця");
+        } else {
+            
+            Object tmp = new Object();
+            
+            tmp = customerTable.getModel().getValueAt(customerTable.getSelectedRow(), 0);
+            customer.setId(Integer.valueOf(tmp.toString()));
+            
+            tmp = customerTable.getModel().getValueAt(customerTable.getSelectedRow(), 1);
+            customer.setName(tmp.toString());
+            
+            tmp = customerTable.getModel().getValueAt(customerTable.getSelectedRow(), 2);
+            customer.setLastName(tmp.toString());
+            
+            tmp = customerTable.getModel().getValueAt(customerTable.getSelectedRow(), 3);
+            customer.setNumberPhone(tmp.toString());
+            
+            tmp = customerTable.getModel().getValueAt(customerTable.getSelectedRow(), 4);
+            customer.setDiscountCardId(Integer.valueOf(tmp.toString()));
+            
+            
+            editCustomerUI.sendCustomer(customer);
+            editCustomerUI.setVisible(rootPaneCheckingEnabled);
+            
+        }
     }//GEN-LAST:event_editCustomerButtonActionPerformed
 
     private void deleteCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCustomerButtonActionPerformed
         // TODO add your handling code here:
         
         if(customerTable.getSelectedRow() == -1){
-            JOptionPane.showMessageDialog(null, "Виберіть користувача");
+            JOptionPane.showMessageDialog(null, "Виберіть Покупця");
         }else {
             connectionDataBase.connect();
             requestDataBase = new RequestDataBase(connectionDataBase.getConnection());

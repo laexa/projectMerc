@@ -196,6 +196,7 @@ public class AddCustomerUI extends javax.swing.JFrame {
     private void addCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerButtonActionPerformed
         
         String tmp = "";
+        System.out.println(table.getSelectedRow());
         
         if(table.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Виберіть із таблиця знижкову карту");
@@ -203,11 +204,11 @@ public class AddCustomerUI extends javax.swing.JFrame {
              customer.setName(nameCustomerTextField.getText());
              customer.setLastName(lastNameCustomerTextField.getText());
              tmp = numberPhoneCustomerTextField.getText();
+             int tmpInt = tmp.length();
              
-             if(tmp.length() > 12 && tmp.length() < 10){
-                 JOptionPane.showMessageDialog(null, "Неправильний номер. Має бути не більше 12 цифр");
-             } else{
+             if(tmpInt == 10 || tmpInt == 12){
                  
+                     
                  customer.setNumberPhone(numberPhoneCustomerTextField.getText());
                  Object o = new Object();
                  o = table.getModel().getValueAt(table.getSelectedRow(), 0);
@@ -217,6 +218,10 @@ public class AddCustomerUI extends javax.swing.JFrame {
                  requestDataBase.addCustomer(customer);
                  JOptionPane.showMessageDialog(null, "Покупця додано");
                  this.dispose();
+                 
+                 
+             } else {
+                 JOptionPane.showMessageDialog(null, "Неправильний номер. Має бути не більше 12 цифр");
              }
         }
     }//GEN-LAST:event_addCustomerButtonActionPerformed
