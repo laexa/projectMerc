@@ -39,10 +39,11 @@ public class CustomerTableModel extends AbstractTableModel{
     public String getColumnName(int coumnIndex) {
         switch(coumnIndex) {
             case 0: return "id";
-            case 1: return "name";
-            case 2: return "lastName";
-            case 3: return "DiscountCard_ID";
-            case 4: return "NumberPhone";  
+            case 1: return "Імя";
+            case 2: return "Призвіще";
+            case 3: return "Номер телефона";
+            case 4: return "Скидочна карта ID";
+            
         }
         return "";
     }

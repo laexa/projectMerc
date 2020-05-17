@@ -11,21 +11,17 @@ import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.driver.RequestDataBase;
 import moon.projectx.objectTable.Customer;
 
-/**
- *
- * @author user
- */
+
 public class EditCustomerUI extends javax.swing.JFrame {
+    
+    DiscountCardTableModel discountCardTableModel;
     ConnectionDataBase connectionDataBase;
     RequestDataBase requestDataBase;
-    DiscountCardTableModel discountCardTableModel;
     Customer customer = new Customer();
-    /**
-     * Creates new form EditCustomer
-     */
+    
     public EditCustomerUI() {
-        
         initComponents();
+        
         connectionDataBase = new ConnectionDataBase();
         connectionDataBase.connect();
         requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
@@ -44,64 +40,27 @@ public class EditCustomerUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
+        exitButton = new javax.swing.JButton();
+        addButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        numberPhoneTextField = new javax.swing.JTextField();
+        lastNameTextField = new javax.swing.JTextField();
+        nameTextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        nameCustomerTextField = new javax.swing.JTextField();
-        lastNameCustomerTextField = new javax.swing.JTextField();
-        numberPhoneCustomerTextField = new javax.swing.JTextField();
-        exitButton = new javax.swing.JButton();
-        addCustomerButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowActivated(java.awt.event.WindowEvent evt) {
                 formWindowActivated(evt);
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 2, 16)); // NOI18N
-        jLabel1.setText("Редагування покупців");
-
-        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel2.setText("Імя");
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Призвіще");
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel4.setText("Номер телефону");
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel5.setText("Тип дискотної карти");
-
-        nameCustomerTextField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-
-        lastNameCustomerTextField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-
-        numberPhoneCustomerTextField.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
-
-        exitButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        exitButton.setText("Вийти");
-        exitButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitButtonActionPerformed(evt);
-            }
-        });
-
-        addCustomerButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
-        addCustomerButton.setText("Добавити");
-        addCustomerButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addCustomerButtonActionPerformed(evt);
-            }
-        });
-
+        table.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -114,8 +73,39 @@ public class EditCustomerUI extends javax.swing.JFrame {
             }
         ));
         table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(table);
+
+        exitButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        exitButton.setText("Вийти");
+
+        addButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        addButton.setText("Змінити");
+        addButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addButtonActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel1.setText("Імя");
+
+        numberPhoneTextField.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+
+        lastNameTextField.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+
+        nameTextField.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel2.setText("Призвіще");
+
+        jLabel3.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel3.setText("Номер телефону");
+
+        jLabel4.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jLabel4.setText("Тип дискотної карти");
+
+        jLabel5.setFont(new java.awt.Font("Lucida Grande", 2, 14)); // NOI18N
+        jLabel5.setText("Меню редагування покупця");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -124,101 +114,62 @@ public class EditCustomerUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 296, Short.MAX_VALUE))
+                            .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(addButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 332, Short.MAX_VALUE)
+                            .addComponent(numberPhoneTextField)
+                            .addComponent(lastNameTextField)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(addCustomerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(nameCustomerTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                            .addComponent(lastNameCustomerTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                            .addComponent(numberPhoneCustomerTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(jLabel5)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 213, Short.MAX_VALUE)
+                        .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 332, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(10, 10, 10)
+                .addComponent(jLabel5)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(nameCustomerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lastNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(numberPhoneTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addComponent(lastNameCustomerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(numberPhoneCustomerTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel4))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(jLabel5)
-                        .addGap(133, 133, 133)
-                        .addComponent(addCustomerButton)
-                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 205, Short.MAX_VALUE)
+                        .addComponent(addButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(exitButton))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-        this.dispose();
-    }//GEN-LAST:event_exitButtonActionPerformed
-
-    private void addCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerButtonActionPerformed
-        
-        connectionDataBase = new ConnectionDataBase();
-        connectionDataBase.connect();
-        requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
-        
-        discountCardTableModel = new DiscountCardTableModel();
-        table.setModel(discountCardTableModel);
-        discountCardTableModel.refreshData(requestDataBase.getAllDiscountCard());
-        
-        String tmp = "";
-        System.out.println(table.getSelectedRow());
-
-        if(table.getSelectedRow() == -1) {
-              JOptionPane.showMessageDialog(null, "Виберіть із таблиця знижкову карту");
-        }else if (table.getSelectedRow() != -1){
-            customer.setName(nameCustomerTextField.getText());
-            customer.setLastName(lastNameCustomerTextField.getText());
-            tmp = numberPhoneCustomerTextField.getText();
-
-            if(tmp.length() == 12 || tmp.length() == 10){
-                JOptionPane.showMessageDialog(null, "Неправильний номер. Має бути не більше 12 цифр");
-            } else{
-
-                customer.setNumberPhone(numberPhoneCustomerTextField.getText());
-                Object o = new Object();
-                o = table.getModel().getValueAt(table.getSelectedRow(), 0);
-                tmp = String.valueOf(o);
-
-                customer.setDiscountCardId(Integer.valueOf(tmp));
-                requestDataBase.updateCustomer(customer.getId(), customer);
-                JOptionPane.showMessageDialog(null, "Покупця змінено");
-                this.dispose();
-            }
-        }
-    }//GEN-LAST:event_addCustomerButtonActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         connectionDataBase = new ConnectionDataBase();
@@ -230,14 +181,44 @@ public class EditCustomerUI extends javax.swing.JFrame {
         discountCardTableModel.refreshData(requestDataBase.getAllDiscountCard());
     }//GEN-LAST:event_formWindowActivated
 
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        if (table.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Виберіт картку");
+        } else {
+            String tmp = numberPhoneTextField.getText();
+            
+            if(tmp.length() == 10 || tmp.length() == 12){
+                Object o = new Object();
+            
+            o = table.getModel().getValueAt(table.getSelectedRow(), 0);
+            customer.setName(nameTextField.getText());
+            customer.setLastName(lastNameTextField.getText());
+            customer.setNumberPhone(numberPhoneTextField.getText());
+            customer.setDiscountCardId(Integer.valueOf(o.toString()));
+            
+            connectionDataBase = new ConnectionDataBase();
+            connectionDataBase.connect();
+            requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+            
+            requestDataBase.updateCustomer(customer.getId(), customer);
+            JOptionPane.showMessageDialog(null, "Покупця зміненно");
+            this.dispose();
+            
+            }else {
+                JOptionPane.showMessageDialog(null, "Неправильний номер. Має бути не більше 12 цифр");
+            }
+        }
+    }//GEN-LAST:event_addButtonActionPerformed
+
     public void sendCustomer(Customer customer) {
-        nameCustomerTextField.setText(customer.getName());
-        lastNameCustomerTextField.setText(customer.getLastName());
-        numberPhoneCustomerTextField.setText(customer.getNumberPhone());
-        initComponents();
+        this.customer.setId(customer.getId());
+        nameTextField.setText(customer.getName());
+        lastNameTextField.setText(customer.getLastName());
+        numberPhoneTextField.setText(customer.getNumberPhone());        
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addCustomerButton;
+    private javax.swing.JButton addButton;
     private javax.swing.JButton exitButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -245,9 +226,9 @@ public class EditCustomerUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField lastNameCustomerTextField;
-    private javax.swing.JTextField nameCustomerTextField;
-    private javax.swing.JTextField numberPhoneCustomerTextField;
+    private javax.swing.JTextField lastNameTextField;
+    private javax.swing.JTextField nameTextField;
+    private javax.swing.JTextField numberPhoneTextField;
     private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

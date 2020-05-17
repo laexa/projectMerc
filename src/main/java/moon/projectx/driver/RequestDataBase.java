@@ -11,12 +11,15 @@ import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.DefaultListModel;
+import javax.swing.ListModel;
 import moon.projectx.objectTable.User;
 import moon.projectx.objectTable.Customer;
 import moon.projectx.objectTable.DiscountCard;
 import moon.projectx.objectTable.Category;
 import moon.projectx.objectTable.Merch;
 import moon.projectx.objectTable.Statistics;
+import moon.projectx.objectTable.CustomerAndDiscountCard;
         
 /**
  *
@@ -367,7 +370,42 @@ public class RequestDataBase {
         
         return null;
     }
-   
+    public ArrayList getAllCustomerAndDiscountCard(){
+        String SQL = "select maindb.customer.id, "
+                + "maindb.customer.name, "
+                + "maindb.customer.lastName, "
+                + "maindb.customer.numberPhone, "
+                + "maindb.discountcardid.name, "
+                + "maindb.discountcardid.percent from maindb.customer inner join maindb.discountcardid on maindb.customer.discountCardId = maindb.discountcardid.id;";
+        
+        try {
+            statement = connection.createStatement();
+            resultSet =  statement.executeQuery(SQL);
+            
+            ArrayList<CustomerAndDiscountCard> customerAndCustomersList = new ArrayList<>();
+            CustomerAndDiscountCard customerAndDiscountCard;
+            
+            
+            
+            while(resultSet.next()){
+                customerAndDiscountCard = new CustomerAndDiscountCard();
+                
+                customerAndDiscountCard.setId(resultSet.getInt(1));
+                customerAndDiscountCard.setName(resultSet.getString(2));
+                customerAndDiscountCard.setLastName(resultSet.getString(3));
+                customerAndDiscountCard.setNumberPhone(resultSet.getString(4));
+                customerAndDiscountCard.setNameDiscountCard(resultSet.getString(5));
+                customerAndDiscountCard.setPercentDiscountCard(resultSet.getInt(6));
+                                customerAndCustomersList.add(customerAndDiscountCard);
+            }
+            
+            statement.close();
+            return customerAndCustomersList;
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return null;
+    }
     public boolean addDiscountCard(DiscountCard discountCard) {
         try {
             
@@ -503,6 +541,33 @@ public class RequestDataBase {
         }
         return false;
     }
+    public DefaultListModel getNameCategory(){
+        String SQL = "select maindb.category.name from maindb.category;";
+        
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Category> categoryList = new ArrayList<>();
+            DefaultListModel<String> defaultListModel = new DefaultListModel<String>();
+            Category category;
+            
+            while(resultSet.next()){
+                category = new Category();
+                
+                category.setName(resultSet.getString(1));
+                categoryList.add(category);
+                defaultListModel.addElement(category.getName());
+            }
+            
+            statement.close();
+            return defaultListModel;
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        return null;
+    }
+    
     
     public ArrayList getAllCategory(){
         String SQL = "select * from maindb.category;";
@@ -589,8 +654,219 @@ public class RequestDataBase {
         return false;
     }
     
-    public ArrayList getAllMerch(){
-        String SQL = "select maindb.merch.id, maindb.merch.name, maindb.merch.desc, maindb.merch.categoryId, maindb.category.name, maindb.merch.price, maindb.merch.count, maindb.merch.percent from maindb.merch  inner join maindb.category On maindb.merch.categoryId = maindb.category.id;";
+    public ArrayList getAllMerchCategory(String category){
+        
+        String SQL = "select  maindb.merch.id, maindb.merch.name, maindb.merch.desc, maindb.category.name, maindb.merch.price, maindb.merch.count, maindb.merch.percent from maindb.merch  inner join maindb.category On maindb.merch.categoryId = maindb.category.id where maindb.category.name = '"+category+"';";
+        
+         try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Merch> merchList = new ArrayList<>();
+            Merch merch;
+            
+            while(resultSet.next()){
+                merch = new Merch();
+                merch.setId(resultSet.getInt(1));
+                merch.setName(resultSet.getString(2));
+                merch.setDesc(resultSet.getString(3));
+                merch.setCategory(resultSet.getString(4));
+                merch.setPrice(resultSet.getInt(5));
+                merch.setCount(resultSet.getInt(6));
+                merch.setPercent(resultSet.getInt(7));
+                merchList.add(merch);
+            }
+            statement.close();
+            return merchList;
+            
+        } catch (Exception e) {
+        }
+        return null;
+        
+    }
+    
+    public ArrayList getAllMerchPriceCountCategory (String price, String count,String category){
+        
+        String SQL = "select  maindb.merch.id, maindb.merch.name, maindb.merch.desc, maindb.category.name, maindb.merch.price, maindb.merch.count, maindb.merch.percent from maindb.merch  inner join maindb.category On maindb.merch.categoryId = maindb.category.id where maindb.category.name = '"+category+"' order by maindb.merch.price "+price+", maindb.merch.count "+count+";";
+        
+         try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Merch> merchList = new ArrayList<>();
+            Merch merch;
+            
+            while(resultSet.next()){
+                merch = new Merch();
+                merch.setId(resultSet.getInt(1));
+                merch.setName(resultSet.getString(2));
+                merch.setDesc(resultSet.getString(3));
+                merch.setCategory(resultSet.getString(4));
+                merch.setPrice(resultSet.getInt(5));
+                merch.setCount(resultSet.getInt(6));
+                merch.setPercent(resultSet.getInt(7));
+                merchList.add(merch);
+            }
+            statement.close();
+            return merchList;
+            
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    
+    public ArrayList getAllMerchPriceDescAndCountDesc() {
+        
+        String SQL = "select  maindb.merch.id, maindb.merch.name, maindb.merch.desc, maindb.category.name, maindb.merch.price, maindb.merch.count, maindb.merch.percent from maindb.merch inner join maindb.category On maindb.merch.categoryId = maindb.category.id order by maindb.merch.price DESC,  maindb.merch.count desc;";
+        
+         try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Merch> merchList = new ArrayList<>();
+            Merch merch;
+            
+            while(resultSet.next()){
+                merch = new Merch();
+                merch.setId(resultSet.getInt(1));
+                merch.setName(resultSet.getString(2));
+                merch.setDesc(resultSet.getString(3));
+                merch.setCategory(resultSet.getString(4));
+                merch.setPrice(resultSet.getInt(5));
+                merch.setCount(resultSet.getInt(6));
+                merch.setPercent(resultSet.getInt(7));
+                merchList.add(merch);
+            }
+            statement.close();
+            return merchList;
+            
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public ArrayList getAllMerchPriceDescAndCountAsc() {
+         String SQL = "select  maindb.merch.id, maindb.merch.name, maindb.merch.desc, maindb.category.name, maindb.merch.price, maindb.merch.count, maindb.merch.percent from maindb.merch inner join maindb.category On maindb.merch.categoryId = maindb.category.id order by maindb.merch.price DESC,  maindb.merch.count ASC;";
+        
+         try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Merch> merchList = new ArrayList<>();
+            Merch merch;
+            
+            while(resultSet.next()){
+                merch = new Merch();
+                merch.setId(resultSet.getInt(1));
+                merch.setName(resultSet.getString(2));
+                merch.setDesc(resultSet.getString(3));
+                merch.setCategory(resultSet.getString(4));
+                merch.setPrice(resultSet.getInt(5));
+                merch.setCount(resultSet.getInt(6));
+                merch.setPercent(resultSet.getInt(7));
+                merchList.add(merch);
+            }
+            statement.close();
+            return merchList;
+            
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public ArrayList getAllMerchPriceASCandCountDESC(){
+        
+        String SQL = "select  maindb.merch.id, maindb.merch.name, maindb.merch.desc, maindb.category.name, maindb.merch.price, maindb.merch.count, maindb.merch.percent from maindb.merch inner join maindb.category On maindb.merch.categoryId = maindb.category.id order by maindb.merch.price ASC,  maindb.merch.count Desc;";
+        
+         try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Merch> merchList = new ArrayList<>();
+            Merch merch;
+            
+            while(resultSet.next()){
+                merch = new Merch();
+                merch.setId(resultSet.getInt(1));
+                merch.setName(resultSet.getString(2));
+                merch.setDesc(resultSet.getString(3));
+                merch.setCategory(resultSet.getString(4));
+                merch.setPrice(resultSet.getInt(5));
+                merch.setCount(resultSet.getInt(6));
+                merch.setPercent(resultSet.getInt(7));
+                merchList.add(merch);
+            }
+            statement.close();
+            return merchList;
+            
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public ArrayList getAllMerchCountAndPriceASC(){
+        
+        String SQL = "select  maindb.merch.id, maindb.merch.name, maindb.merch.desc, maindb.category.name, maindb.merch.price, maindb.merch.count, maindb.merch.percent from maindb.merch inner join maindb.category On maindb.merch.categoryId = maindb.category.id order by maindb.merch.price , maindb.merch.count ASC;";
+        
+         try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Merch> merchList = new ArrayList<>();
+            Merch merch;
+            
+            while(resultSet.next()){
+                merch = new Merch();
+                merch.setId(resultSet.getInt(1));
+                merch.setName(resultSet.getString(2));
+                merch.setDesc(resultSet.getString(3));
+                merch.setCategory(resultSet.getString(4));
+                merch.setPrice(resultSet.getInt(5));
+                merch.setCount(resultSet.getInt(6));
+                merch.setPercent(resultSet.getInt(7));
+                merchList.add(merch);
+            }
+            statement.close();
+            return merchList;
+            
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public ArrayList getAllMerchCountASC(){
+         String SQL = "select  maindb.merch.id, maindb.merch.name, maindb.merch.desc, maindb.category.name, maindb.merch.price, maindb.merch.count, maindb.merch.percent from maindb.merch inner join maindb.category On maindb.merch.categoryId = maindb.category.id order by maindb.merch.count ASC;";
+        
+         try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Merch> merchList = new ArrayList<>();
+            Merch merch;
+            
+            while(resultSet.next()){
+                merch = new Merch();
+                merch.setId(resultSet.getInt(1));
+                merch.setName(resultSet.getString(2));
+                merch.setDesc(resultSet.getString(3));
+                merch.setCategory(resultSet.getString(4));
+                merch.setPrice(resultSet.getInt(5));
+                merch.setCount(resultSet.getInt(6));
+                merch.setPercent(resultSet.getInt(7));
+                merchList.add(merch);
+            }
+            statement.close();
+            return merchList;
+            
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public ArrayList getAllMerchCountDesc(){
+        
+        String SQL = "select  maindb.merch.id, maindb.merch.name, maindb.merch.desc, maindb.category.name, maindb.merch.price, maindb.merch.count, maindb.merch.percent from maindb.merch inner join maindb.category On maindb.merch.categoryId = maindb.category.id order by maindb.merch.count DESC;";
         
         try {
             statement = connection.createStatement();
@@ -604,11 +880,100 @@ public class RequestDataBase {
                 merch.setId(resultSet.getInt(1));
                 merch.setName(resultSet.getString(2));
                 merch.setDesc(resultSet.getString(3));
-                merch.setCategoryId(resultSet.getInt(4));
-                merch.setCategory(resultSet.getString(5));
-                merch.setPrice(resultSet.getInt(6));
-                merch.setCount(resultSet.getInt(7));
-                merch.setPercent(resultSet.getInt(8));
+                merch.setCategory(resultSet.getString(4));
+                merch.setPrice(resultSet.getInt(5));
+                merch.setCount(resultSet.getInt(6));
+                merch.setPercent(resultSet.getInt(7));
+                merchList.add(merch);
+            }
+            statement.close();
+            return merchList;
+            
+        } catch (Exception e) {
+        }
+        return null;
+        
+    }
+    
+    public ArrayList getAllMerchPriceDESC (){
+        
+        String SQL = "select  maindb.merch.id, maindb.merch.name, maindb.merch.desc, maindb.category.name, maindb.merch.price, maindb.merch.count, maindb.merch.percent from maindb.merch inner join maindb.category On maindb.merch.categoryId = maindb.category.id order by maindb.merch.price DESC;";
+        
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Merch> merchList = new ArrayList<>();
+            Merch merch;
+            
+            while(resultSet.next()){
+                merch = new Merch();
+                merch.setId(resultSet.getInt(1));
+                merch.setName(resultSet.getString(2));
+                merch.setDesc(resultSet.getString(3));
+                merch.setCategory(resultSet.getString(4));
+                merch.setPrice(resultSet.getInt(5));
+                merch.setCount(resultSet.getInt(6));
+                merch.setPercent(resultSet.getInt(7));
+                merchList.add(merch);
+            }
+            statement.close();
+            return merchList;
+            
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public ArrayList getAllMerchPriceASC() {
+        
+        String SQL = "select  maindb.merch.id, maindb.merch.name, maindb.merch.desc, maindb.category.name, maindb.merch.price, maindb.merch.count, maindb.merch.percent from maindb.merch inner join maindb.category On maindb.merch.categoryId = maindb.category.id order by maindb.merch.price ASC;";
+        
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Merch> merchList = new ArrayList<>();
+            Merch merch;
+            
+            while(resultSet.next()){
+                merch = new Merch();
+                merch.setId(resultSet.getInt(1));
+                merch.setName(resultSet.getString(2));
+                merch.setDesc(resultSet.getString(3));
+                merch.setCategory(resultSet.getString(4));
+                merch.setPrice(resultSet.getInt(5));
+                merch.setCount(resultSet.getInt(6));
+                merch.setPercent(resultSet.getInt(7));
+                merchList.add(merch);
+            }
+            statement.close();
+            return merchList;
+            
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public ArrayList getAllMerch(){
+        String SQL = "select maindb.merch.id, maindb.merch.name, maindb.merch.desc, maindb.category.name, maindb.merch.price, maindb.merch.count, maindb.merch.percent from maindb.merch  inner join maindb.category On maindb.merch.categoryId = maindb.category.id;";
+        
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Merch> merchList = new ArrayList<>();
+            Merch merch;
+            
+            while(resultSet.next()){
+                merch = new Merch();
+                merch.setId(resultSet.getInt(1));
+                merch.setName(resultSet.getString(2));
+                merch.setDesc(resultSet.getString(3));
+                merch.setCategory(resultSet.getString(4));
+                merch.setPrice(resultSet.getInt(5));
+                merch.setCount(resultSet.getInt(6));
+                merch.setPercent(resultSet.getInt(7));
                 merchList.add(merch);
             }
             statement.close();

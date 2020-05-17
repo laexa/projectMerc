@@ -7,9 +7,12 @@ package moon.projectx.UI.manager;
 
 import javax.swing.JOptionPane;
 import moon.projectx.UI.TableModel.CustomerTableModel;
+import moon.projectx.UI.TableModel.CustomerAndDiscountCardTableModel;
 import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.driver.RequestDataBase;
 import moon.projectx.UI.AddAndEditUI.AddCustomerUI;
+import moon.projectx.UI.AddAndEditUI.EditCustomerUI;
+import moon.projectx.UI.AddAndEditUI.EditCustomerUI;
 import moon.projectx.UI.AddAndEditUI.EditCustomerUI;
 import moon.projectx.objectTable.Customer;
 
@@ -22,11 +25,14 @@ public class CustomerManagerUI extends javax.swing.JFrame {
     
     ConnectionDataBase connectionDataBase;
     RequestDataBase requestDataBase;
-    CustomerTableModel customerTableModel;
+    CustomerAndDiscountCardTableModel customerAndDiscountCardModel;
+
+    
     AddCustomerUI addCustomerUI = new AddCustomerUI();
     EditCustomerUI editCustomerUI = new EditCustomerUI();
     Customer customer = new Customer();
-    
+    Thread mainThread;
+    EditCustomerUI editCustomerUi = new EditCustomerUI();
     
     
     
@@ -35,12 +41,11 @@ public class CustomerManagerUI extends javax.swing.JFrame {
         initComponents();
         
         connectionDataBase = new ConnectionDataBase();
-        customerTableModel = new CustomerTableModel();
+        customerAndDiscountCardModel = new CustomerAndDiscountCardTableModel();
         connectionDataBase.connect();
         requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
-        
-        customerTable.setModel(customerTableModel);
-        customerTableModel.refreshData(requestDataBase.getAllCustomer());
+        customerTable.setModel(customerAndDiscountCardModel);
+        customerAndDiscountCardModel.refreshData(requestDataBase.getAllCustomerAndDiscountCard());
         
         
     }
@@ -160,16 +165,25 @@ public class CustomerManagerUI extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void addCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerButtonActionPerformed
-        addCustomerUI.setVisible(rootPaneCheckingEnabled);
+       
+        
+        mainThread = new Thread(){
+            @Override
+            public void run() {
+                addCustomerUI.setVisible(rootPaneCheckingEnabled); 
+            }
+        };
+        mainThread.run();
+        
     }//GEN-LAST:event_addCustomerButtonActionPerformed
 
     private void editCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCustomerButtonActionPerformed
-        if (editCustomerUI.isVisible() == false) {
-            editCustomerUI.dispose();
-            editCustomerUI = null;
+        if (editCustomerUi.isVisible() == false) {
+            editCustomerUi.dispose();
+            editCustomerUi = null;
             System.gc();
             
-            editCustomerUI = new EditCustomerUI();
+            editCustomerUi = new EditCustomerUI();
         }
         
         if (customerTable.getSelectedRow() == -1) {
@@ -190,12 +204,9 @@ public class CustomerManagerUI extends javax.swing.JFrame {
             tmp = customerTable.getModel().getValueAt(customerTable.getSelectedRow(), 3);
             customer.setNumberPhone(tmp.toString());
             
-            tmp = customerTable.getModel().getValueAt(customerTable.getSelectedRow(), 4);
-            customer.setDiscountCardId(Integer.valueOf(tmp.toString()));
+            editCustomerUi.sendCustomer(customer);
+            editCustomerUi.setVisible(rootPaneCheckingEnabled);
             
-            
-            editCustomerUI.sendCustomer(customer);
-            editCustomerUI.setVisible(rootPaneCheckingEnabled);
             
         }
     }//GEN-LAST:event_editCustomerButtonActionPerformed
@@ -212,23 +223,26 @@ public class CustomerManagerUI extends javax.swing.JFrame {
             Object tmp = customerTable.getModel().getValueAt(customerTable.getSelectedRow(), 0);
             requestDataBase.deleteCustomer(Integer.valueOf(tmp.toString()));
             
-            customerTableModel = new CustomerTableModel();
-            customerTable.setModel(customerTableModel);
-            customerTableModel.refreshData(requestDataBase.getAllCustomer());
+            customerAndDiscountCardModel = new CustomerAndDiscountCardTableModel();
+            customerTable.setModel(customerAndDiscountCardModel);
+            customerAndDiscountCardModel.refreshData(requestDataBase.getAllCustomerAndDiscountCard());
         }
     }//GEN-LAST:event_deleteCustomerButtonActionPerformed
 
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
-        // TODO add your handling code here:
+        if(mainThread.isAlive() == false){
+            mainThread.stop();
+        }
         this.dispose();
     }//GEN-LAST:event_exitButtonActionPerformed
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         connectionDataBase.connect();
         requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
-        customerTableModel = new CustomerTableModel();
-        customerTable.setModel(customerTableModel);
-        customerTableModel.refreshData(requestDataBase.getAllCustomer());
+        
+        customerAndDiscountCardModel = new CustomerAndDiscountCardTableModel();
+        customerTable.setModel(customerAndDiscountCardModel);
+        customerAndDiscountCardModel.refreshData(requestDataBase.getAllCustomerAndDiscountCard());
     }//GEN-LAST:event_formWindowActivated
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
