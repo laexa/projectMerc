@@ -568,6 +568,29 @@ public class RequestDataBase {
         return null;
     }
     
+    public int getIdCategory(String category){
+        
+        String SQL = "select maindb.category.id from maindb.category where maindb.category.name = '" + category + "';";
+        int tmp = 0;
+        
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            
+            
+            while(resultSet.next()){
+                tmp = resultSet.getInt(1);
+            }
+            
+            statement.close();
+            return tmp;
+            
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        return 0;
+    }
     
     public ArrayList getAllCategory(){
         String SQL = "select * from maindb.category;";
