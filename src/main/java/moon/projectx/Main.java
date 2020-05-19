@@ -25,6 +25,7 @@ import moon.projectx.UI.AddAndEditUI.EditUserUI;
 import moon.projectx.UI.manager.CustomerManagerUI;
 import moon.projectx.UI.AddAndEditUI.AddCustomerUI;
 import moon.projectx.UI.AddAndEditUI.AddDiscountCardUI;
+import moon.projectx.UI.SaleMenuUI;
 import moon.projectx.UI.manager.CategoryManagerUI;
 import moon.projectx.UI.manager.CustomerManagerUI;
 import moon.projectx.UI.manager.MerchManagerUI;
@@ -40,18 +41,17 @@ public class Main extends Thread{
     
     @Override
     public void run() {
-        new MerchManagerUI().setVisible(true);
+        new SaleMenuUI().setVisible(true);
+//        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
+//        connectionDataBase.connect();
+//        RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        
+//        Statistics stat = new Statistics(0, "name", 2, 322, 20, null, 8, 12);
+//        System.out.println(requestDataBase.addStat(stat));
+
     }
                     
     public static void main(String[] args) {
-        
-        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
-        connectionDataBase.connect();
-        RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
-                
-//        for (int i = 0; i < 1000; i+=100) {
-//            requestDataBase.addMerch(new Merch(0, "name1", "desc1", "", 12, i, i, 30));
-//        }
         Thread main = new Main();
         main.run();
     }

@@ -592,6 +592,31 @@ public class RequestDataBase {
         return 0;
     }
     
+    public String getCategoryFromId(int id){
+        String tmp = "";
+        
+        try {
+            
+            if(statement.isClosed()){
+                statement = connection.createStatement();
+            }
+            request = "";
+            request = "select maindb.category.name from maindb.category where maindb.category.id = "+id+";";
+            resultSet = statement.executeQuery(request);
+            
+            while (resultSet.next()) {                
+                tmp = resultSet.getString(1);
+            }
+            
+            resultSet.close();
+            
+            return tmp;
+            
+        } catch (Exception e) {
+        }
+        return tmp;
+    }
+    
     public ArrayList getAllCategory(){
         String SQL = "select * from maindb.category;";
         
@@ -627,6 +652,22 @@ public class RequestDataBase {
             preparedStatement.setInt(4, merch.getPrice());
             preparedStatement.setInt(5, merch.getCount());
             preparedStatement.setInt(6, merch.getPercent());
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+            
+            return true;
+        } catch (Exception e) {
+            System.err.println(e.getLocalizedMessage());
+        }
+        return false;
+    }
+    
+    public boolean updateMerchCount(int id, int count){
+        try {
+            preparedStatement = connection.prepareStatement("update maindb.merch set maindb.merch.count = ? where maindb.merch.id = ?;");
+            
+            preparedStatement.setInt(1, count);
+            preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
             preparedStatement.close();
             
@@ -675,6 +716,39 @@ public class RequestDataBase {
             System.err.println(e.getLocalizedMessage());
         }
         return false;
+    }
+    
+    public Merch getMerch(Integer id ){
+        Merch merch = new Merch();
+        
+        try {
+            
+            if(statement.isClosed()){
+                statement = connection.createStatement();
+            }
+            request = "";
+            request = "select * from maindb.merch where maindb.merch.id = " + id + ";";
+            resultSet = statement.executeQuery(request);
+            
+            while (resultSet.next()) {                
+                
+                merch.setId(id);
+                merch.setName(resultSet.getString(2));
+                merch.setDesc(resultSet.getString(3));
+                merch.setCategoryId(resultSet.getInt(4));
+                merch.setPrice(resultSet.getInt(5));
+                merch.setCount(resultSet.getInt(6));
+                merch.setPercent(resultSet.getInt(7));
+                
+            }
+            
+            resultSet.close();
+            
+            return merch;
+            
+        } catch (Exception e) {
+        }
+        return merch;
     }
     
     public ArrayList getAllMerchCategory(String category){
@@ -978,6 +1052,35 @@ public class RequestDataBase {
         return null;
     }
     
+    public ArrayList getAllMerchSerch(String name){
+        String SQL = "select maindb.merch.id, maindb.merch.name, maindb.merch.desc, maindb.category.name, maindb.merch.price, maindb.merch.count, maindb.merch.percent from maindb.merch  inner join maindb.category On maindb.merch.categoryId = maindb.category.id where maindb.merch.name like '%" + name + "%';";
+        
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Merch> merchList = new ArrayList<>();
+            Merch merch;
+            
+            while(resultSet.next()){
+                merch = new Merch();
+                merch.setId(resultSet.getInt(1));
+                merch.setName(resultSet.getString(2));
+                merch.setDesc(resultSet.getString(3));
+                merch.setCategory(resultSet.getString(4));
+                merch.setPrice(resultSet.getInt(5));
+                merch.setCount(resultSet.getInt(6));
+                merch.setPercent(resultSet.getInt(7));
+                merchList.add(merch);
+            }
+            statement.close();
+            return merchList;
+            
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
     public ArrayList getAllMerch(){
         String SQL = "select maindb.merch.id, maindb.merch.name, maindb.merch.desc, maindb.category.name, maindb.merch.price, maindb.merch.count, maindb.merch.percent from maindb.merch  inner join maindb.category On maindb.merch.categoryId = maindb.category.id;";
         
@@ -1010,23 +1113,29 @@ public class RequestDataBase {
     public boolean addStat(Statistics stat){
         try {
             preparedStatement = connection.prepareStatement("insert maindb.stat "
-                    + "(maindb.stat.nameMerch, "
+                    + "(maindb.stat.nameMerch , "
                     + "maindb.stat.categoryId, "
                     + "maindb.stat.price, "
                     + "maindb.stat.count, "
-                    + "maindb.stat.date) values "
-                    + "(?, ?, ?, ?, now());");
+                    + "maindb.stat.date, "
+                    + "maindb.stat.customerId, "
+                    + "maindb.stat.userId,"
+                    + "maindb.stat.merchId) "
+                    + "values (?, ?, ?, ?, now(), ?, ?, ?);");
             preparedStatement.setString(1, stat.getName());
             preparedStatement.setInt(2, stat.getCategoryId());
             preparedStatement.setInt(3, stat.getPrice());
             preparedStatement.setInt(4, stat.getCount());
+            preparedStatement.setInt(5, stat.getCustomerId());
+            preparedStatement.setInt(6, stat.getUserId());
+            preparedStatement.setInt(7, stat.getMerchId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             
             
             return true;
         } catch (Exception e) {
-            System.err.println("");
+            System.err.println(e.getMessage());
         }
         return false;
     }
@@ -1105,5 +1214,30 @@ public class RequestDataBase {
         } catch (Exception e) {
         }
         return null;
+    }
+    
+    public int getPercentFromDiscountCardID(int id){
+        int tmp = 0;
+        
+        try {
+            
+            if(statement.isClosed()){
+                statement = connection.createStatement();
+            }
+            request = "";
+            request = "select maindb.discountcardid.percent from maindb.discountcardid where maindb.discountcardid.id = " + id + ";";
+            resultSet = statement.executeQuery(request);
+            
+            while (resultSet.next()) {                
+                tmp = resultSet.getInt(1);
+            }
+            
+            resultSet.close();
+            
+            return tmp;
+            
+        } catch (Exception e) {
+        }
+        return tmp;
     }
 }

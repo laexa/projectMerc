@@ -20,19 +20,27 @@ public class Statistics {
     private int price;
     private int count;
     private Date date;
+    private int customerId;
+    private int userId;
+    private int merchId;
 
     public Statistics() {
         
     }
 
-    public Statistics(int id, String name, int categoryId, int price, int count) {
+    public Statistics(int id, String name, String category, int categoryId, int price, int count, Date date, int customerId, int userId, int merchId) {
         this.id = id;
         this.name = name;
+        this.category = category;
         this.categoryId = categoryId;
         this.price = price;
         this.count = count;
+        this.date = date;
+        this.customerId = customerId;
+        this.userId = userId;
+        this.merchId = merchId;
     }
-    
+        
     public int getId() {
         return id;
     }
@@ -88,7 +96,33 @@ public class Statistics {
     public void setDate(Date date) {
         this.date = date;
     }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getMerchId() {
+        return merchId;
+    }
+
+    public void setMerchId(int merchId) {
+        this.merchId = merchId;
+    }
     
+    
+            
     public String[] getStatArray() {
         String[] stat = new String[6];
         stat[0] = String.valueOf(id);

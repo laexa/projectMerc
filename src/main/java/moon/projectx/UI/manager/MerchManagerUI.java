@@ -127,6 +127,11 @@ public class MerchManagerUI extends javax.swing.JFrame {
 
         exitButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         exitButton.setText("Вийти");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 2, 16)); // NOI18N
         jLabel1.setText("Меню товарів");
@@ -590,6 +595,10 @@ public class MerchManagerUI extends javax.swing.JFrame {
             
         }
     }//GEN-LAST:event_editButtonActionPerformed
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_exitButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

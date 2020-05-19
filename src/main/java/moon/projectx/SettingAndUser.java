@@ -24,6 +24,7 @@ public class SettingAndUser {
     }
     
     public static class User{
-        
+        public static int userId;
+        public static String userName;
     }
 }
