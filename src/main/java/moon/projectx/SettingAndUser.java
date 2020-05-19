@@ -26,5 +26,9 @@ public class SettingAndUser {
     public static class User{
         public static int userId;
         public static String userName;
+        public static String userLastName;
+        public static int userType;
+        public static String userLogin;
+        public static String userPassword;
     }
 }

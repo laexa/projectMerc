@@ -16,6 +16,8 @@ public class Statistics {
     private int id;
     private String name;    
     private String category;
+    private String customer;
+    private String user;
     private int categoryId;
     private int price;
     private int count;
@@ -23,10 +25,25 @@ public class Statistics {
     private int customerId;
     private int userId;
     private int merchId;
+    
 
     public Statistics() {
         
     }
+
+    public Statistics(int id, String name, int categoryId, int price, int count, Date date, int customerId, int userId, int merchId) {
+        this.id = id;
+        this.name = name;
+        this.categoryId = categoryId;
+        this.price = price;
+        this.count = count;
+        this.date = date;
+        this.customerId = customerId;
+        this.userId = userId;
+        this.merchId = merchId;
+    }
+    
+    
 
     public Statistics(int id, String name, String category, int categoryId, int price, int count, Date date, int customerId, int userId, int merchId) {
         this.id = id;
@@ -120,24 +137,40 @@ public class Statistics {
     public void setMerchId(int merchId) {
         this.merchId = merchId;
     }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
     
-    
-            
     public String[] getStatArray() {
-        String[] stat = new String[6];
+        String[] stat = new String[9];
         stat[0] = String.valueOf(id);
         stat[1] = name;
         stat[2] = category;
         stat[3] = String.valueOf(count);
         stat[4] = String.valueOf(price);
         stat[5] = date.toString();
+        stat[6] = customer;
+        stat[7] = user;
+        stat[8] = String.valueOf(merchId);
         return stat;
     }
 
     @Override
     public String toString() {
-        return "Statistics{" + "id=" + id + ", name=" + name + ", category=" + category + ", categoryId=" + categoryId + ", price=" + price + ", count=" + count + ", date=" + date + '}';
-    }
-    
+        return "Statistics{" + "id=" + id + ", name=" + name + ", category=" + category + ", categoryId=" + categoryId + ", price=" + price + ", count=" + count + ", date=" + date + ", customerId=" + customerId + ", userId=" + userId + ", merchId=" + merchId + '}';
+    }  
     
 }

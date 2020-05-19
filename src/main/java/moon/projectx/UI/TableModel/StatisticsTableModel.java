@@ -15,7 +15,7 @@ import moon.projectx.objectTable.Statistics;
  */
 public class StatisticsTableModel extends AbstractTableModel{
 
-    private int columnCount = 6;
+    private int columnCount = 9;
     private ArrayList<String []> dataArrayList;
 
     public StatisticsTableModel() {
@@ -38,11 +38,14 @@ public class StatisticsTableModel extends AbstractTableModel{
     public String getColumnName(int columnIndex){
         switch(columnIndex){
             case 0: return "id";
-            case 1: return "name";
-            case 2: return "category";
-            case 3: return "price";
-            case 4: return "count";
-            case 5: return "date";
+            case 1: return "Імя";
+            case 2: return "Категорія";
+            case 3: return "Ціна";
+            case 4: return "Кількість";
+            case 5: return "Дата";
+            case 6: return "Покупець";
+            case 7: return "Робітник";
+            case 8: return "Товар";
         }
         return "";
     }

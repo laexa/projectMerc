@@ -29,6 +29,7 @@ import moon.projectx.UI.SaleMenuUI;
 import moon.projectx.UI.manager.CategoryManagerUI;
 import moon.projectx.UI.manager.CustomerManagerUI;
 import moon.projectx.UI.manager.MerchManagerUI;
+import moon.projectx.UI.manager.StatManagerUI;
 
 
 
@@ -41,13 +42,16 @@ public class Main extends Thread{
     
     @Override
     public void run() {
-        new SaleMenuUI().setVisible(true);
+        new StatManagerUI().setVisible(true);
+//        new StatManagerUI().setVisible(true);
+//        new SaleMenuUI().setVisible(true);
 //        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
 //        connectionDataBase.connect();
 //        RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
         
-//        Statistics stat = new Statistics(0, "name", 2, 322, 20, null, 8, 12);
-//        System.out.println(requestDataBase.addStat(stat));
+//        Statistics stat = new Statistics(0,"name",9, 2, 22, null, 5,1, 22);
+//        requestDataBase.addStat(stat);
+//        System.out.println(stat.toString());
 
     }
                     

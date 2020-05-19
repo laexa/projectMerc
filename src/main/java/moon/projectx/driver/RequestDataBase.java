@@ -9,6 +9,7 @@ package moon.projectx.driver;
 import java.util.ArrayList;
 import java.sql.Statement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import javax.swing.DefaultListModel;
@@ -1177,16 +1178,45 @@ public class RequestDataBase {
         return false;
     }
     
-    public ArrayList getAllStat(){
-        String SQL = "select "
-                + "maindb.stat.id, "
-                + "maindb.stat.nameMerch, "
-                + "maindb.stat.categoryId, "
-                + "maindb.category.name, "
-                + "maindb.stat.price, "
-                + "maindb.stat.count, "
-                + "maindb.stat.date "
-                + "from maindb.stat inner join maindb.category on maindb.stat.categoryId = maindb.category.id;";
+    public Statistics getStatInId(int id){
+        
+        Statistics stat = new Statistics();
+        
+        try {
+            
+            if(statement.isClosed()){
+                statement = connection.createStatement();
+            }
+            request = "";
+            request = "select maindb.stat.id, maindb.stat.nameMerch, maindb.stat.categoryId, maindb.stat.price, maindb.stat.count, maindb.stat.date, maindb.stat.customerId, maindb.stat.userId, maindb.stat.merchId from maindb.stat where maindb.stat.id = "+id+";";
+            resultSet = statement.executeQuery(request);
+            
+            while (resultSet.next()) {                
+                stat.setId(resultSet.getInt(1));
+                stat.setName(resultSet.getString(2));
+                stat.setCategoryId(resultSet.getInt(3));
+                stat.setPrice(resultSet.getInt(4));
+                stat.setCount(resultSet.getInt(5));
+                stat.setDate(resultSet.getDate(6));
+                stat.setCustomerId(resultSet.getInt(7));
+                stat.setUserId(resultSet.getInt(8));
+                stat.setMerchId(resultSet.getInt(9));
+                
+            }
+            
+            resultSet.close();
+            
+            return stat;
+            
+        } catch (Exception e) {
+        }
+        return stat;
+        
+    }
+    
+    public ArrayList getAllStatDate(Date from, Date to){
+         String SQL = "select maindb.stat.id, maindb.stat.nameMerch, maindb.category.name, maindb.stat.count, maindb.stat.price, maindb.stat.date, maindb.customer.lastName, maindb.user.login, maindb.stat.merchId from maindb.stat inner join maindb.category on maindb.stat.categoryId = maindb.category.id inner join maindb.user on maindb.stat.userId = maindb.user.id inner join maindb.customer on maindb.stat.customerId = maindb.customer.id where maindb.stat. >= '"+from.toString() +"' and maindb.stat.date <= '"+to.toString()+"';";
+                
  
         
         try {
@@ -1200,11 +1230,47 @@ public class RequestDataBase {
                 stat = new Statistics();
                 stat.setId(resultSet.getInt(1));
                 stat.setName(resultSet.getString(2));
-                stat.setCategoryId(resultSet.getInt(3));
-                stat.setCategory(resultSet.getString(4));
+                stat.setCategory(resultSet.getString(3));
+                stat.setCount(resultSet.getInt(4));
                 stat.setPrice(resultSet.getInt(5));
-                stat.setCount(resultSet.getInt(6));
-                stat.setDate(resultSet.getDate(7));
+                stat.setDate(resultSet.getDate(6));
+                stat.setCustomer(resultSet.getString(7));
+                stat.setUser(resultSet.getString(8));
+                stat.setMerchId(resultSet.getInt(9));
+                
+                statList.add(stat);
+                
+            }
+            statement.close();
+            return statList;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    
+    public ArrayList getAllStat(){
+        String SQL = "select maindb.stat.id, maindb.stat.nameMerch, maindb.category.name, maindb.stat.count, maindb.stat.price, maindb.stat.date, maindb.customer.lastName, maindb.user.login, maindb.stat.merchId from maindb.stat inner join maindb.category on maindb.stat.categoryId = maindb.category.id inner join maindb.user on maindb.stat.userId = maindb.user.id inner join maindb.customer on maindb.stat.customerId = maindb.customer.id;";
+                
+ 
+        
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(SQL);
+            
+            ArrayList<Statistics> statList = new ArrayList<>();
+            Statistics stat;
+            
+            while (resultSet.next()) {
+                stat = new Statistics();
+                stat.setId(resultSet.getInt(1));
+                stat.setName(resultSet.getString(2));
+                stat.setCategory(resultSet.getString(3));
+                stat.setCount(resultSet.getInt(4));
+                stat.setPrice(resultSet.getInt(5));
+                stat.setDate(resultSet.getDate(6));
+                stat.setCustomer(resultSet.getString(7));
+                stat.setUser(resultSet.getString(8));
+                stat.setMerchId(resultSet.getInt(9));
                 
                 statList.add(stat);
                 

@@ -254,7 +254,7 @@ public class SaleFormUI extends javax.swing.JFrame {
                             stat.setName(nameLabel.getText());
                             stat.setCategoryId(merch.getCategoryId());
                             stat.setPrice(i);
-                            stat.setCount(countUpdate);
+                            stat.setCount(Integer.valueOf(countTextField.getText()));
                             stat.setUserId(SettingAndUser.User.userId);
                             stat.setCustomerId(Integer.valueOf(tmpObject.toString()));
                             stat.setMerchId(merch.getId());
@@ -288,7 +288,7 @@ public class SaleFormUI extends javax.swing.JFrame {
                             stat.setName(nameLabel.getText());
                             stat.setCategoryId(merch.getCategoryId());
                             stat.setPrice(i);
-                            stat.setCount(countUpdate);
+                            stat.setCount(Integer.valueOf(countTextField.getText()));
                             stat.setUserId(SettingAndUser.User.userId);
                             stat.setCustomerId(Integer.valueOf(tmpObject.toString()));
                             stat.setMerchId(merch.getId());
