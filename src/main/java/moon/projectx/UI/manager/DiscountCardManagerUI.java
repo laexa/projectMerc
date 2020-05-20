@@ -99,6 +99,11 @@ public class DiscountCardManagerUI extends javax.swing.JFrame {
         });
 
         exitButton.setText("Вихід");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -206,6 +211,10 @@ public class DiscountCardManagerUI extends javax.swing.JFrame {
             discountCardTableModel.refreshData(requestDataBase.getAllDiscountCard());
         }
     }//GEN-LAST:event_deleteButtonActionPerformed
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_exitButtonActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;

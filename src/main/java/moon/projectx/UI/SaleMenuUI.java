@@ -154,6 +154,11 @@ public class SaleMenuUI extends javax.swing.JFrame {
         });
 
         exitButton.setText("Вийти");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
 
         countBilsheRadioButton.setText("Більше");
         countBilsheRadioButton.addActionListener(new java.awt.event.ActionListener() {
@@ -424,6 +429,10 @@ public class SaleMenuUI extends javax.swing.JFrame {
             
         }else JOptionPane.showMessageDialog(null, "Невибраниий товар");
     }//GEN-LAST:event_saleButtonActionPerformed
+
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_exitButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

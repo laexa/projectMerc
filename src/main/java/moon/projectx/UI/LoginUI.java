@@ -11,6 +11,7 @@ import moon.projectx.UI.SettingUI;
 import moon.projectx.objectTable.User;
 import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.driver.RequestDataBase;
+import moon.projectx.SettingAndUser;
 
 /**
  *
@@ -170,6 +171,7 @@ public class LoginUI extends javax.swing.JFrame {
         if(dataLogin == 1 && dataPassword == 1) {
             JOptionPane.showMessageDialog(null, "You enter");
             new MainMenuAdminUI().setVisible(rootPaneCheckingEnabled);
+            SettingAndUser.User.userId = requestDataBase.getUserId(loginTextField.getText());
             this.dispose();
         }else if(dataLogin != 1 && dataPassword != 1) {
             JOptionPane.showMessageDialog(null, "Wrong login and password");

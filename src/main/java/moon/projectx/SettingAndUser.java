@@ -25,8 +25,8 @@ public class SettingAndUser {
     
     public static class User{
         public static int userId;
-        public static String userName;
-        public static String userLastName;
+        public static String userName = "TestName";
+        public static String userLastName = "TestLastName";
         public static int userType;
         public static String userLogin;
         public static String userPassword;

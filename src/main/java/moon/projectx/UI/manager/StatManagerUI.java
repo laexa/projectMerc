@@ -6,7 +6,9 @@
 package moon.projectx.UI.manager;
 
 import com.toedter.calendar.JDateChooser;
-import java.util.Date;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,6 +25,8 @@ public class StatManagerUI extends javax.swing.JFrame {
     public StatManagerUI() {
         initComponents();
         
+        toDateChooser.setDate(new java.util.Date());
+        fromDateChooser.setDate(new java.util.Date());
         connectionDataBase.connect();
         requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
         statisticsTableModel = new StatisticsTableModel();
@@ -55,7 +59,7 @@ public class StatManagerUI extends javax.swing.JFrame {
         toDateChooser = new com.toedter.calendar.JDateChooser();
         jButton1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         fromDateChooser.setDateFormatString("y MMM d");
         fromDateChooser.setMaxSelectableDate(new java.util.Date(253370761267000L));
@@ -160,19 +164,31 @@ public class StatManagerUI extends javax.swing.JFrame {
         statisticsTableModel = new StatisticsTableModel();
         jTable1.setModel(statisticsTableModel);
         
-        Date d = new Date();
         
-        d = toDateChooser.getDate();
-        java.util.Date utilDate = new java.util.Date();
         
-        java.sql.Date sqlDate = new java.sql.Date(ERROR, WIDTH, WIDTH);
+       
         
-        System.out.println(d.toString()+ "date");
-        System.out.println(d.getYear());
-        System.out.println(d.getMonth());
-        System.out.println(d.getDay());
+//      java.sql.Date sqlDate = new java.sql.Date(ERROR, WIDTH, xWIDTH);
+        java.util.Date utilDateFrom = new java.util.Date();
+        java.util.Date utilDateTo = new java.util.Date();
+        
+        utilDateFrom = fromDateChooser.getDate();
+        utilDateTo = toDateChooser.getDate();
+        
+        java.sql.Date fromSqlDate = convert(utilDateFrom);
+        java.sql.Date toSqlDate   = convert(utilDateTo);
+        
+        System.out.println(fromSqlDate.toString());
+        
+       statisticsTableModel.refreshData(requestDataBase.getAllStatDate(fromSqlDate, toSqlDate));
+       
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
+    private java.sql.Date convert(java.util.Date uDate) {
+        java.sql.Date sDate = new java.sql.Date(uDate.getTime());
+        return sDate;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private net.sourceforge.jdatepicker.impl.DateComponentFormatter dateComponentFormatter1;
     private net.sourceforge.jdatepicker.impl.DateComponentFormatter dateComponentFormatter2;

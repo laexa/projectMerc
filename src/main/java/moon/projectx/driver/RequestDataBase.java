@@ -43,6 +43,31 @@ public class RequestDataBase {
         }
     }
     
+    public int getUserId(String name) {
+          int tmp = 0;
+        
+        try {
+            
+            if(statement.isClosed()){
+                statement = connection.createStatement();
+            }
+            request = "";
+            request = "select maindb.user.id from maindb.user where maindb.user.login = '"+name+"';";
+            resultSet = statement.executeQuery(request);
+            
+            while (resultSet.next()) {                
+                tmp = resultSet.getInt(1);
+                
+            }
+            
+            resultSet.close();
+            
+            return tmp;
+            
+        } catch (Exception e) {
+        }
+        return 0;
+    }
     public User getUser(int id) {
         
         User user = new User();
@@ -1215,7 +1240,7 @@ public class RequestDataBase {
     }
     
     public ArrayList getAllStatDate(Date from, Date to){
-         String SQL = "select maindb.stat.id, maindb.stat.nameMerch, maindb.category.name, maindb.stat.count, maindb.stat.price, maindb.stat.date, maindb.customer.lastName, maindb.user.login, maindb.stat.merchId from maindb.stat inner join maindb.category on maindb.stat.categoryId = maindb.category.id inner join maindb.user on maindb.stat.userId = maindb.user.id inner join maindb.customer on maindb.stat.customerId = maindb.customer.id where maindb.stat. >= '"+from.toString() +"' and maindb.stat.date <= '"+to.toString()+"';";
+         String SQL = "select maindb.stat.id, maindb.stat.nameMerch, maindb.category.name, maindb.stat.count, maindb.stat.price, maindb.stat.date, maindb.customer.lastName, maindb.user.login, maindb.stat.merchId from maindb.stat inner join maindb.category on maindb.stat.categoryId = maindb.category.id inner join maindb.user on maindb.stat.userId = maindb.user.id inner join maindb.customer on maindb.stat.customerId = maindb.customer.id where maindb.stat.date >= '"+ from.toString() +"' and maindb.stat.date <= '"+to.toString()+"';";
                 
  
         

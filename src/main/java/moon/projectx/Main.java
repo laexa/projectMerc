@@ -11,6 +11,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import com.mysql.cj.jdbc.Driver;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import moon.projectx.PDFGenerator.PDFGeneretor;
 import moon.projectx.objectTable.User;
 import moon.projectx.objectTable.Customer;
 import moon.projectx.objectTable.Statistics;
@@ -42,7 +45,7 @@ public class Main extends Thread{
     
     @Override
     public void run() {
-        new StatManagerUI().setVisible(true);
+//        new StatManagerUI().setVisible(true);
 //        new StatManagerUI().setVisible(true);
 //        new SaleMenuUI().setVisible(true);
 //        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
@@ -52,7 +55,7 @@ public class Main extends Thread{
 //        Statistics stat = new Statistics(0,"name",9, 2, 22, null, 5,1, 22);
 //        requestDataBase.addStat(stat);
 //        System.out.println(stat.toString());
-
+        new PDFGeneretor().creatInvoice(null, 10, 100);
     }
                     
     public static void main(String[] args) {

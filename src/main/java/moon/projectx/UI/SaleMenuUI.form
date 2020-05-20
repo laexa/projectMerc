@@ -261,6 +261,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x412;&#x438;&#x439;&#x442;&#x438;"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exitButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="countBilsheRadioButton">
       <Properties>
