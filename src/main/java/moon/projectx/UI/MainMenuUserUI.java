@@ -5,17 +5,42 @@
  */
 package moon.projectx.UI;
 
+import moon.projectx.UI.manager.CategoryManagerUI;
+import moon.projectx.UI.manager.CustomerManagerUI;
+import moon.projectx.UI.manager.DiscountCardManagerUI;
+import moon.projectx.UI.manager.MerchManagerUI;
+import moon.projectx.UI.manager.UserManagerUI;
+import moon.projectx.UI.SaleMenuUI;
+import moon.projectx.UI.manager.StatManagerUI;
+import moon.projectx.UI.TableModel.StatisticsTableModel;
+import moon.projectx.driver.ConnectionDataBase;
+import moon.projectx.driver.RequestDataBase;
 /**
  *
- * @author alex
+ * @author user
  */
 public class MainMenuUserUI extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MainMenuUserUI
-     */
+    SaleMenuUI saleMenuUI = new SaleMenuUI();
+    StatManagerUI statManagerUI = new StatManagerUI();
+    CustomerManagerUI customerManagerUI = new CustomerManagerUI();
+    CategoryManagerUI categoryManagerUI = new CategoryManagerUI();
+    UserManagerUI userManagerUI = new UserManagerUI();
+    MerchManagerUI merchManagerUI = new MerchManagerUI();
+    DiscountCardManagerUI discountCardManagerUI = new DiscountCardManagerUI();
+    StatisticsTableModel statisticsTableModel;
+    ConnectionDataBase connectionDataBase = new ConnectionDataBase();
+    RequestDataBase requestDataBase; 
+    
     public MainMenuUserUI() {
         initComponents();
+        
+        connectionDataBase.connect();
+        requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        
+        statisticsTableModel = new StatisticsTableModel();
+        table.setModel(statisticsTableModel);
+        statisticsTableModel.refreshData(requestDataBase.getAllStat());
     }
 
     /**
@@ -27,22 +52,201 @@ public class MainMenuUserUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        categoryButton = new javax.swing.JButton();
+        customerButton = new javax.swing.JButton();
+        merchButton = new javax.swing.JButton();
+        discountCardButton = new javax.swing.JButton();
+        exitButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        table = new javax.swing.JTable();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
+
+        jLabel1.setFont(new java.awt.Font("Lucida Grande", 2, 16)); // NOI18N
+        jLabel1.setText("Головне меню Користувача");
+
+        categoryButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        categoryButton.setText("Категорії");
+        categoryButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                categoryButtonActionPerformed(evt);
+            }
+        });
+
+        customerButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        customerButton.setText("Покупці");
+        customerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customerButtonActionPerformed(evt);
+            }
+        });
+
+        merchButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        merchButton.setText("Товари");
+        merchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                merchButtonActionPerformed(evt);
+            }
+        });
+
+        discountCardButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        discountCardButton.setText("Знижки");
+        discountCardButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                discountCardButtonActionPerformed(evt);
+            }
+        });
+
+        exitButton.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        exitButton.setText("Вийти");
+        exitButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitButtonActionPerformed(evt);
+            }
+        });
+
+        table.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(table);
+
+        jButton1.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jButton1.setText("Продажа");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jButton2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
+        jButton2.setText("Звіт");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 729, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(categoryButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 132, Short.MAX_VALUE)
+                            .addComponent(customerButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(merchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(discountCardButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(17, 17, 17))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(47, 47, 47)
+                        .addComponent(customerButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(merchButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(discountCardButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(categoryButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(exitButton))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE))
+                .addGap(18, 18, 18))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
+       this.dispose();
+        
+    }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void categoryButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_categoryButtonActionPerformed
+        // TODO add your handling code here:
+        categoryManagerUI.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_categoryButtonActionPerformed
+
+    private void customerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customerButtonActionPerformed
+        // TODO add your handling code here:
+        customerManagerUI.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_customerButtonActionPerformed
+
+    private void merchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_merchButtonActionPerformed
+        // TODO add your handling code here:
+        merchManagerUI.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_merchButtonActionPerformed
+
+    private void discountCardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_discountCardButtonActionPerformed
+        // TODO add your handling code here:
+        discountCardManagerUI.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_discountCardButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        saleMenuUI.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        statManagerUI.setVisible(rootPaneCheckingEnabled);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        connectionDataBase.connect();
+        requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        
+        statisticsTableModel = new StatisticsTableModel();
+        table.setModel(statisticsTableModel);
+        statisticsTableModel.refreshData(requestDataBase.getAllStat());
+    }//GEN-LAST:event_formWindowActivated
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton categoryButton;
+    private javax.swing.JButton customerButton;
+    private javax.swing.JButton discountCardButton;
+    private javax.swing.JButton exitButton;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JButton merchButton;
+    private javax.swing.JTable table;
     // End of variables declaration//GEN-END:variables
 }

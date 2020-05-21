@@ -12,9 +12,12 @@ import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
 import moon.projectx.objectTable.Statistics;
 import moon.projectx.UI.TableModel.StatisticsTableModel;
 import moon.projectx.driver.*;
+import moon.projectx.PDFGenerator.PDFGeneretor;
 
 
 public class StatManagerUI extends javax.swing.JFrame {
@@ -30,7 +33,7 @@ public class StatManagerUI extends javax.swing.JFrame {
         connectionDataBase.connect();
         requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
         statisticsTableModel = new StatisticsTableModel();
-        jTable1.setModel(statisticsTableModel);
+        table.setModel(statisticsTableModel);
         statisticsTableModel.refreshData(requestDataBase.getAllStat());
 //        toDateChooser = new JDateChooser
     }
@@ -53,11 +56,13 @@ public class StatManagerUI extends javax.swing.JFrame {
         jDatePickerUtil4 = new net.sourceforge.jdatepicker.util.JDatePickerUtil();
         fromDateChooser = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        table = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         toDateChooser = new com.toedter.calendar.JDateChooser();
-        jButton1 = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
+        generatReoprtButton = new javax.swing.JButton();
+        selectAllButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -69,7 +74,7 @@ public class StatManagerUI extends javax.swing.JFrame {
             }
         });
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        table.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -80,7 +85,7 @@ public class StatManagerUI extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(table);
 
         jLabel1.setText("Від");
 
@@ -94,10 +99,24 @@ public class StatManagerUI extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        refreshButton.setText("Оновити");
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                refreshButtonActionPerformed(evt);
+            }
+        });
+
+        generatReoprtButton.setText("Генерувати звіт");
+        generatReoprtButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generatReoprtButtonActionPerformed(evt);
+            }
+        });
+
+        selectAllButton.setText("Вибрати все");
+        selectAllButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                selectAllButtonActionPerformed(evt);
             }
         });
 
@@ -107,23 +126,17 @@ public class StatManagerUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fromDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel2))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(toDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 213, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jButton1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                    .addComponent(toDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                    .addComponent(fromDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                    .addComponent(refreshButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(generatReoprtButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(selectAllButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,14 +147,18 @@ public class StatManagerUI extends javax.swing.JFrame {
                         .addGap(4, 4, 4)
                         .addComponent(jLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(fromDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(fromDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(toDateChooser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(toDateChooser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(refreshButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(generatReoprtButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1)
-                        .addContainerGap(217, Short.MAX_VALUE))
+                        .addComponent(selectAllButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(123, 123, 123))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addContainerGap())))
@@ -158,11 +175,11 @@ public class StatManagerUI extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_toDateChooserPropertyChange
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
         connectionDataBase.connect();
         requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
         statisticsTableModel = new StatisticsTableModel();
-        jTable1.setModel(statisticsTableModel);
+        table.setModel(statisticsTableModel);
         
         
         
@@ -182,7 +199,66 @@ public class StatManagerUI extends javax.swing.JFrame {
         
        statisticsTableModel.refreshData(requestDataBase.getAllStatDate(fromSqlDate, toSqlDate));
        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_refreshButtonActionPerformed
+
+    private void selectAllButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_selectAllButtonActionPerformed
+        table.selectAll();
+    }//GEN-LAST:event_selectAllButtonActionPerformed
+
+    private void generatReoprtButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatReoprtButtonActionPerformed
+        if(table.getSelectedRow() != -1){
+            
+            Statistics stat = new Statistics();
+            ArrayList<Statistics> arrayList = new ArrayList<>();
+            
+            Object o = new Object();
+            String s = new String();
+            
+            int[] size = table.getSelectedRows();
+            
+           
+            
+            for (int i : size) {
+                
+                o = table.getModel().getValueAt(i, 0);
+                stat.setId(Integer.valueOf(o.toString()));
+                
+                o = table.getModel().getValueAt(i, 1);
+                stat.setName(o.toString());
+                
+                o = table.getModel().getValueAt(i, 2);
+                stat.setCategory(o.toString());
+                
+                o = table.getModel().getValueAt(i, 3);
+                stat.setPrice(Integer.valueOf(o.toString()));
+                
+                o = table.getModel().getValueAt(i, 4);
+                stat.setCount(Integer.valueOf(o.toString()));
+                
+                o = table.getModel().getValueAt(i, 5);
+                stat.setDateString(o.toString());
+                
+                o = table.getModel().getValueAt(i, 6);
+                stat.setCustomer(o.toString());
+                
+                o = table.getModel().getValueAt(i, 7);
+                stat.setUser(o.toString());
+                
+                o = table.getModel().getValueAt(i, 8);
+                stat.setMerchId(Integer.valueOf(o.toString()));
+                
+                arrayList.add(stat);
+                stat = new Statistics();
+                
+            }
+            
+            PDFGeneretor generetor = new PDFGeneretor();
+            generetor.generatorReport(arrayList);
+            
+            JOptionPane.showMessageDialog(null, "Звіт згенеровано");
+            
+        }else JOptionPane.showMessageDialog(null, "Виберіть із таблиці щось");
+    }//GEN-LAST:event_generatReoprtButtonActionPerformed
     
     private java.sql.Date convert(java.util.Date uDate) {
         java.sql.Date sDate = new java.sql.Date(uDate.getTime());
@@ -193,7 +269,7 @@ public class StatManagerUI extends javax.swing.JFrame {
     private net.sourceforge.jdatepicker.impl.DateComponentFormatter dateComponentFormatter1;
     private net.sourceforge.jdatepicker.impl.DateComponentFormatter dateComponentFormatter2;
     private com.toedter.calendar.JDateChooser fromDateChooser;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton generatReoprtButton;
     private net.sourceforge.jdatepicker.util.JDatePickerUtil jDatePickerUtil1;
     private net.sourceforge.jdatepicker.util.JDatePickerUtil jDatePickerUtil2;
     private net.sourceforge.jdatepicker.util.JDatePickerUtil jDatePickerUtil3;
@@ -201,8 +277,10 @@ public class StatManagerUI extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton refreshButton;
+    private javax.swing.JButton selectAllButton;
     private net.sourceforge.jdatepicker.impl.SqlDateModel sqlDateModel1;
+    private javax.swing.JTable table;
     private com.toedter.calendar.JDateChooser toDateChooser;
     // End of variables declaration//GEN-END:variables
 }

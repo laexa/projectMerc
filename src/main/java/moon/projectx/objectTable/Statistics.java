@@ -25,6 +25,7 @@ public class Statistics {
     private int customerId;
     private int userId;
     private int merchId;
+    private String dateString;
     
 
     public Statistics() {
@@ -153,6 +154,15 @@ public class Statistics {
     public void setUser(String user) {
         this.user = user;
     }
+
+    public String getDateString() {
+        return dateString;
+    }
+
+    public void setDateString(String dateString) {
+        this.dateString = dateString;
+    }
+    
     
     public String[] getStatArray() {
         String[] stat = new String[9];

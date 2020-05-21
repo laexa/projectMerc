@@ -169,10 +169,25 @@ public class LoginUI extends javax.swing.JFrame {
         int dataPassword    = requestDataBase.getUserPassword(passwordPasswordField.getText());
         
         if(dataLogin == 1 && dataPassword == 1) {
-            JOptionPane.showMessageDialog(null, "You enter");
-            new MainMenuAdminUI().setVisible(rootPaneCheckingEnabled);
-            SettingAndUser.User.userId = requestDataBase.getUserId(loginTextField.getText());
-            this.dispose();
+            
+//            JOptionPane.showMessageDialog(null, "You enter");
+             
+            
+            User u = new User();
+            int tmp = requestDataBase.getUserId(loginTextField.getText());
+            u = requestDataBase.getUser(tmp);
+            SettingAndUser.User.userName = u.getName();
+            SettingAndUser.User.userLastName = u.getLastName();
+            
+            int userType = requestDataBase.getUserType(loginTextField.getText());
+            
+            if(userType == 0){
+                new MainMenuAdminUI().setVisible(rootPaneCheckingEnabled);
+                this.dispose();
+            }else if(userType == 1) {
+                new MainMenuUserUI().setVisible(rootPaneCheckingEnabled);
+                this.dispose();
+            }
         }else if(dataLogin != 1 && dataPassword != 1) {
             JOptionPane.showMessageDialog(null, "Wrong login and password");
         }else if(dataLogin != 1) {

@@ -5,9 +5,8 @@
  */
 package moon.projectx.PDFGenerator;
 
-import com.itextpdf.text.Anchor;
-import static com.itextpdf.text.Chunk.ENCODING;
 import java.io.File;
+import com.itextpdf.text.Anchor;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,13 +19,16 @@ import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import java.io.ByteArrayInputStream;
 import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import moon.projectx.SettingAndUser;
 import moon.projectx.objectTable.Merch;
+import moon.projectx.objectTable.Statistics;
+import moon.projectx.driver.ConnectionDataBase;
+import moon.projectx.driver.RequestDataBase;
+import moon.projectx.objectTable.Customer;
 
 /**
  *
@@ -42,116 +44,224 @@ public class PDFGeneretor {
         return "";
     }
     
-    public boolean creatDoucumentAndEdit(String pathString) {
-        try {
-            
-            Document document = new Document(PageSize.A4, 0, 0, 0, 0);
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(getPathe() + "/nameDocument"+ new Date().toString()+".pdf"));
-            document.open();
-//            
-            Anchor anchor = new Anchor("Fists anchor");
-            anchor.setName("back to top");
-            
-            Paragraph paragraph = new Paragraph();
-            paragraph.setSpacingBefore(50);
-            paragraph.add(anchor);
-            document.add(paragraph);
+    public boolean generateInvoice(Statistics stat){
         
-            PdfPTable table = new PdfPTable(3);
-            table.setSpacingBefore(25);
-            table.setSpacingAfter(25);
-            
-            PdfPCell cell1 = new PdfPCell(new Phrase("cell1"));
-            table.addCell(cell1);
-            
-            PdfPCell cell2 = new PdfPCell(new Phrase("cell2"));
-            table.addCell(cell2);
-            
-            PdfPCell cell3 = new PdfPCell(new Phrase("cell3"));
-            table.addCell(cell3);
-            
-            table.addCell("1.1");
-            table.addCell("1.2");
-            table.addCell("1.3");
-            
-            document.add(table);
-            document.close();
-            return true;
-        } catch (Exception e) {
-        }
-        
-        return false;
-    }
-    
-    public boolean creatInvoice(Merch merch, int count, int price){
         try {
+            Customer customer = new Customer();
+            ConnectionDataBase connectionDataBase = new ConnectionDataBase();
+            connectionDataBase.connect();
+            RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+            customer = requestDataBase.getCustomer(stat.getCustomerId());
             
-            Document document = new Document(PageSize.A4, 0, 0, 0, 0);
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(getPathe() + "/invoice"+SettingAndUser.User.userLastName+ SettingAndUser.User.userName+ new Date().toString()+".pdf"));
+            BaseFont uaFont = BaseFont.createFont("/Users/alex/NetBeansProjects/projectMerc/src/main/java/moon/projectx/font/OpenSans-Light.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            Font defaultFont = new Font(uaFont, 10, Font.NORMAL);
+            
+            Date nowDate = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd'|'hh:mm:ss");
+            SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy.MM.dd");
+            
+            Document document = new Document(PageSize.A4, 10, 10, 10, 10);
+            
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(getPathe() 
+                    + "/invoice_"+
+                    SettingAndUser.User.userLastName +"_"+ 
+                    SettingAndUser.User.userName + 
+                    "_"  + dateFormat.format(nowDate) +".pdf"));
             document.open();
             
-            BaseFont helvetica = BaseFont.createFont("/Users/alex/NetBeansProjects/projectMerc/src/main/java/moon/projectx/font/ArialBlack.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-           
-            Font font = new Font(helvetica, 10, Font.NORMAL);
+            
+            Anchor otherText_1 = new Anchor("Накладна ",new Font(uaFont, 14));
+            Anchor otherText_2 = new Anchor("Імя продавця:  " + SettingAndUser.User.userLastName + " " + SettingAndUser.User.userName, new Font(uaFont, 12));
+            Anchor otherText_3 = new Anchor("Дата формування: " + dateFormat.format(nowDate), new Font(uaFont, 12));
+            Anchor otherText_4 = new Anchor("Номер накладної " + requestDataBase.getLastStatRow(), new Font(uaFont, 12, Font.BOLD));
             
             
-            Anchor anchor = new Anchor("руский ", font);
-           
             
-            Anchor anchorDesc = new Anchor("Name Seller " + SettingAndUser.User.userLastName + SettingAndUser.User.userName);
-          
+            Paragraph p = new Paragraph();
             
-            Anchor anchorData = new Anchor("Date : " + new Date().toString());
-         
-            Paragraph paragraph = new Paragraph();
-            Paragraph paragraph1 = new Paragraph();
-            Paragraph paragraph2 = new Paragraph();
+            p.add(otherText_1);
+            document.add(p);
+            p.clear();
             
-            paragraph.setSpacingBefore(25);
-            paragraph.setFont(font);
-            paragraph1.setSpacingBefore(25);
-            paragraph2.setSpacingBefore(25);
+            p.add(otherText_2);
+            document.add(p);
+            p.clear();
             
-            paragraph.add(anchor);
-            paragraph1.add(anchorDesc);
-            paragraph2.add(anchorData);
+            p.add(otherText_3);
+            document.add(p);
+            p.clear();
             
-            document.add(paragraph);
-            document.add(paragraph1);
-            document.add(paragraph2);
-            
+            p.add(otherText_4);
+            document.add(p);
+            p.clear();
+            // Table generator
             
             PdfPTable table = new PdfPTable(5);
             table.setSpacingBefore(25);
             table.setSpacingAfter(25);
             
-            PdfPCell cellName = new PdfPCell(new Phrase("Name"));
+            PdfPCell cellName = new PdfPCell(new Phrase("Імя", defaultFont));
             table.addCell(cellName);
             
-            PdfPCell cellCount = new PdfPCell(new Phrase("Count"));
+            PdfPCell cellCount = new PdfPCell(new Phrase("Кількість", defaultFont));
             table.addCell(cellCount);
             
-            PdfPCell cellDate = new PdfPCell(new Phrase("Date"));
+            PdfPCell cellDate = new PdfPCell(new Phrase("Дата", defaultFont));
             table.addCell(cellDate);
             
-            PdfPCell cellCustomer = new PdfPCell(new Phrase("Customer"));
+            PdfPCell cellCustomer = new PdfPCell(new Phrase("Покупець", defaultFont));
             table.addCell(cellCustomer);
             
-            PdfPCell cellPrice = new PdfPCell(new Phrase("Price"));
+            PdfPCell cellPrice = new PdfPCell(new Phrase("Ціна", defaultFont));
             table.addCell(cellPrice);
             
-            table.addCell("1.1");
-            table.addCell("1.1");
-            table.addCell("1.1");
-            table.addCell("1.1");
-            table.addCell("1.1");
-            table.addCell("1.1");
+            
+            table.addCell(new Phrase(stat.getName(), defaultFont));
+            table.addCell(String.valueOf(stat.getCount()));
+            table.addCell(simpleFormat.format(nowDate));
+            table.addCell(new Phrase(customer.getLastName() + " " + customer.getName(), defaultFont));
+            table.addCell(String.valueOf(stat.getPrice()));
+            
+            
             
             document.add(table);
+            
+            
+            p.setSpacingAfter(20);
+            p.setSpacingBefore(20);
+            otherText_1.clear();
+            otherText_1 = new Anchor("Підпис працівника  ________________________", new Font(uaFont, 12, Font.UNDERLINE));
+            p.add(otherText_1);
+            document.add(p);
+            p.clear();
+            otherText_1.clear();
+            
+            otherText_1 = new Anchor("Підпис покупця (Необовязково _______________)", new Font(uaFont, 12, Font.UNDERLINE));
+            p.add(otherText_1);
+            document.add(p);
+            p.clear();
+            otherText_1.clear();
+            
             document.close();
             
+            return true;
+            
         } catch (Exception e) {
-            System.err.println(e.getMessage());
+            System.err.println(e.getLocalizedMessage());
+        }
+        
+        return false;
+    }
+    
+    public boolean generatorReport(ArrayList<Statistics> arrayListStat){
+        try {
+            
+            Customer customer = new Customer();
+            ConnectionDataBase connectionDataBase = new ConnectionDataBase();
+            connectionDataBase.connect();
+            RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+            
+            
+            BaseFont uaFont = BaseFont.createFont("/Users/alex/NetBeansProjects/projectMerc/src/main/java/moon/projectx/font/OpenSans-Light.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            Font defaultFont = new Font(uaFont, 10, Font.NORMAL);
+            
+            Date nowDate = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd'|'hh:mm:ss");
+            SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy.MM.dd");
+            
+            Document document = new Document(PageSize.A4, 10, 10, 10, 10);
+            
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(getPathe() 
+                    + "/invoice_"+
+                    SettingAndUser.User.userLastName +"_"+ 
+                    SettingAndUser.User.userName + 
+                    "_"  + dateFormat.format(nowDate) +".pdf"));
+            document.open();
+            
+            
+            Anchor otherText_1 = new Anchor("Накладна ",new Font(uaFont, 14));
+            Anchor otherText_2 = new Anchor("Імя продавця:  " + SettingAndUser.User.userLastName + " " + SettingAndUser.User.userName, new Font(uaFont, 12));
+            Anchor otherText_3 = new Anchor("Дата формування: " + dateFormat.format(nowDate), new Font(uaFont, 12));
+            Anchor otherText_4 = new Anchor("Номер накладної " + requestDataBase.getLastStatRow(), new Font(uaFont, 12, Font.BOLD));
+            
+            
+            
+            Paragraph p = new Paragraph();
+            
+            p.add(otherText_1);
+            document.add(p);
+            p.clear();
+            
+            p.add(otherText_2);
+            document.add(p);
+            p.clear();
+            
+            p.add(otherText_3);
+            document.add(p);
+            p.clear();
+            
+            p.add(otherText_4);
+            document.add(p);
+            p.clear();
+            // Table generator
+            
+            PdfPTable table = new PdfPTable(5);
+            table.setSpacingBefore(25);
+            table.setSpacingAfter(25);
+            
+            PdfPCell cellName = new PdfPCell(new Phrase("Імя", defaultFont));
+            table.addCell(cellName);
+            
+            PdfPCell cellCount = new PdfPCell(new Phrase("Ціна", defaultFont));
+            table.addCell(cellCount);
+            
+            PdfPCell cellDate = new PdfPCell(new Phrase("Дата", defaultFont));
+            table.addCell(cellDate);
+            
+            PdfPCell cellCustomer = new PdfPCell(new Phrase("Покупець", defaultFont));
+            table.addCell(cellCustomer);
+            
+            PdfPCell cellPrice = new PdfPCell(new Phrase("Кількість", defaultFont));
+            table.addCell(cellPrice);
+            
+            Statistics st;
+            for (int i = 0; i < arrayListStat.size(); i++) {
+                
+                st = new Statistics();
+                st = arrayListStat.get(i);
+                table.addCell(new Phrase(st.getName(), defaultFont));
+                table.addCell(String.valueOf(st.getCount()));
+                table.addCell(st.getDateString()); 
+                table.addCell(new Phrase(st.getCustomer(), defaultFont));
+                table.addCell(String.valueOf(st.getPrice()));
+                
+                st = null;
+                
+                 
+                
+            }
+            
+            
+            
+            
+            
+            document.add(table);
+            
+            
+            p.setSpacingAfter(20);
+            p.setSpacingBefore(20);
+            otherText_1.clear();
+            otherText_1 = new Anchor("Підпис працівника  ________________________", new Font(uaFont, 12, Font.UNDERLINE));
+            p.add(otherText_1);
+            document.add(p);
+            p.clear();
+            otherText_1.clear();
+            
+            document.close();
+            
+            return true;
+            
+        } catch (Exception e) {
         }
         return false;
     }

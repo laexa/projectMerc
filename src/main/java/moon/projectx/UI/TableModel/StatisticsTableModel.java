@@ -40,8 +40,8 @@ public class StatisticsTableModel extends AbstractTableModel{
             case 0: return "id";
             case 1: return "Імя";
             case 2: return "Категорія";
-            case 3: return "Ціна";
-            case 4: return "Кількість";
+            case 3: return "Кількість";
+            case 4: return "Ціна";
             case 5: return "Дата";
             case 6: return "Покупець";
             case 7: return "Робітник";

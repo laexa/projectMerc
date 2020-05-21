@@ -13,6 +13,7 @@ import moon.projectx.objectTable.Statistics;
 import org.apache.commons.lang3.math.NumberUtils;
 import moon.projectx.UI.TableModel.CustomerTableModel;
 import moon.projectx.SettingAndUser;
+import moon.projectx.PDFGenerator.PDFGeneretor;
 
 public class SaleFormUI extends javax.swing.JFrame {
     
@@ -21,6 +22,7 @@ public class SaleFormUI extends javax.swing.JFrame {
     Merch merch = new Merch();
     Statistics statistics = new Statistics();
     CustomerTableModel customerTableModel;
+    PDFGeneretor pDFGeneretor = new PDFGeneretor();
    
     public SaleFormUI(Integer id) {
         
@@ -28,6 +30,7 @@ public class SaleFormUI extends javax.swing.JFrame {
         
         connectionDataBase.connect();
         requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+        
         
         Merch merch = new Merch();
         merch = requestDataBase.getMerch(id);
@@ -73,7 +76,7 @@ public class SaleFormUI extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        checkInvoice = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -129,7 +132,7 @@ public class SaleFormUI extends javax.swing.JFrame {
 
         jLabel5.setText("Кількість товару ");
 
-        jCheckBox1.setText("Сформувати накладну");
+        checkInvoice.setText("Сформувати накладну");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,7 +146,7 @@ public class SaleFormUI extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(saleButton)
                         .addGap(75, 75, 75)
-                        .addComponent(jCheckBox1))
+                        .addComponent(checkInvoice))
                     .addComponent(countTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                         .addGroup(layout.createSequentialGroup()
@@ -201,7 +204,7 @@ public class SaleFormUI extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(saleButton)
-                            .addComponent(jCheckBox1)))
+                            .addComponent(checkInvoice)))
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -260,8 +263,15 @@ public class SaleFormUI extends javax.swing.JFrame {
                             stat.setMerchId(merch.getId());
                             requestDataBase.addStat(stat);
                             
-                            
-                            JOptionPane.showMessageDialog(null, "Покупка зробленa. Вартість становить "+ i +"");
+                            if(checkInvoice.isSelected()){
+                                pDFGeneretor.generateInvoice(stat);
+                                JOptionPane.showMessageDialog(null, "Покупка зробленa. Вартість становить "+ i +" Накладна згенерована");
+                                this.dispose();
+                            }else {
+                                
+                                JOptionPane.showMessageDialog(null, "Покупка зробленa. Вартість становить "+ i +"");
+                                this.dispose();
+                            }
                         }else{
                             
                             o = table.getModel().getValueAt(table.getSelectedRow(), 4);
@@ -294,7 +304,15 @@ public class SaleFormUI extends javax.swing.JFrame {
                             stat.setMerchId(merch.getId());
                             requestDataBase.addStat(stat);
                             
+                            if(checkInvoice.isSelected()){
+                                pDFGeneretor.generateInvoice(stat);
+                                JOptionPane.showMessageDialog(null, "Покупка зробленa. Вартість становить "+ i +" Накладна згенерована");
+                                this.dispose();
+                            }else {
+                            
                             JOptionPane.showMessageDialog(null, "Покупка зробленa. Вартість становить "+ i +"");
+                            this.dispose();
+                            }
                         }
                     }
                     
@@ -307,10 +325,10 @@ public class SaleFormUI extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel categoryLabel;
+    private javax.swing.JCheckBox checkInvoice;
     private javax.swing.JLabel countLabel;
     private javax.swing.JTextField countTextField;
     private javax.swing.JTextArea descTextArea;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

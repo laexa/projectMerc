@@ -55,7 +55,8 @@ public class Main extends Thread{
 //        Statistics stat = new Statistics(0,"name",9, 2, 22, null, 5,1, 22);
 //        requestDataBase.addStat(stat);
 //        System.out.println(stat.toString());
-        new PDFGeneretor().creatInvoice(null, 10, 100);
+//        new PDFGeneretor().generateInvoice();
+        new LoginUI().setVisible(true);
     }
                     
     public static void main(String[] args) {

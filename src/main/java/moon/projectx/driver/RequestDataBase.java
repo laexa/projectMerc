@@ -43,6 +43,32 @@ public class RequestDataBase {
         }
     }
     
+    public int getUserType(String login){
+        int tmp = 0;
+        
+        try {
+            
+            if(statement.isClosed()){
+                statement = connection.createStatement();
+            }
+            request = "";
+            request = "select maindb.user.type from maindb.user where maindb.user.login = '" + login + "';";
+            resultSet = statement.executeQuery(request);
+            
+            while (resultSet.next()) {                
+                tmp = resultSet.getInt(1);
+                
+            }
+            
+            resultSet.close();
+            
+            return tmp;
+            
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+        return 0;
+    }
     public int getUserId(String name) {
           int tmp = 0;
         
@@ -78,7 +104,7 @@ public class RequestDataBase {
                 statement = connection.createStatement();
             }
             request = "";
-            request = "select maindb.user_table.name, maindb.user_table.lastName, maindb.user_table.type, maindb.user_table.password From maindb.user_table where maindb.user_table.id = " + id + ";";
+            request = "select maindb.user.name, maindb.user.lastName, maindb.user.type, maindb.user.password From maindb.user where maindb.user.id = "+id+";";
             resultSet = statement.executeQuery(request);
             
             while (resultSet.next()) {                
@@ -1317,6 +1343,31 @@ public class RequestDataBase {
             }
             request = "";
             request = "select maindb.discountcardid.percent from maindb.discountcardid where maindb.discountcardid.id = " + id + ";";
+            resultSet = statement.executeQuery(request);
+            
+            while (resultSet.next()) {                
+                tmp = resultSet.getInt(1);
+            }
+            
+            resultSet.close();
+            
+            return tmp;
+            
+        } catch (Exception e) {
+        }
+        return tmp;
+    }
+    
+    public int getLastStatRow(){
+        int tmp = 0;
+        
+        try {
+            
+            if(statement.isClosed()){
+                statement = connection.createStatement();
+            }
+            request = "";
+            request = "select maindb.stat.id from maindb.stat order by id desc limit 1;";
             resultSet = statement.executeQuery(request);
             
             while (resultSet.next()) {                

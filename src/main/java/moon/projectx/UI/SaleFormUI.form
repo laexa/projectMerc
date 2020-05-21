@@ -31,7 +31,7 @@
                   <Group type="102" attributes="0">
                       <Component id="saleButton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
-                      <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                      <Component id="checkInvoice" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="countTextField" alignment="0" min="-2" pref="351" max="-2" attributes="0"/>
                   <Group type="103" alignment="0" groupAlignment="1" attributes="0">
@@ -105,7 +105,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="saleButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jCheckBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="checkInvoice" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                   <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
@@ -221,7 +221,7 @@
         <Property name="text" type="java.lang.String" value="&#x41a;&#x456;&#x43b;&#x44c;&#x43a;&#x456;&#x441;&#x442;&#x44c; &#x442;&#x43e;&#x432;&#x430;&#x440;&#x443; "/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JCheckBox" name="jCheckBox1">
+    <Component class="javax.swing.JCheckBox" name="checkInvoice">
       <Properties>
         <Property name="text" type="java.lang.String" value="&#x421;&#x444;&#x43e;&#x440;&#x43c;&#x443;&#x432;&#x430;&#x442;&#x438; &#x43d;&#x430;&#x43a;&#x43b;&#x430;&#x434;&#x43d;&#x443;"/>
       </Properties>
