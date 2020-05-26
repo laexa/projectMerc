@@ -165,7 +165,9 @@ public class PDFGeneretor {
             File path = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString());
             
             
-            BaseFont uaFont = BaseFont.createFont("/Users/alex/NetBeansProjects/projectMerc/src/main/java/moon/projectx/font/OpenSans-Light.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            File t = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString());
+            System.out.println(t.getParent()+"OpenSans-Light.ttf");
+            BaseFont uaFont = BaseFont.createFont(t.getParent()+"/OpenSans-Light.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             Font defaultFont = new Font(uaFont, 10, Font.NORMAL);
             
             Date nowDate = new Date();
