@@ -10,9 +10,22 @@ package moon.projectx;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import com.mysql.cj.jdbc.Driver;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FilenameFilter;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.nio.file.Paths;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 import moon.projectx.PDFGenerator.PDFGeneretor;
 import moon.projectx.objectTable.User;
 import moon.projectx.objectTable.Customer;
@@ -43,25 +56,25 @@ import moon.projectx.UI.manager.StatManagerUI;
 
 public class Main extends Thread{
     
-    @Override
-    public void run() {
-//        new StatManagerUI().setVisible(true);
-//        new StatManagerUI().setVisible(true);
-//        new SaleMenuUI().setVisible(true);
-//        ConnectionDataBase connectionDataBase = new ConnectionDataBase();
-//        connectionDataBase.connect();
-//        RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
-        
-//        Statistics stat = new Statistics(0,"name",9, 2, 22, null, 5,1, 22);
-//        requestDataBase.addStat(stat);
-//        System.out.println(stat.toString());
-//        new PDFGeneretor().generateInvoice();
-        new LoginUI().setVisible(true);
-    }
+
+      
+       
                     
     public static void main(String[] args) {
-        Thread main = new Main();
-        main.run();
+//        JFileChooser fileopen = new JFileChooser();
+//        fileopen.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+//        int ret = fileopen.showDialog(null, "");                
+//        if (ret == JFileChooser.APPROVE_OPTION) {
+//        File file = fileopen.getSelectedFile();
+//        System.out.println(fileopen.getSelectedFile().getAbsolutePath());
+        File path = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString());
+        
+        
+//       JOptionPane.showMessageDialog(null, path.getParent());
+        new LoginUI().setVisible(true);
+    /*
+     * Какие-то действия.
+     */ 
     }
-    
-  }
+}        
+ 

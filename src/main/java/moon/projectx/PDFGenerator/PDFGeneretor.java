@@ -23,6 +23,8 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import javax.swing.JOptionPane;
+import moon.projectx.Main;
 import moon.projectx.SettingAndUser;
 import moon.projectx.objectTable.Merch;
 import moon.projectx.objectTable.Statistics;
@@ -62,7 +64,7 @@ public class PDFGeneretor {
             
             Document document = new Document(PageSize.A4, 10, 10, 10, 10);
             
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(getPathe() 
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(ClassLoader.getSystemClassLoader().getResource(".").getPath()
                     + "/invoice_"+
                     SettingAndUser.User.userLastName +"_"+ 
                     SettingAndUser.User.userName + 
@@ -160,6 +162,7 @@ public class PDFGeneretor {
             ConnectionDataBase connectionDataBase = new ConnectionDataBase();
             connectionDataBase.connect();
             RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
+            File path = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString());
             
             
             BaseFont uaFont = BaseFont.createFont("/Users/alex/NetBeansProjects/projectMerc/src/main/java/moon/projectx/font/OpenSans-Light.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
@@ -170,22 +173,24 @@ public class PDFGeneretor {
             SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy.MM.dd");
             
             Document document = new Document(PageSize.A4, 10, 10, 10, 10);
+//            JOptionPane.showMessageDialog(null, path.getParent());
+    
             
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(getPathe() 
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream( path.getParent()
                     + "/invoice_"+
                     SettingAndUser.User.userLastName +"_"+ 
                     SettingAndUser.User.userName + 
                     "_"  + dateFormat.format(nowDate) +".pdf"));
             document.open();
             
-            
+//            JOptionPane.showMessageDialog(null, "Формирования Шапки накладної");
             Anchor otherText_1 = new Anchor("Накладна ",new Font(uaFont, 14));
             Anchor otherText_2 = new Anchor("Імя продавця:  " + SettingAndUser.User.userLastName + " " + SettingAndUser.User.userName, new Font(uaFont, 12));
             Anchor otherText_3 = new Anchor("Дата формування: " + dateFormat.format(nowDate), new Font(uaFont, 12));
             Anchor otherText_4 = new Anchor("Номер накладної " + requestDataBase.getLastStatRow(), new Font(uaFont, 12, Font.BOLD));
             
             
-            
+//            JOptionPane.showMessageDialog(null, "добавления параграфив");
             Paragraph p = new Paragraph();
             
             p.add(otherText_1);
@@ -194,7 +199,7 @@ public class PDFGeneretor {
             
             p.add(otherText_2);
             document.add(p);
-            p.clear();
+            p.clear(); 
             
             p.add(otherText_3);
             document.add(p);
@@ -204,7 +209,7 @@ public class PDFGeneretor {
             document.add(p);
             p.clear();
             // Table generator
-            
+//            JOptionPane.showMessageDialog(null, "Генерация таблици");
             PdfPTable table = new PdfPTable(5);
             table.setSpacingBefore(25);
             table.setSpacingAfter(25);
@@ -262,6 +267,9 @@ public class PDFGeneretor {
             return true;
             
         } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e.getLocalizedMessage());
+//            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, e.toString());
         }
         return false;
     }
