@@ -71,21 +71,22 @@ public class Main extends Thread{
         
         
 //       JOptionPane.showMessageDialog(null, path.getParent());
-//        new LoginUI().setVisible(true);
+        new LoginUI().setVisible(true);
         
     /*
      * Какие-то действия.
-     */ 
-    java.util.Date date = new java.util.Date();
-        switch (Util.getOS()) {
-            case WINDOWS:
-                System.out.println("Windows");
-                
-                break;
-            case MAC:
-                System.out.println("Mac OS");
-                break;
-        }
-        System.out.println();
+//     */ 
+//    java.util.Date date = new java.util.Date();
+//        switch (Util.getOS()) {
+//            case WINDOWS:
+//                System.out.println("Windows");
+//                
+//                break;
+//            case MAC:
+//                System.out.println("Mac OS");
+//                break;
+//        }
+//        System.out.println();
     }  
+
 }
