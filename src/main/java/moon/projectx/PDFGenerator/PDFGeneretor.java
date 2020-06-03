@@ -26,7 +26,7 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import moon.projectx.Main;
 import moon.projectx.SettingAndUser;
-import moon.projectx.objectTable.Merch;
+import moon.projectx.Util;
 import moon.projectx.objectTable.Statistics;
 import moon.projectx.driver.ConnectionDataBase;
 import moon.projectx.driver.RequestDataBase;
@@ -164,29 +164,54 @@ public class PDFGeneretor {
             RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
             File path = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString());
             
-            
             File t = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString());
             System.out.println(t.getParent()+"OpenSans-Light.ttf");
-            BaseFont uaFont = BaseFont.createFont(t.getParent()+"/OpenSans-Light.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-            Font defaultFont = new Font(uaFont, 10, Font.NORMAL);
             
+            Document document = new Document(PageSize.A4, 10, 10, 10, 10);
             Date nowDate = new Date();
+            
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd'|'hh:mm:ss");
             SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy.MM.dd");
             
-            Document document = new Document(PageSize.A4, 10, 10, 10, 10);
-//            JOptionPane.showMessageDialog(null, path.getParent());
-    
+            BaseFont uaFont = null;
+            Font defaultFont = null;
+            PdfWriter writer;
+                    
+            switch (Util.getOS()) {
+                case WINDOWS:
+
+                    System.out.println("Windows");
+                    uaFont = BaseFont.createFont(t.getParent()+"\\OpenSans-Light.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                    defaultFont = new Font(uaFont, 10, Font.NORMAL);
+                    
+                    writer = PdfWriter.getInstance(document, new FileOutputStream( path.getParent()
+                        + "\\invoice_"+
+                        SettingAndUser.User.userLastName +"_"+ 
+                        SettingAndUser.User.userName + 
+                        "_"  + simpleFormat.format(nowDate) +".pdf"));
+                    
+                    break;
+                case MAC:
+
+                    System.out.println("Mac OS");
+                    uaFont = BaseFont.createFont(t.getParent()+"/OpenSans-Light.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                    defaultFont = new Font(uaFont, 10, Font.NORMAL);
+                    
+                    writer = PdfWriter.getInstance(document, new FileOutputStream( path.getParent()
+                        + "/invoice_"+
+                        SettingAndUser.User.userLastName +"_"+ 
+                        SettingAndUser.User.userName + 
+                        "_"  + dateFormat.format(nowDate) +".pdf"));
+                    
+                    break;
+                 
+            }
             
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream( path.getParent()
-                    + "/invoice_"+
-                    SettingAndUser.User.userLastName +"_"+ 
-                    SettingAndUser.User.userName + 
-                    "_"  + dateFormat.format(nowDate) +".pdf"));
             document.open();
             
 //            JOptionPane.showMessageDialog(null, "Формирования Шапки накладної");
-            Anchor otherText_1 = new Anchor("Накладна ",new Font(uaFont, 14));
+
+            Anchor otherText_1 = new Anchor("Зві ",new Font(uaFont, 16, Font.BOLD));
             Anchor otherText_2 = new Anchor("Імя продавця:  " + SettingAndUser.User.userLastName + " " + SettingAndUser.User.userName, new Font(uaFont, 12));
             Anchor otherText_3 = new Anchor("Дата формування: " + dateFormat.format(nowDate), new Font(uaFont, 12));
             Anchor otherText_4 = new Anchor("Номер накладної " + requestDataBase.getLastStatRow(), new Font(uaFont, 12, Font.BOLD));

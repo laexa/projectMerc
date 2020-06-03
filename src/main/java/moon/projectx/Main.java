@@ -67,14 +67,25 @@ public class Main extends Thread{
 //        if (ret == JFileChooser.APPROVE_OPTION) {
 //        File file = fileopen.getSelectedFile();
 //        System.out.println(fileopen.getSelectedFile().getAbsolutePath());
-        File path = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString());
+//        File path = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString());
         
         
 //       JOptionPane.showMessageDialog(null, path.getParent());
-        new LoginUI().setVisible(true);
+//        new LoginUI().setVisible(true);
+        
     /*
      * Какие-то действия.
      */ 
-    }
-}        
- 
+    java.util.Date date = new java.util.Date();
+        switch (Util.getOS()) {
+            case WINDOWS:
+                System.out.println("Windows");
+                
+                break;
+            case MAC:
+                System.out.println("Mac OS");
+                break;
+        }
+        System.out.println();
+    }  
+}
