@@ -55,20 +55,51 @@ public class PDFGeneretor {
             RequestDataBase requestDataBase = new RequestDataBase(connectionDataBase.getConnection());
             customer = requestDataBase.getCustomer(stat.getCustomerId());
             
-            BaseFont uaFont = BaseFont.createFont("/Users/alex/NetBeansProjects/projectMerc/src/main/java/moon/projectx/font/OpenSans-Light.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
-            Font defaultFont = new Font(uaFont, 10, Font.NORMAL);
+            File path = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString());
             
+            File t = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().toString());
+            System.out.println(t.getParent()+"OpenSans-Light.ttf");
+            
+            Document document = new Document(PageSize.A4, 10, 10, 10, 10);
             Date nowDate = new Date();
+            
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd'|'hh:mm:ss");
             SimpleDateFormat simpleFormat = new SimpleDateFormat("yyyy.MM.dd");
             
-            Document document = new Document(PageSize.A4, 10, 10, 10, 10);
+            BaseFont uaFont = null;
+            Font defaultFont = null;
+            PdfWriter writer;
+                    
+            switch (Util.getOS()) {
+                case WINDOWS:
+
+                    System.out.println("Windows");
+                    uaFont = BaseFont.createFont(t.getParent()+"\\OpenSans-Light.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                    defaultFont = new Font(uaFont, 10, Font.NORMAL);
+                    
+                    writer = PdfWriter.getInstance(document, new FileOutputStream( path.getParent()
+                        + "\\report_"+
+                        SettingAndUser.User.userLastName +"_"+ 
+                        SettingAndUser.User.userName + 
+                        "_"  + simpleFormat.format(nowDate) +".pdf"));
+                    
+                    break;
+                case MAC:
+
+                    System.out.println("Mac OS");
+                    uaFont = BaseFont.createFont(t.getParent()+"/OpenSans-Light.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+                    defaultFont = new Font(uaFont, 10, Font.NORMAL);
+                    
+                    writer = PdfWriter.getInstance(document, new FileOutputStream( path.getParent()
+                        + "/report_"+
+                        SettingAndUser.User.userLastName +"_"+ 
+                        SettingAndUser.User.userName + 
+                        "_"  + dateFormat.format(nowDate) +".pdf"));
+                    
+                    break;
+                 
+            }
             
-            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(ClassLoader.getSystemClassLoader().getResource(".").getPath()
-                    + "/invoice_"+
-                    SettingAndUser.User.userLastName +"_"+ 
-                    SettingAndUser.User.userName + 
-                    "_"  + dateFormat.format(nowDate) +".pdf"));
             document.open();
             
             
@@ -185,7 +216,7 @@ public class PDFGeneretor {
                     defaultFont = new Font(uaFont, 10, Font.NORMAL);
                     
                     writer = PdfWriter.getInstance(document, new FileOutputStream( path.getParent()
-                        + "\\invoice_"+
+                        + "\\report_"+
                         SettingAndUser.User.userLastName +"_"+ 
                         SettingAndUser.User.userName + 
                         "_"  + simpleFormat.format(nowDate) +".pdf"));
@@ -198,7 +229,7 @@ public class PDFGeneretor {
                     defaultFont = new Font(uaFont, 10, Font.NORMAL);
                     
                     writer = PdfWriter.getInstance(document, new FileOutputStream( path.getParent()
-                        + "/invoice_"+
+                        + "/report_"+
                         SettingAndUser.User.userLastName +"_"+ 
                         SettingAndUser.User.userName + 
                         "_"  + dateFormat.format(nowDate) +".pdf"));
@@ -211,13 +242,13 @@ public class PDFGeneretor {
             
 //            JOptionPane.showMessageDialog(null, "Формирования Шапки накладної");
 
-            Anchor otherText_1 = new Anchor("Зві ",new Font(uaFont, 16, Font.BOLD));
+            Anchor otherText_1 = new Anchor("Звіт ",new Font(uaFont, 16, Font.BOLD));
             Anchor otherText_2 = new Anchor("Імя продавця:  " + SettingAndUser.User.userLastName + " " + SettingAndUser.User.userName, new Font(uaFont, 12));
             Anchor otherText_3 = new Anchor("Дата формування: " + dateFormat.format(nowDate), new Font(uaFont, 12));
-            Anchor otherText_4 = new Anchor("Номер накладної " + requestDataBase.getLastStatRow(), new Font(uaFont, 12, Font.BOLD));
+
             
             
-//            JOptionPane.showMessageDialog(null, "добавления параграфив");
+
             Paragraph p = new Paragraph();
             
             p.add(otherText_1);
@@ -232,11 +263,7 @@ public class PDFGeneretor {
             document.add(p);
             p.clear();
             
-            p.add(otherText_4);
-            document.add(p);
-            p.clear();
-            // Table generator
-//            JOptionPane.showMessageDialog(null, "Генерация таблици");
+
             PdfPTable table = new PdfPTable(5);
             table.setSpacingBefore(25);
             table.setSpacingAfter(25);
